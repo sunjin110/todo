@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "todo-back/infrastructure/handler/grpc/proto_go_gen/user";
+
+service UserRpc {}
+
+message UserId { string id = 1; }
+
+message User {
+    UserId id = 1;
+}
+
+message Token {
+    optional string token = 1;
+}
