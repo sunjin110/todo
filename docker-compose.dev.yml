@@ -1,0 +1,42 @@
+version: "3"
+services:
+  todo-back:
+    build:
+      context: ./todo-back
+      target: final
+    ports:
+      - 3010:3010
+    depends_on:
+      mongo:
+        condition: service_healthy
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: todo
+    volumes:
+      - ./local_data/mongodb_data:/data/db
+      - ./local/mongo/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | /bin/mongosh mongo:27017/test --quiet
+      interval: 10s
+      timeout: 2s
+      retries: 5
+      start_period: 5s
+    command: mongod
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo_express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongo
+    depends_on:
+      mongo:
+          condition: service_healthy
