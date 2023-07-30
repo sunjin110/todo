@@ -25,6 +25,6 @@ func (t *todo) Delete(ctx context.Context, id model.TodoID) error {
 func (t *todo) Get(ctx context.Context, id model.TodoID) (model.Todo, error) {
 	panic("todo")
 }
-func (t *todo) List(ctx context.Context, request repository.TodoListRequest) ([]model.Todo, error) {
+func (t *todo) List(ctx context.Context, request repository.TodoListRequest) (repository.TodoListOutput, error) {
 	panic("todo")
 }

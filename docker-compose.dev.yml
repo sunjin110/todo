@@ -6,6 +6,8 @@ services:
       target: final
     ports:
       - 3010:3010
+    environment:
+      MONGO_DB_URI: mongodb://root:password@localhost:27017/todo
     depends_on:
       mongo:
         condition: service_healthy

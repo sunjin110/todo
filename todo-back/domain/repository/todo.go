@@ -11,7 +11,7 @@ type TodoListRequest struct {
 	filter  *TodoFilter
 }
 
-type TodoOutput struct {
+type TodoListOutput struct {
 	TodoList []model.Todo
 	HasNext  bool
 }
@@ -33,5 +33,5 @@ type Todo interface {
 	Update(ctx context.Context, id model.TodoID, updatedTodo model.Todo) error
 	Delete(ctx context.Context, id model.TodoID) error
 	Get(ctx context.Context, id model.TodoID) (model.Todo, error)
-	List(ctx context.Context, request TodoListRequest) ([]model.Todo, error)
+	List(ctx context.Context, request TodoListRequest) (TodoListOutput, error)
 }
