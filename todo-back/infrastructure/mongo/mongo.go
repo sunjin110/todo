@@ -3,6 +3,7 @@ package mongo
 import (
 	"context"
 	"fmt"
+	"sort"
 	"todo-back/domain/repository"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -39,6 +40,35 @@ func AppendPaging(opts *options.FindOptions, paging *repository.Paging) *options
 	}
 	opts.SetLimit(int64(paging.Limit + 1)) // hasNextのために
 	opts.SetSkip(int64(paging.Offset))
+	return opts
+}
+
+func AppendSorting(opts *options.FindOptions, sortMap map[string]*repository.SortField) *options.FindOptions {
+	if len(sortMap) == 0 {
+		return opts
+	}
+
+	sorts := bson.D{}
+	priority := map[string]uint32{}
+	for key, sortField := range sortMap {
+		if sortField == nil {
+			continue
+		}
+		sorts = append(sorts, bson.E{
+			Key:   key,
+			Value: sortField.SortKind.Int(),
+		})
+		priority[key] = sortField.Priority
+	}
+
+	if len(sorts) == 0 {
+		return opts
+	}
+
+	sort.Slice(sorts, func(i, j int) bool {
+		return priority[sorts[i].Key] < priority[sorts[j].Key]
+	})
+	opts.SetSort(sorts)
 	return opts
 }
 

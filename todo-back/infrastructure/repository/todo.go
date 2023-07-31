@@ -90,29 +90,13 @@ func (t *todo) Get(ctx context.Context, id model.TodoID) (model.Todo, error) {
 }
 
 func (t *todo) List(ctx context.Context, request repository.TodoListRequest) (_ repository.TodoListOutput, err error) {
-
 	opt := options.Find()
 	opt = mongo.AppendPaging(opt, request.Paging)
-
 	if request.Sorting != nil {
-		sorts := bson.D{}
-		if request.Sorting.CreateTime != nil {
-			sorts = append(sorts, bson.E{
-				Key:   "ct",
-				Value: request.Sorting.CreateTime.SortKind.Int(),
-			})
-		}
-
-		if request.Sorting.DoneTime != nil {
-			sorts = append(sorts, bson.E{
-				Key:   "dt",
-				Value: request.Sorting.DoneTime.SortKind.Int(),
-			})
-		}
-
-		// TODO priorityに合わせてsort
-
-		opt.SetSort(sorts)
+		opt = mongo.AppendSorting(opt, map[string]*repository.SortField{
+			"ct": request.Sorting.CreateTime,
+			"dt": request.Sorting.DoneTime,
+		})
 	}
 
 	filter := bson.M{}

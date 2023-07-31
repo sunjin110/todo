@@ -34,7 +34,7 @@ func (sk SortKind) Int() int {
 	return -1
 }
 
-type SortField[T any] struct {
+type SortField struct {
 	SortKind SortKind
 	Priority uint32 // 優先順位
 	// SortFields []T    // 独自の順番でソートしたいときに利用する 使わんだろ
