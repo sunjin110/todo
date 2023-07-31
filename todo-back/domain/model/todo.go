@@ -3,7 +3,16 @@ package model
 import "time"
 
 type TodoStatus string
+
+func (s TodoStatus) String() string {
+	return string(s)
+}
+
 type TodoID string
+
+func (t TodoID) String() string {
+	return string(t)
+}
 
 const (
 	DoneStatus      TodoStatus = "done"

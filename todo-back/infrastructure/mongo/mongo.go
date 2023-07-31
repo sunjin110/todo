@@ -11,6 +11,8 @@ import (
 
 type Client = mongo.Client
 
+type Database = mongo.Database
+
 func Connect(ctx context.Context, uri string) (*Client, error) {
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
 	if err != nil {
