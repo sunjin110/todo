@@ -27,8 +27,15 @@ const (
 	Desc SortKind = "desc"
 )
 
+func (sk SortKind) Int() int {
+	if sk == Asc {
+		return 1
+	}
+	return -1
+}
+
 type SortField[T any] struct {
-	SortKind   SortKind
-	Priority   uint32 // 優先順位
-	SortFields []T    // 独自の順番でソートしたいときに利用する
+	SortKind SortKind
+	Priority uint32 // 優先順位
+	// SortFields []T    // 独自の順番でソートしたいときに利用する 使わんだろ
 }

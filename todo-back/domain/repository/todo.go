@@ -2,13 +2,14 @@ package repository
 
 import (
 	"context"
+	"time"
 	"todo-back/domain/model"
 )
 
 type TodoListRequest struct {
-	paging  *Paging
-	sorting *TodoSort
-	filter  *TodoFilter
+	Paging  *Paging
+	Sorting *TodoSort
+	Filter  *TodoFilter
 }
 
 type TodoListOutput struct {
@@ -17,8 +18,8 @@ type TodoListOutput struct {
 }
 
 type TodoSort struct {
-	Status     *SortKind
-	CreateTime *SortKind
+	CreateTime *SortField[time.Time]
+	DoneTime   *SortField[time.Time]
 }
 
 type TodoFilter struct {

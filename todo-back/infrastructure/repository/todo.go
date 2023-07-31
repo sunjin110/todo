@@ -10,6 +10,7 @@ import (
 	"todo-back/infrastructure/repository/dto"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type todo struct {
@@ -88,6 +89,65 @@ func (t *todo) Get(ctx context.Context, id model.TodoID) (model.Todo, error) {
 	return *dtoTodo.ToModel(), nil
 }
 
-func (t *todo) List(ctx context.Context, request repository.TodoListRequest) (repository.TodoListOutput, error) {
-	panic("todo")
+func (t *todo) List(ctx context.Context, request repository.TodoListRequest) (_ repository.TodoListOutput, err error) {
+
+	opt := options.Find()
+	opt = mongo.AppendPaging(opt, request.Paging)
+
+	if request.Sorting != nil {
+		sorts := bson.D{}
+		if request.Sorting.CreateTime != nil {
+			sorts = append(sorts, bson.E{
+				Key:   "ct",
+				Value: request.Sorting.CreateTime.SortKind.Int(),
+			})
+		}
+
+		if request.Sorting.DoneTime != nil {
+			sorts = append(sorts, bson.E{
+				Key:   "dt",
+				Value: request.Sorting.DoneTime.SortKind.Int(),
+			})
+		}
+
+		// TODO priorityに合わせてsort
+
+		opt.SetSort(sorts)
+	}
+
+	filter := bson.M{}
+	if request.Filter != nil {
+		if request.Filter.ID != nil {
+			filter["_id"] = request.Filter.ID.Value.String()
+		}
+		filter, err = mongo.PutStringFilter(filter, request.Filter.Title, "title", "title_segments")
+		if err != nil {
+			return repository.TodoListOutput{}, fmt.Errorf("failed add title filter field. err: %w", err)
+		}
+
+		filter, err = mongo.PutStringFilter(filter, request.Filter.Description, "desc", "desc_segments")
+		if err != nil {
+			return repository.TodoListOutput{}, fmt.Errorf("failed add desc filter field. err: %w", err)
+		}
+	}
+
+	cursor, err := t.mongoDB.Collection(mongo.TodoDB).Find(ctx, filter, opt)
+	if err != nil {
+		return repository.TodoListOutput{}, fmt.Errorf("failed find todo list, err: %w", err)
+	}
+
+	todos := []dto.Todo{}
+	err = cursor.All(ctx, &todos)
+	if err != nil {
+		return repository.TodoListOutput{}, fmt.Errorf("failed cursor all todo list, err: %w", err)
+	}
+
+	var list []model.Todo
+	for _, todo := range todos {
+		list = append(list, *todo.ToModel())
+	}
+	return repository.TodoListOutput{
+		TodoList: list,
+		HasNext:  mongo.HasNext(list, request.Paging),
+	}, nil
 }
