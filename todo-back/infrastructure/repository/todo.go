@@ -50,22 +50,23 @@ func (t *todo) Create(ctx context.Context, todo model.Todo) (model.TodoID, error
 }
 
 func (t *todo) Update(ctx context.Context, id model.TodoID, updatedTodo model.Todo) error {
+	titleSegments, err := t.morphologicalAnalysisService.TextSegmentation(t.morphologicalLang, updatedTodo.Title)
+	if err != nil {
+		return fmt.Errorf("failed update. err: %w", err)
+	}
 
-	// titleSegments, err := t.morphologicalAnalysisService.TextSegmentation(t.morphologicalLang, updatedTodo.Title)
-	// if err != nil {
-	// 	return fmt.Errorf("failed update. err: %w", err)
-	// }
+	descSegments, err := t.morphologicalAnalysisService.TextSegmentation(t.morphologicalLang, updatedTodo.Description)
+	if err != nil {
+		return fmt.Errorf("failed update. err: %w", err)
+	}
 
-	// descSegments, err := t.morphologicalAnalysisService.TextSegmentation(t.morphologicalLang, updatedTodo.Description)
-	// if err != nil {
-	// 	return fmt.Errorf("failed update. err: %w", err)
-	// }
+	todoDto := dto.NewTodo(updatedTodo, titleSegments, descSegments)
 
-	// todoDto := dto.NewTodo(updatedTodo, titleSegments, descSegments)
-
-	// t.mongoDB.Collection("todos").ReplaceOne()
-
-	panic("todo")
+	_, err = t.mongoDB.Collection(mongo.TodoDB).UpdateOne(ctx, bson.M{"_id": id.String()}, &todoDto)
+	if err != nil {
+		return fmt.Errorf("failed update. err: %w", err)
+	}
+	return nil
 }
 
 func (t *todo) Delete(ctx context.Context, id model.TodoID) error {
