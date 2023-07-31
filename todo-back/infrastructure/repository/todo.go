@@ -8,6 +8,8 @@ import (
 	"todo-back/domain/service"
 	"todo-back/infrastructure/mongo"
 	"todo-back/infrastructure/repository/dto"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 type todo struct {
@@ -48,14 +50,43 @@ func (t *todo) Create(ctx context.Context, todo model.Todo) (model.TodoID, error
 }
 
 func (t *todo) Update(ctx context.Context, id model.TodoID, updatedTodo model.Todo) error {
+
+	// titleSegments, err := t.morphologicalAnalysisService.TextSegmentation(t.morphologicalLang, updatedTodo.Title)
+	// if err != nil {
+	// 	return fmt.Errorf("failed update. err: %w", err)
+	// }
+
+	// descSegments, err := t.morphologicalAnalysisService.TextSegmentation(t.morphologicalLang, updatedTodo.Description)
+	// if err != nil {
+	// 	return fmt.Errorf("failed update. err: %w", err)
+	// }
+
+	// todoDto := dto.NewTodo(updatedTodo, titleSegments, descSegments)
+
+	// t.mongoDB.Collection("todos").ReplaceOne()
+
 	panic("todo")
 }
+
 func (t *todo) Delete(ctx context.Context, id model.TodoID) error {
-	panic("todo")
+	_, err := t.mongoDB.Collection("todos").DeleteOne(ctx, bson.M{"_id": id.String()})
+	if err != nil {
+		return fmt.Errorf("failed delete. id: %s, err: %w", id.String(), err)
+	}
+	return nil
 }
 func (t *todo) Get(ctx context.Context, id model.TodoID) (model.Todo, error) {
-	panic("todo")
+	dtoTodo := dto.Todo{}
+	err := t.mongoDB.Collection("todos").FindOne(ctx, bson.M{"_id": id.String()}).Decode(&dtoTodo)
+	if err != nil {
+		if err == mongo.ErrNotDocuments {
+			return model.Todo{}, repository.ErrNotFound
+		}
+		return model.Todo{}, fmt.Errorf("failed get todo. err: %w", err)
+	}
+	return *dtoTodo.ToModel(), nil
 }
+
 func (t *todo) List(ctx context.Context, request repository.TodoListRequest) (repository.TodoListOutput, error) {
 	panic("todo")
 }
