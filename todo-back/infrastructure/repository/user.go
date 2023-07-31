@@ -6,7 +6,7 @@ import (
 )
 
 type user struct {
-	mongoClient mongo.Client
+	mongoDB mongo.Database
 }
 
 func NewUser(mongoClient mongo.Client) repository.User {

@@ -13,6 +13,11 @@ type Client = mongo.Client
 
 type Database = mongo.Database
 
+const (
+	UserDB = "users"
+	TodoDB = "todos"
+)
+
 var ErrNotDocuments = mongo.ErrNoDocuments
 
 func Connect(ctx context.Context, uri string) (*Client, error) {
