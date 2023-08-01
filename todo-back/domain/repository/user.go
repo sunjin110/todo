@@ -6,9 +6,9 @@ import (
 )
 
 type UserListRequest struct {
-	paging *Paging
-	sort   *UserSort
-	filter *UserFilter
+	Paging *Paging
+	Sort   *UserSort
+	Filter *UserFilter
 }
 
 type UserListOutput struct {
@@ -17,8 +17,8 @@ type UserListOutput struct {
 }
 
 type UserSort struct {
-	LastLogin  *SortKind
-	CreateTime *SortKind
+	LastLogin  *SortField
+	CreateTime *SortField
 }
 
 type UserFilter struct {

@@ -9,6 +9,7 @@ import (
 	"todo-back/infrastructure/repository/dto"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type user struct {
@@ -63,5 +64,43 @@ func (u *user) Get(ctx context.Context, id model.UserID) (model.User, error) {
 }
 
 func (u *user) List(ctx context.Context, request repository.UserListRequest) (repository.UserListOutput, error) {
-	panic("todo")
+	opts := options.Find()
+	opts = mongo.AppendPaging(opts, request.Paging)
+	if request.Sort != nil {
+		opts = mongo.AppendSorting(opts, map[string]*repository.SortField{
+			"ct": request.Sort.CreateTime,
+			"lt": request.Sort.LastLogin,
+		})
+	}
+
+	filter := bson.M{}
+	if request.Filter != nil {
+		if request.Filter.ID != nil {
+			filter["_id"] = request.Filter.ID.Value.String()
+		}
+		// TODO domainのコードで完全一致のみサポートすることを宣言する
+		if request.Filter.Name != nil {
+			filter["name"] = request.Filter.Name.Value
+		}
+		if request.Filter.Email != nil {
+			filter["email"] = request.Filter.Email.Value
+		}
+	}
+
+	cursor, err := u.mongoDB.Collection(mongo.UserColl).Find(ctx, filter, opts)
+	if err != nil {
+		return repository.UserListOutput{}, fmt.Errorf("failed find user list, err: %w", err)
+	}
+
+	users := []*dto.User{}
+	err = cursor.All(ctx, &users)
+	if err != nil {
+		return repository.UserListOutput{}, fmt.Errorf("failed cursor all user list, err: %w", err)
+	}
+
+	return repository.UserListOutput{
+		List:    mongo.GenerateList[*dto.User, model.User](users, request.Paging),
+		HasNext: mongo.HasNext(users, request.Paging),
+	}, nil
+
 }

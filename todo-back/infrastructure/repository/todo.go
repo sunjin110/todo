@@ -117,18 +117,14 @@ func (t *todo) List(ctx context.Context, request repository.TodoListRequest) (_ 
 		return repository.TodoListOutput{}, fmt.Errorf("failed find todo list, err: %w", err)
 	}
 
-	todos := []dto.Todo{}
+	todos := []*dto.Todo{}
 	err = cursor.All(ctx, &todos)
 	if err != nil {
 		return repository.TodoListOutput{}, fmt.Errorf("failed cursor all todo list, err: %w", err)
 	}
 
-	var list []model.Todo
-	for _, todo := range todos {
-		list = append(list, *todo.ToModel())
-	}
 	return repository.TodoListOutput{
-		TodoList: list,
-		HasNext:  mongo.HasNext(list, request.Paging),
+		TodoList: mongo.GenerateList[*dto.Todo, model.Todo](todos, request.Paging),
+		HasNext:  mongo.HasNext(todos, request.Paging),
 	}, nil
 }

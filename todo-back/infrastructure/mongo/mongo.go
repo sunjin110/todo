@@ -94,3 +94,23 @@ func HasNext[T any](list []T, paging *repository.Paging) bool {
 	}
 	return len(list) < int(paging.Limit)
 }
+
+func GenerateList[T ToModeler[U], U any](dtoList []T, paging *repository.Paging) []U {
+	var models []U
+	for _, d := range dtoList {
+		models = append(models, *d.ToModel())
+	}
+
+	if paging == nil {
+		return models
+	}
+	if HasNext(models, paging) {
+		// 1つ多くとってきているため-1する
+		return models[:len(models)-1]
+	}
+	return models
+}
+
+type ToModeler[U any] interface {
+	ToModel() *U
+}
