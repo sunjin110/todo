@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package login;
+
+option go_package = "todo-back/infrastructure/handler/grpc/proto_go_gen/login";
+
+service LoginRpc {
+    rpc SignUp(SignUpInput) returns (SignUpOutput) {}
+    rpc SignIn(SignInInput) returns (SignInOutput) {}
+    rpc SignOut(SignOutInput) returns (SignOutOutput) {}
+}
+
+message SignUpInput {
+    string name = 1;
+    string email = 2;
+}
+message SignUpOutput {}
+
+message SignInInput {}
+message SignInOutput {}
+message SignOutInput {}
+message SignOutOutput {}
