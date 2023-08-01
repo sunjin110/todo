@@ -9,7 +9,7 @@ func (u UserID) String() string {
 }
 
 type User struct {
-	ID         string
+	ID         UserID
 	Name       string
 	Email      string
 	CreateTime time.Time

@@ -17,8 +17,8 @@ type Client = mongo.Client
 type Database = mongo.Database
 
 const (
-	UserDB = "users"
-	TodoDB = "todos"
+	UserColl = "users"
+	TodoColl = "todos"
 )
 
 var ErrNotDocuments = mongo.ErrNoDocuments
