@@ -49,4 +49,5 @@ enum SignupAuthStatus {
     SignupAuthStatusAllowed = 1;
     SignupAuthStatusWaitForPermission = 2;
     SignupAuthStatusAlreadyHaveAccount = 3;
+    SignupAuthStatusAuthDeniied = 4;
 }
