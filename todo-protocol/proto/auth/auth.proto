@@ -19,7 +19,8 @@ message SignUpInput {
 }
 
 message SignUpOutput {
-    Token token = 1;
+    optional Token token = 1;
+    SignupAuthStatus status = 2;
 }
 
 message SignInInput {
@@ -41,4 +42,11 @@ message SignOutOutput {
 message Token {
     string access_token = 1;
     optional google.protobuf.Timestamp expire_time = 2;
+}
+
+enum SignupAuthStatus {
+    SignupAuthStatusUnknown = 0;
+    SignupAuthStatusAllowed = 1;
+    SignupAuthStatusWaitForPermission = 2;
+    SignupAuthStatusAlreadyHaveAccount = 3;
 }

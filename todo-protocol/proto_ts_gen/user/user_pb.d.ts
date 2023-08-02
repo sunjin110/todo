@@ -26,6 +26,12 @@ export class User extends jspb.Message {
   hasId(): boolean;
   clearId(): User;
 
+  getName(): string;
+  setName(value: string): User;
+
+  getEmail(): string;
+  setEmail(value: string): User;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): User.AsObject;
   static toObject(includeInstance: boolean, msg: User): User.AsObject;
@@ -37,31 +43,8 @@ export class User extends jspb.Message {
 export namespace User {
   export type AsObject = {
     id?: UserId.AsObject,
-  }
-}
-
-export class Token extends jspb.Message {
-  getToken(): string;
-  setToken(value: string): Token;
-
-  getTokenCase(): Token.TokenCase;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): Token.AsObject;
-  static toObject(includeInstance: boolean, msg: Token): Token.AsObject;
-  static serializeBinaryToWriter(message: Token, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): Token;
-  static deserializeBinaryFromReader(message: Token, reader: jspb.BinaryReader): Token;
-}
-
-export namespace Token {
-  export type AsObject = {
-    token: string,
-  }
-
-  export enum TokenCase { 
-    _TOKEN_NOT_SET = 0,
-    TOKEN = 1,
+    name: string,
+    email: string,
   }
 }
 
