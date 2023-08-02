@@ -20,7 +20,7 @@ message SignUpInput {
 
 message SignUpOutput {
     optional Token token = 1;
-    SignupAuthStatus status = 2;
+    UserSignUpStatus status = 2;
 }
 
 message SignInInput {
@@ -44,10 +44,9 @@ message Token {
     optional google.protobuf.Timestamp expire_time = 2;
 }
 
-enum SignupAuthStatus {
-    SignupAuthStatusUnknown = 0;
-    SignupAuthStatusAllowed = 1;
-    SignupAuthStatusWaitForPermission = 2;
-    SignupAuthStatusAlreadyHaveAccount = 3;
-    SignupAuthStatusAuthDeniied = 4;
+enum UserSignUpStatus {
+    SignupSignUpStatusUnknown = 0;
+    SignupSignUpStatusAllowed = 1;
+    SignupSignUpStatusWaitForAllow = 2;
+    SignupSignUpStatusDenied = 3;
 }

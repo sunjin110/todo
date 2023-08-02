@@ -9,9 +9,11 @@ func (u UserID) String() string {
 }
 
 type User struct {
-	ID         UserID
-	Name       string
-	Email      string
-	CreateTime time.Time
-	LastLogin  *time.Time
+	ID           UserID
+	Name         string
+	Email        string
+	PasswordHash string
+	SignUpStatus UserSignUpStatus
+	CreateTime   time.Time
+	LastLogin    *time.Time
 }
