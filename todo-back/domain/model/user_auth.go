@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 // UserSignUpStatus 利用者のサインアップ状況
 type UserSignUpStatus string
 
@@ -12,3 +14,8 @@ const (
 	SignUpWaitForAllow UserSignUpStatus = "wait_for_allow"
 	SignUpDenied       UserSignUpStatus = "denied"
 )
+
+type Session struct {
+	Session    string
+	ExpireTime *time.Time
+}

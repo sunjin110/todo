@@ -19,7 +19,7 @@ message SignUpInput {
 }
 
 message SignUpOutput {
-    optional Token token = 1;
+    optional Session session = 1;
     UserSignUpStatus status = 2;
 }
 
@@ -29,18 +29,18 @@ message SignInInput {
 }
 
 message SignInOutput {
-    Token token = 1;
+    Session session = 1;
 }
 
 message SignOutInput {
-    Token token = 1;
+    Session session = 1;
 }
 
 message SignOutOutput {
 }
 
-message Token {
-    string access_token = 1;
+message Session {
+    string session = 1;
     optional google.protobuf.Timestamp expire_time = 2;
 }
 

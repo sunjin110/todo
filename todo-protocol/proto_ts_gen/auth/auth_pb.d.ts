@@ -30,15 +30,15 @@ export namespace SignUpInput {
 }
 
 export class SignUpOutput extends jspb.Message {
-  getToken(): Token | undefined;
-  setToken(value?: Token): SignUpOutput;
-  hasToken(): boolean;
-  clearToken(): SignUpOutput;
+  getSession(): Session | undefined;
+  setSession(value?: Session): SignUpOutput;
+  hasSession(): boolean;
+  clearSession(): SignUpOutput;
 
-  getStatus(): SignupAuthStatus;
-  setStatus(value: SignupAuthStatus): SignUpOutput;
+  getStatus(): UserSignUpStatus;
+  setStatus(value: UserSignUpStatus): SignUpOutput;
 
-  getTokenCase(): SignUpOutput.TokenCase;
+  getSessionCase(): SignUpOutput.SessionCase;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SignUpOutput.AsObject;
@@ -50,13 +50,13 @@ export class SignUpOutput extends jspb.Message {
 
 export namespace SignUpOutput {
   export type AsObject = {
-    token?: Token.AsObject,
-    status: SignupAuthStatus,
+    session?: Session.AsObject,
+    status: UserSignUpStatus,
   }
 
-  export enum TokenCase { 
-    _TOKEN_NOT_SET = 0,
-    TOKEN = 1,
+  export enum SessionCase { 
+    _SESSION_NOT_SET = 0,
+    SESSION = 1,
   }
 }
 
@@ -83,10 +83,10 @@ export namespace SignInInput {
 }
 
 export class SignInOutput extends jspb.Message {
-  getToken(): Token | undefined;
-  setToken(value?: Token): SignInOutput;
-  hasToken(): boolean;
-  clearToken(): SignInOutput;
+  getSession(): Session | undefined;
+  setSession(value?: Session): SignInOutput;
+  hasSession(): boolean;
+  clearSession(): SignInOutput;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SignInOutput.AsObject;
@@ -98,15 +98,15 @@ export class SignInOutput extends jspb.Message {
 
 export namespace SignInOutput {
   export type AsObject = {
-    token?: Token.AsObject,
+    session?: Session.AsObject,
   }
 }
 
 export class SignOutInput extends jspb.Message {
-  getToken(): Token | undefined;
-  setToken(value?: Token): SignOutInput;
-  hasToken(): boolean;
-  clearToken(): SignOutInput;
+  getSession(): Session | undefined;
+  setSession(value?: Session): SignOutInput;
+  hasSession(): boolean;
+  clearSession(): SignOutInput;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SignOutInput.AsObject;
@@ -118,7 +118,7 @@ export class SignOutInput extends jspb.Message {
 
 export namespace SignOutInput {
   export type AsObject = {
-    token?: Token.AsObject,
+    session?: Session.AsObject,
   }
 }
 
@@ -136,28 +136,28 @@ export namespace SignOutOutput {
   }
 }
 
-export class Token extends jspb.Message {
-  getAccessToken(): string;
-  setAccessToken(value: string): Token;
+export class Session extends jspb.Message {
+  getSession(): string;
+  setSession(value: string): Session;
 
   getExpireTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setExpireTime(value?: google_protobuf_timestamp_pb.Timestamp): Token;
+  setExpireTime(value?: google_protobuf_timestamp_pb.Timestamp): Session;
   hasExpireTime(): boolean;
-  clearExpireTime(): Token;
+  clearExpireTime(): Session;
 
-  getExpireTimeCase(): Token.ExpireTimeCase;
+  getExpireTimeCase(): Session.ExpireTimeCase;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): Token.AsObject;
-  static toObject(includeInstance: boolean, msg: Token): Token.AsObject;
-  static serializeBinaryToWriter(message: Token, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): Token;
-  static deserializeBinaryFromReader(message: Token, reader: jspb.BinaryReader): Token;
+  toObject(includeInstance?: boolean): Session.AsObject;
+  static toObject(includeInstance: boolean, msg: Session): Session.AsObject;
+  static serializeBinaryToWriter(message: Session, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Session;
+  static deserializeBinaryFromReader(message: Session, reader: jspb.BinaryReader): Session;
 }
 
-export namespace Token {
+export namespace Session {
   export type AsObject = {
-    accessToken: string,
+    session: string,
     expireTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
   }
 
@@ -167,10 +167,9 @@ export namespace Token {
   }
 }
 
-export enum SignupAuthStatus { 
-  SIGNUPAUTHSTATUSUNKNOWN = 0,
-  SIGNUPAUTHSTATUSALLOWED = 1,
-  SIGNUPAUTHSTATUSWAITFORPERMISSION = 2,
-  SIGNUPAUTHSTATUSALREADYHAVEACCOUNT = 3,
-  SIGNUPAUTHSTATUSAUTHDENIIED = 4,
+export enum UserSignUpStatus { 
+  SIGNUPSIGNUPSTATUSUNKNOWN = 0,
+  SIGNUPSIGNUPSTATUSALLOWED = 1,
+  SIGNUPSIGNUPSTATUSWAITFORALLOW = 2,
+  SIGNUPSIGNUPSTATUSDENIED = 3,
 }
