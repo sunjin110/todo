@@ -6,20 +6,16 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"todo-back/domain/service"
 )
 
 const digit = 16
-
-type SessionService interface {
-	GenerateSignedSession() (string, error)
-	VerifyAndExtract(signedString string) ([]byte, bool)
-}
 
 type sessionService struct {
 	secretKey string
 }
 
-func NewSessionService(secretKey string) SessionService {
+func NewSessionService(secretKey string) service.SessionService {
 	return &sessionService{
 		secretKey: secretKey,
 	}
@@ -47,12 +43,7 @@ func (s *sessionService) GenerateSignedSession() (string, error) {
 	}
 
 	signature := signMessage(randomBytes, s.secretKey)
-
-	fmt.Println("Random Bytes:", hex.EncodeToString(randomBytes))
-	fmt.Println("Signature:", hex.EncodeToString(signature))
-
 	signedString := hex.EncodeToString(randomBytes) + hex.EncodeToString(signature)
-	fmt.Println("Signed String:", signedString)
 	return signedString, nil
 }
 
