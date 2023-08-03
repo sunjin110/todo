@@ -6,7 +6,7 @@ option go_package = "todo-back/infrastructure/handler/grpc/proto_go_gen/todo";
 
 import "google/protobuf/timestamp.proto";
 import "user/user.proto";
-import "auth/auth.proto";
+import "auth/authentication.proto";
 import "list/list.proto";
 
 service TodoRpc {
@@ -32,7 +32,7 @@ message TodoSort {
 }
 
 message ListInput {
-  auth.Session session = 1;
+  authentication.Session session = 1;
   list.Paging paging = 2;
   optional TodoFilter filter = 3;
   optional TodoSort sort = 4;
@@ -44,7 +44,7 @@ message ListOutput {
 }
 
 message GetInput {
-  auth.Session session = 1;
+  authentication.Session session = 1;
   TodoId id = 2;
 }
 
@@ -53,20 +53,20 @@ message GetOutput {
 }
 
 message CreateInput {
-  auth.Session session = 1;
+  authentication.Session session = 1;
   CreateTodo todo = 2;
 }
 
 message CreateOutput {}
 
 message UpdateInput {
-  auth.Session session = 1;
+  authentication.Session session = 1;
   UpdateTodo todo = 2;
 }
 message UpdateOutput {}
 
 message DeleteInput {
-  auth.Session session = 1;
+  authentication.Session session = 1;
   TodoId id = 2;
 }
 message DeleteOutput {}

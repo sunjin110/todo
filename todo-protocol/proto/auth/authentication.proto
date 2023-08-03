@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package auth;
+package authentication;
 
-option go_package = "todo-back/infrastructure/handler/grpc/proto_go_gen/auth";
+option go_package = "todo-back/infrastructure/handler/grpc/proto_go_gen/authentication";
 
 import "google/protobuf/timestamp.proto";
 
-service Auth {
+service Authentication {
   rpc SignUp(SignUpInput) returns (SignUpOutput) {}
   rpc SignIn(SignInInput) returns (SignInOutput) {}
   rpc SignOut(SignOutInput) returns (SignOutOutput) {}

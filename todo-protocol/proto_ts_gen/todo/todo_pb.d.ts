@@ -2,7 +2,7 @@ import * as jspb from 'google-protobuf'
 
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 import * as user_user_pb from '../user/user_pb';
-import * as auth_auth_pb from '../auth/auth_pb';
+import * as auth_authentication_pb from '../auth/authentication_pb';
 import * as list_list_pb from '../list/list_pb';
 
 
@@ -129,8 +129,8 @@ export namespace TodoSort {
 }
 
 export class ListInput extends jspb.Message {
-  getSession(): auth_auth_pb.Session | undefined;
-  setSession(value?: auth_auth_pb.Session): ListInput;
+  getSession(): auth_authentication_pb.Session | undefined;
+  setSession(value?: auth_authentication_pb.Session): ListInput;
   hasSession(): boolean;
   clearSession(): ListInput;
 
@@ -163,7 +163,7 @@ export class ListInput extends jspb.Message {
 
 export namespace ListInput {
   export type AsObject = {
-    session?: auth_auth_pb.Session.AsObject,
+    session?: auth_authentication_pb.Session.AsObject,
     paging?: list_list_pb.Paging.AsObject,
     filter?: TodoFilter.AsObject,
     sort?: TodoSort.AsObject,
@@ -205,8 +205,8 @@ export namespace ListOutput {
 }
 
 export class GetInput extends jspb.Message {
-  getSession(): auth_auth_pb.Session | undefined;
-  setSession(value?: auth_auth_pb.Session): GetInput;
+  getSession(): auth_authentication_pb.Session | undefined;
+  setSession(value?: auth_authentication_pb.Session): GetInput;
   hasSession(): boolean;
   clearSession(): GetInput;
 
@@ -225,7 +225,7 @@ export class GetInput extends jspb.Message {
 
 export namespace GetInput {
   export type AsObject = {
-    session?: auth_auth_pb.Session.AsObject,
+    session?: auth_authentication_pb.Session.AsObject,
     id?: TodoId.AsObject,
   }
 }
@@ -251,8 +251,8 @@ export namespace GetOutput {
 }
 
 export class CreateInput extends jspb.Message {
-  getSession(): auth_auth_pb.Session | undefined;
-  setSession(value?: auth_auth_pb.Session): CreateInput;
+  getSession(): auth_authentication_pb.Session | undefined;
+  setSession(value?: auth_authentication_pb.Session): CreateInput;
   hasSession(): boolean;
   clearSession(): CreateInput;
 
@@ -271,7 +271,7 @@ export class CreateInput extends jspb.Message {
 
 export namespace CreateInput {
   export type AsObject = {
-    session?: auth_auth_pb.Session.AsObject,
+    session?: auth_authentication_pb.Session.AsObject,
     todo?: CreateTodo.AsObject,
   }
 }
@@ -291,8 +291,8 @@ export namespace CreateOutput {
 }
 
 export class UpdateInput extends jspb.Message {
-  getSession(): auth_auth_pb.Session | undefined;
-  setSession(value?: auth_auth_pb.Session): UpdateInput;
+  getSession(): auth_authentication_pb.Session | undefined;
+  setSession(value?: auth_authentication_pb.Session): UpdateInput;
   hasSession(): boolean;
   clearSession(): UpdateInput;
 
@@ -311,7 +311,7 @@ export class UpdateInput extends jspb.Message {
 
 export namespace UpdateInput {
   export type AsObject = {
-    session?: auth_auth_pb.Session.AsObject,
+    session?: auth_authentication_pb.Session.AsObject,
     todo?: UpdateTodo.AsObject,
   }
 }
@@ -331,8 +331,8 @@ export namespace UpdateOutput {
 }
 
 export class DeleteInput extends jspb.Message {
-  getSession(): auth_auth_pb.Session | undefined;
-  setSession(value?: auth_auth_pb.Session): DeleteInput;
+  getSession(): auth_authentication_pb.Session | undefined;
+  setSession(value?: auth_authentication_pb.Session): DeleteInput;
   hasSession(): boolean;
   clearSession(): DeleteInput;
 
@@ -351,7 +351,7 @@ export class DeleteInput extends jspb.Message {
 
 export namespace DeleteInput {
   export type AsObject = {
-    session?: auth_auth_pb.Session.AsObject,
+    session?: auth_authentication_pb.Session.AsObject,
     id?: TodoId.AsObject,
   }
 }
