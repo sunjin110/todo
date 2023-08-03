@@ -6,9 +6,9 @@ import (
 )
 
 type Authentication interface {
-	SignUp(ctx context.Context, input SignUpInput) (output SignUpOutput, err error)
-	SignIn(ctx context.Context, input SignInInput) (output SignInOutput, err error)
-	SignOut(ctx context.Context, input SignOutInput) (err error)
+	SignUp(ctx context.Context, input *SignUpInput) (output *SignUpOutput, err error)
+	SignIn(ctx context.Context, input *SignInInput) (output *SignInOutput, err error)
+	SignOut(ctx context.Context, input *SignOutInput) (err error)
 }
 
 type SignUpInput struct {
@@ -23,8 +23,8 @@ type SignUpOutput struct {
 }
 
 type SignInInput struct {
-	Name  string
-	Email string
+	Email    string
+	Password string
 }
 
 type SignInOutput struct {
@@ -33,4 +33,23 @@ type SignInOutput struct {
 
 type SignOutInput struct {
 	Session model.Session
+}
+
+type authentication struct {
+}
+
+func NewAuthentication() Authentication {
+	return &authentication{}
+}
+
+func (a *authentication) SignUp(ctx context.Context, input *SignUpInput) (output *SignUpOutput, err error) {
+	panic("todo")
+}
+
+func (a *authentication) SignIn(ctx context.Context, input *SignInInput) (output *SignInOutput, err error) {
+	panic("todo")
+}
+
+func (a *authentication) SignOut(ctx context.Context, input *SignOutInput) (err error) {
+	panic("todo")
 }
