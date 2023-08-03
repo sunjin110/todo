@@ -8,6 +8,8 @@ import (
 	"fmt"
 )
 
+const digit = 16
+
 type SessionService interface {
 	GenerateSignedSession() (string, error)
 	VerifyAndExtract(signedString string) ([]byte, bool)
@@ -22,8 +24,6 @@ func NewSessionService(secretKey string) SessionService {
 		secretKey: secretKey,
 	}
 }
-
-const digit = 16
 
 func generateRandomBytes(n int) ([]byte, error) {
 	b := make([]byte, n)
