@@ -8,9 +8,22 @@ import (
 	"fmt"
 )
 
-const digit = 16
+type SessionService interface {
+	GenerateSignedSession() (string, error)
+	VerifyAndExtract(signedString string) ([]byte, bool)
+}
 
-const secretKey = "hoge"
+type sessionService struct {
+	secretKey string
+}
+
+func NewSessionService(secretKey string) SessionService {
+	return &sessionService{
+		secretKey: secretKey,
+	}
+}
+
+const digit = 16
 
 func generateRandomBytes(n int) ([]byte, error) {
 	b := make([]byte, n)
@@ -21,19 +34,19 @@ func generateRandomBytes(n int) ([]byte, error) {
 	return b, nil
 }
 
-func signMessage(message []byte) []byte {
+func signMessage(message []byte, secretKey string) []byte {
 	h := hmac.New(sha256.New, []byte(secretKey))
 	h.Write(message)
 	return h.Sum(nil)
 }
 
-func GenerateSignedSession() (string, error) {
+func (s *sessionService) GenerateSignedSession() (string, error) {
 	randomBytes, err := generateRandomBytes(digit)
 	if err != nil {
 		return "", fmt.Errorf("failed generate random bytes. err: %w", err)
 	}
 
-	signature := signMessage(randomBytes)
+	signature := signMessage(randomBytes, s.secretKey)
 
 	fmt.Println("Random Bytes:", hex.EncodeToString(randomBytes))
 	fmt.Println("Signature:", hex.EncodeToString(signature))
@@ -43,7 +56,7 @@ func GenerateSignedSession() (string, error) {
 	return signedString, nil
 }
 
-func VerifyAndExtract(signedString string) ([]byte, bool) {
+func (s *sessionService) VerifyAndExtract(signedString string) ([]byte, bool) {
 	if len(signedString) < 64 { // 16 bytes (original message) + 32 bytes (HMAC) in hex
 		return nil, false
 	}
@@ -61,7 +74,7 @@ func VerifyAndExtract(signedString string) ([]byte, bool) {
 		return nil, false
 	}
 
-	expectedSignature := signMessage(originalBytes)
+	expectedSignature := signMessage(originalBytes, s.secretKey)
 	if hmac.Equal(expectedSignature, signatureBytes) {
 		return originalBytes, true
 	}
