@@ -6,7 +6,7 @@ option go_package = "todo-back/infrastructure/handler/grpc/proto_go_gen/todo";
 
 import "google/protobuf/timestamp.proto";
 import "user/user.proto";
-import "auth/authentication.proto";
+import "authentication/authentication.proto";
 import "list/list.proto";
 
 service TodoRpc {

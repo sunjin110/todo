@@ -1,6 +1,6 @@
 import * as jspb from 'google-protobuf'
 
-import * as auth_authentication_pb from '../auth/authentication_pb';
+import * as authentication_authentication_pb from '../authentication/authentication_pb';
 import * as list_list_pb from '../list/list_pb';
 
 
@@ -34,8 +34,8 @@ export class User extends jspb.Message {
   getEmail(): string;
   setEmail(value: string): User;
 
-  getStatus(): auth_authentication_pb.UserSignUpStatus;
-  setStatus(value: auth_authentication_pb.UserSignUpStatus): User;
+  getStatus(): authentication_authentication_pb.UserSignUpStatus;
+  setStatus(value: authentication_authentication_pb.UserSignUpStatus): User;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): User.AsObject;
@@ -50,7 +50,7 @@ export namespace User {
     id?: UserId.AsObject,
     name: string,
     email: string,
-    status: auth_authentication_pb.UserSignUpStatus,
+    status: authentication_authentication_pb.UserSignUpStatus,
   }
 }
 
@@ -61,8 +61,8 @@ export class CreateUser extends jspb.Message {
   getEmail(): string;
   setEmail(value: string): CreateUser;
 
-  getStatus(): auth_authentication_pb.UserSignUpStatus;
-  setStatus(value: auth_authentication_pb.UserSignUpStatus): CreateUser;
+  getStatus(): authentication_authentication_pb.UserSignUpStatus;
+  setStatus(value: authentication_authentication_pb.UserSignUpStatus): CreateUser;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateUser.AsObject;
@@ -76,7 +76,7 @@ export namespace CreateUser {
   export type AsObject = {
     name: string,
     email: string,
-    status: auth_authentication_pb.UserSignUpStatus,
+    status: authentication_authentication_pb.UserSignUpStatus,
   }
 }
 
@@ -87,8 +87,8 @@ export class UpdateUser extends jspb.Message {
   getEmail(): string;
   setEmail(value: string): UpdateUser;
 
-  getStatus(): auth_authentication_pb.UserSignUpStatus;
-  setStatus(value: auth_authentication_pb.UserSignUpStatus): UpdateUser;
+  getStatus(): authentication_authentication_pb.UserSignUpStatus;
+  setStatus(value: authentication_authentication_pb.UserSignUpStatus): UpdateUser;
 
   getNameCase(): UpdateUser.NameCase;
 
@@ -108,7 +108,7 @@ export namespace UpdateUser {
   export type AsObject = {
     name: string,
     email: string,
-    status: auth_authentication_pb.UserSignUpStatus,
+    status: authentication_authentication_pb.UserSignUpStatus,
   }
 
   export enum NameCase { 
@@ -128,8 +128,8 @@ export namespace UpdateUser {
 }
 
 export class CreateInput extends jspb.Message {
-  getSession(): auth_authentication_pb.Session | undefined;
-  setSession(value?: auth_authentication_pb.Session): CreateInput;
+  getSession(): authentication_authentication_pb.Session | undefined;
+  setSession(value?: authentication_authentication_pb.Session): CreateInput;
   hasSession(): boolean;
   clearSession(): CreateInput;
 
@@ -148,7 +148,7 @@ export class CreateInput extends jspb.Message {
 
 export namespace CreateInput {
   export type AsObject = {
-    session?: auth_authentication_pb.Session.AsObject,
+    session?: authentication_authentication_pb.Session.AsObject,
     user?: CreateUser.AsObject,
   }
 }
@@ -168,8 +168,8 @@ export namespace CreateOutput {
 }
 
 export class UpdateInput extends jspb.Message {
-  getSession(): auth_authentication_pb.Session | undefined;
-  setSession(value?: auth_authentication_pb.Session): UpdateInput;
+  getSession(): authentication_authentication_pb.Session | undefined;
+  setSession(value?: authentication_authentication_pb.Session): UpdateInput;
   hasSession(): boolean;
   clearSession(): UpdateInput;
 
@@ -188,7 +188,7 @@ export class UpdateInput extends jspb.Message {
 
 export namespace UpdateInput {
   export type AsObject = {
-    session?: auth_authentication_pb.Session.AsObject,
+    session?: authentication_authentication_pb.Session.AsObject,
     user?: UpdateUser.AsObject,
   }
 }
@@ -208,8 +208,8 @@ export namespace UpdateOutput {
 }
 
 export class DeleteInput extends jspb.Message {
-  getSession(): auth_authentication_pb.Session | undefined;
-  setSession(value?: auth_authentication_pb.Session): DeleteInput;
+  getSession(): authentication_authentication_pb.Session | undefined;
+  setSession(value?: authentication_authentication_pb.Session): DeleteInput;
   hasSession(): boolean;
   clearSession(): DeleteInput;
 
@@ -228,7 +228,7 @@ export class DeleteInput extends jspb.Message {
 
 export namespace DeleteInput {
   export type AsObject = {
-    session?: auth_authentication_pb.Session.AsObject,
+    session?: authentication_authentication_pb.Session.AsObject,
     id?: UserId.AsObject,
   }
 }
@@ -359,8 +359,8 @@ export namespace UserSort {
 }
 
 export class ListInput extends jspb.Message {
-  getSession(): auth_authentication_pb.Session | undefined;
-  setSession(value?: auth_authentication_pb.Session): ListInput;
+  getSession(): authentication_authentication_pb.Session | undefined;
+  setSession(value?: authentication_authentication_pb.Session): ListInput;
   hasSession(): boolean;
   clearSession(): ListInput;
 
@@ -393,7 +393,7 @@ export class ListInput extends jspb.Message {
 
 export namespace ListInput {
   export type AsObject = {
-    session?: auth_authentication_pb.Session.AsObject,
+    session?: authentication_authentication_pb.Session.AsObject,
     paging?: list_list_pb.Paging.AsObject,
     filter?: UserFilter.AsObject,
     sort?: UserSort.AsObject,
@@ -435,8 +435,8 @@ export namespace ListOutput {
 }
 
 export class GetInput extends jspb.Message {
-  getSession(): auth_authentication_pb.Session | undefined;
-  setSession(value?: auth_authentication_pb.Session): GetInput;
+  getSession(): authentication_authentication_pb.Session | undefined;
+  setSession(value?: authentication_authentication_pb.Session): GetInput;
   hasSession(): boolean;
   clearSession(): GetInput;
 
@@ -455,7 +455,7 @@ export class GetInput extends jspb.Message {
 
 export namespace GetInput {
   export type AsObject = {
-    session?: auth_authentication_pb.Session.AsObject,
+    session?: authentication_authentication_pb.Session.AsObject,
     id?: UserId.AsObject,
   }
 }

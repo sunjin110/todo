@@ -5,7 +5,7 @@ import (
 	"todo-back/domain/model"
 )
 
-type Auth interface {
+type Authentication interface {
 	SignUp(ctx context.Context, input SignUpInput) (output SignUpOutput, err error)
 	SignIn(ctx context.Context, input SignInInput) (output SignInOutput, err error)
 	SignOut(ctx context.Context, input SignOutInput) (err error)

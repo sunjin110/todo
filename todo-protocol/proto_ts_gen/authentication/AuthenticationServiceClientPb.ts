@@ -13,7 +13,7 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as auth_authentication_pb from '../auth/authentication_pb';
+import * as authentication_authentication_pb from '../authentication/authentication_pb';
 
 
 export class AuthenticationClient {
@@ -36,28 +36,28 @@ export class AuthenticationClient {
   }
 
   methodInfoSignUp = new grpcWeb.AbstractClientBase.MethodInfo(
-    auth_authentication_pb.SignUpOutput,
-    (request: auth_authentication_pb.SignUpInput) => {
+    authentication_authentication_pb.SignUpOutput,
+    (request: authentication_authentication_pb.SignUpInput) => {
       return request.serializeBinary();
     },
-    auth_authentication_pb.SignUpOutput.deserializeBinary
+    authentication_authentication_pb.SignUpOutput.deserializeBinary
   );
 
   signUp(
-    request: auth_authentication_pb.SignUpInput,
-    metadata: grpcWeb.Metadata | null): Promise<auth_authentication_pb.SignUpOutput>;
+    request: authentication_authentication_pb.SignUpInput,
+    metadata: grpcWeb.Metadata | null): Promise<authentication_authentication_pb.SignUpOutput>;
 
   signUp(
-    request: auth_authentication_pb.SignUpInput,
+    request: authentication_authentication_pb.SignUpInput,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
-               response: auth_authentication_pb.SignUpOutput) => void): grpcWeb.ClientReadableStream<auth_authentication_pb.SignUpOutput>;
+               response: authentication_authentication_pb.SignUpOutput) => void): grpcWeb.ClientReadableStream<authentication_authentication_pb.SignUpOutput>;
 
   signUp(
-    request: auth_authentication_pb.SignUpInput,
+    request: authentication_authentication_pb.SignUpInput,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.Error,
-               response: auth_authentication_pb.SignUpOutput) => void) {
+               response: authentication_authentication_pb.SignUpOutput) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -76,28 +76,28 @@ export class AuthenticationClient {
   }
 
   methodInfoSignIn = new grpcWeb.AbstractClientBase.MethodInfo(
-    auth_authentication_pb.SignInOutput,
-    (request: auth_authentication_pb.SignInInput) => {
+    authentication_authentication_pb.SignInOutput,
+    (request: authentication_authentication_pb.SignInInput) => {
       return request.serializeBinary();
     },
-    auth_authentication_pb.SignInOutput.deserializeBinary
+    authentication_authentication_pb.SignInOutput.deserializeBinary
   );
 
   signIn(
-    request: auth_authentication_pb.SignInInput,
-    metadata: grpcWeb.Metadata | null): Promise<auth_authentication_pb.SignInOutput>;
+    request: authentication_authentication_pb.SignInInput,
+    metadata: grpcWeb.Metadata | null): Promise<authentication_authentication_pb.SignInOutput>;
 
   signIn(
-    request: auth_authentication_pb.SignInInput,
+    request: authentication_authentication_pb.SignInInput,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
-               response: auth_authentication_pb.SignInOutput) => void): grpcWeb.ClientReadableStream<auth_authentication_pb.SignInOutput>;
+               response: authentication_authentication_pb.SignInOutput) => void): grpcWeb.ClientReadableStream<authentication_authentication_pb.SignInOutput>;
 
   signIn(
-    request: auth_authentication_pb.SignInInput,
+    request: authentication_authentication_pb.SignInInput,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.Error,
-               response: auth_authentication_pb.SignInOutput) => void) {
+               response: authentication_authentication_pb.SignInOutput) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -116,28 +116,28 @@ export class AuthenticationClient {
   }
 
   methodInfoSignOut = new grpcWeb.AbstractClientBase.MethodInfo(
-    auth_authentication_pb.SignOutOutput,
-    (request: auth_authentication_pb.SignOutInput) => {
+    authentication_authentication_pb.SignOutOutput,
+    (request: authentication_authentication_pb.SignOutInput) => {
       return request.serializeBinary();
     },
-    auth_authentication_pb.SignOutOutput.deserializeBinary
+    authentication_authentication_pb.SignOutOutput.deserializeBinary
   );
 
   signOut(
-    request: auth_authentication_pb.SignOutInput,
-    metadata: grpcWeb.Metadata | null): Promise<auth_authentication_pb.SignOutOutput>;
+    request: authentication_authentication_pb.SignOutInput,
+    metadata: grpcWeb.Metadata | null): Promise<authentication_authentication_pb.SignOutOutput>;
 
   signOut(
-    request: auth_authentication_pb.SignOutInput,
+    request: authentication_authentication_pb.SignOutInput,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
-               response: auth_authentication_pb.SignOutOutput) => void): grpcWeb.ClientReadableStream<auth_authentication_pb.SignOutOutput>;
+               response: authentication_authentication_pb.SignOutOutput) => void): grpcWeb.ClientReadableStream<authentication_authentication_pb.SignOutOutput>;
 
   signOut(
-    request: auth_authentication_pb.SignOutInput,
+    request: authentication_authentication_pb.SignOutInput,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.Error,
-               response: auth_authentication_pb.SignOutOutput) => void) {
+               response: authentication_authentication_pb.SignOutOutput) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
