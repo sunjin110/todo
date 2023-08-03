@@ -25,6 +25,8 @@ type TodoRpcClient interface {
 	List(ctx context.Context, in *ListInput, opts ...grpc.CallOption) (*ListOutput, error)
 	Get(ctx context.Context, in *GetInput, opts ...grpc.CallOption) (*GetOutput, error)
 	Create(ctx context.Context, in *CreateInput, opts ...grpc.CallOption) (*CreateOutput, error)
+	Update(ctx context.Context, in *UpdateInput, opts ...grpc.CallOption) (*UpdateOutput, error)
+	Delete(ctx context.Context, in *DeleteInput, opts ...grpc.CallOption) (*DeleteOutput, error)
 }
 
 type todoRpcClient struct {
@@ -62,6 +64,24 @@ func (c *todoRpcClient) Create(ctx context.Context, in *CreateInput, opts ...grp
 	return out, nil
 }
 
+func (c *todoRpcClient) Update(ctx context.Context, in *UpdateInput, opts ...grpc.CallOption) (*UpdateOutput, error) {
+	out := new(UpdateOutput)
+	err := c.cc.Invoke(ctx, "/todo.TodoRpc/Update", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *todoRpcClient) Delete(ctx context.Context, in *DeleteInput, opts ...grpc.CallOption) (*DeleteOutput, error) {
+	out := new(DeleteOutput)
+	err := c.cc.Invoke(ctx, "/todo.TodoRpc/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TodoRpcServer is the server API for TodoRpc service.
 // All implementations must embed UnimplementedTodoRpcServer
 // for forward compatibility
@@ -69,6 +89,8 @@ type TodoRpcServer interface {
 	List(context.Context, *ListInput) (*ListOutput, error)
 	Get(context.Context, *GetInput) (*GetOutput, error)
 	Create(context.Context, *CreateInput) (*CreateOutput, error)
+	Update(context.Context, *UpdateInput) (*UpdateOutput, error)
+	Delete(context.Context, *DeleteInput) (*DeleteOutput, error)
 	mustEmbedUnimplementedTodoRpcServer()
 }
 
@@ -84,6 +106,12 @@ func (UnimplementedTodoRpcServer) Get(context.Context, *GetInput) (*GetOutput, e
 }
 func (UnimplementedTodoRpcServer) Create(context.Context, *CreateInput) (*CreateOutput, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedTodoRpcServer) Update(context.Context, *UpdateInput) (*UpdateOutput, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedTodoRpcServer) Delete(context.Context, *DeleteInput) (*DeleteOutput, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedTodoRpcServer) mustEmbedUnimplementedTodoRpcServer() {}
 
@@ -152,6 +180,42 @@ func _TodoRpc_Create_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TodoRpc_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateInput)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TodoRpcServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/todo.TodoRpc/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TodoRpcServer).Update(ctx, req.(*UpdateInput))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TodoRpc_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteInput)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TodoRpcServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/todo.TodoRpc/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TodoRpcServer).Delete(ctx, req.(*DeleteInput))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TodoRpc_ServiceDesc is the grpc.ServiceDesc for TodoRpc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +234,14 @@ var TodoRpc_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _TodoRpc_Create_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _TodoRpc_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _TodoRpc_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

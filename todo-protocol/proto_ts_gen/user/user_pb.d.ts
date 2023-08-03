@@ -359,6 +359,11 @@ export namespace UserSort {
 }
 
 export class ListInput extends jspb.Message {
+  getSession(): auth_auth_pb.Session | undefined;
+  setSession(value?: auth_auth_pb.Session): ListInput;
+  hasSession(): boolean;
+  clearSession(): ListInput;
+
   getPaging(): list_list_pb.Paging | undefined;
   setPaging(value?: list_list_pb.Paging): ListInput;
   hasPaging(): boolean;
@@ -369,7 +374,14 @@ export class ListInput extends jspb.Message {
   hasFilter(): boolean;
   clearFilter(): ListInput;
 
+  getSort(): UserSort | undefined;
+  setSort(value?: UserSort): ListInput;
+  hasSort(): boolean;
+  clearSort(): ListInput;
+
   getFilterCase(): ListInput.FilterCase;
+
+  getSortCase(): ListInput.SortCase;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListInput.AsObject;
@@ -381,13 +393,20 @@ export class ListInput extends jspb.Message {
 
 export namespace ListInput {
   export type AsObject = {
+    session?: auth_auth_pb.Session.AsObject,
     paging?: list_list_pb.Paging.AsObject,
     filter?: UserFilter.AsObject,
+    sort?: UserSort.AsObject,
   }
 
   export enum FilterCase { 
     _FILTER_NOT_SET = 0,
-    FILTER = 2,
+    FILTER = 3,
+  }
+
+  export enum SortCase { 
+    _SORT_NOT_SET = 0,
+    SORT = 4,
   }
 }
 

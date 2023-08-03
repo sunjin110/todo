@@ -2,9 +2,157 @@ import * as jspb from 'google-protobuf'
 
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 import * as user_user_pb from '../user/user_pb';
+import * as auth_auth_pb from '../auth/auth_pb';
+import * as list_list_pb from '../list/list_pb';
 
+
+export class TodoFilter extends jspb.Message {
+  getId(): TodoId | undefined;
+  setId(value?: TodoId): TodoFilter;
+  hasId(): boolean;
+  clearId(): TodoFilter;
+
+  getTitle(): string;
+  setTitle(value: string): TodoFilter;
+
+  getTitleFilterKind(): list_list_pb.FilterKind;
+  setTitleFilterKind(value: list_list_pb.FilterKind): TodoFilter;
+
+  getDescription(): string;
+  setDescription(value: string): TodoFilter;
+
+  getDescriptionFilterKind(): list_list_pb.FilterKind;
+  setDescriptionFilterKind(value: list_list_pb.FilterKind): TodoFilter;
+
+  getStatus(): Status;
+  setStatus(value: Status): TodoFilter;
+
+  getIdCase(): TodoFilter.IdCase;
+
+  getTitleCase(): TodoFilter.TitleCase;
+
+  getTitleFilterKindCase(): TodoFilter.TitleFilterKindCase;
+
+  getDescriptionCase(): TodoFilter.DescriptionCase;
+
+  getDescriptionFilterKindCase(): TodoFilter.DescriptionFilterKindCase;
+
+  getStatusCase(): TodoFilter.StatusCase;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): TodoFilter.AsObject;
+  static toObject(includeInstance: boolean, msg: TodoFilter): TodoFilter.AsObject;
+  static serializeBinaryToWriter(message: TodoFilter, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): TodoFilter;
+  static deserializeBinaryFromReader(message: TodoFilter, reader: jspb.BinaryReader): TodoFilter;
+}
+
+export namespace TodoFilter {
+  export type AsObject = {
+    id?: TodoId.AsObject,
+    title: string,
+    titleFilterKind: list_list_pb.FilterKind,
+    description: string,
+    descriptionFilterKind: list_list_pb.FilterKind,
+    status: Status,
+  }
+
+  export enum IdCase { 
+    _ID_NOT_SET = 0,
+    ID = 1,
+  }
+
+  export enum TitleCase { 
+    _TITLE_NOT_SET = 0,
+    TITLE = 2,
+  }
+
+  export enum TitleFilterKindCase { 
+    _TITLE_FILTER_KIND_NOT_SET = 0,
+    TITLE_FILTER_KIND = 3,
+  }
+
+  export enum DescriptionCase { 
+    _DESCRIPTION_NOT_SET = 0,
+    DESCRIPTION = 4,
+  }
+
+  export enum DescriptionFilterKindCase { 
+    _DESCRIPTION_FILTER_KIND_NOT_SET = 0,
+    DESCRIPTION_FILTER_KIND = 5,
+  }
+
+  export enum StatusCase { 
+    _STATUS_NOT_SET = 0,
+    STATUS = 6,
+  }
+}
+
+export class TodoSort extends jspb.Message {
+  getCreateTime(): list_list_pb.SortField | undefined;
+  setCreateTime(value?: list_list_pb.SortField): TodoSort;
+  hasCreateTime(): boolean;
+  clearCreateTime(): TodoSort;
+
+  getDoneTime(): list_list_pb.SortField | undefined;
+  setDoneTime(value?: list_list_pb.SortField): TodoSort;
+  hasDoneTime(): boolean;
+  clearDoneTime(): TodoSort;
+
+  getCreateTimeCase(): TodoSort.CreateTimeCase;
+
+  getDoneTimeCase(): TodoSort.DoneTimeCase;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): TodoSort.AsObject;
+  static toObject(includeInstance: boolean, msg: TodoSort): TodoSort.AsObject;
+  static serializeBinaryToWriter(message: TodoSort, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): TodoSort;
+  static deserializeBinaryFromReader(message: TodoSort, reader: jspb.BinaryReader): TodoSort;
+}
+
+export namespace TodoSort {
+  export type AsObject = {
+    createTime?: list_list_pb.SortField.AsObject,
+    doneTime?: list_list_pb.SortField.AsObject,
+  }
+
+  export enum CreateTimeCase { 
+    _CREATE_TIME_NOT_SET = 0,
+    CREATE_TIME = 1,
+  }
+
+  export enum DoneTimeCase { 
+    _DONE_TIME_NOT_SET = 0,
+    DONE_TIME = 2,
+  }
+}
 
 export class ListInput extends jspb.Message {
+  getSession(): auth_auth_pb.Session | undefined;
+  setSession(value?: auth_auth_pb.Session): ListInput;
+  hasSession(): boolean;
+  clearSession(): ListInput;
+
+  getPaging(): list_list_pb.Paging | undefined;
+  setPaging(value?: list_list_pb.Paging): ListInput;
+  hasPaging(): boolean;
+  clearPaging(): ListInput;
+
+  getFilter(): TodoFilter | undefined;
+  setFilter(value?: TodoFilter): ListInput;
+  hasFilter(): boolean;
+  clearFilter(): ListInput;
+
+  getSort(): TodoSort | undefined;
+  setSort(value?: TodoSort): ListInput;
+  hasSort(): boolean;
+  clearSort(): ListInput;
+
+  getFilterCase(): ListInput.FilterCase;
+
+  getSortCase(): ListInput.SortCase;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListInput.AsObject;
   static toObject(includeInstance: boolean, msg: ListInput): ListInput.AsObject;
@@ -15,10 +163,32 @@ export class ListInput extends jspb.Message {
 
 export namespace ListInput {
   export type AsObject = {
+    session?: auth_auth_pb.Session.AsObject,
+    paging?: list_list_pb.Paging.AsObject,
+    filter?: TodoFilter.AsObject,
+    sort?: TodoSort.AsObject,
+  }
+
+  export enum FilterCase { 
+    _FILTER_NOT_SET = 0,
+    FILTER = 3,
+  }
+
+  export enum SortCase { 
+    _SORT_NOT_SET = 0,
+    SORT = 4,
   }
 }
 
 export class ListOutput extends jspb.Message {
+  getHasNext(): boolean;
+  setHasNext(value: boolean): ListOutput;
+
+  getTodosList(): Array<Todo>;
+  setTodosList(value: Array<Todo>): ListOutput;
+  clearTodosList(): ListOutput;
+  addTodos(value?: Todo, index?: number): Todo;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListOutput.AsObject;
   static toObject(includeInstance: boolean, msg: ListOutput): ListOutput.AsObject;
@@ -29,10 +199,22 @@ export class ListOutput extends jspb.Message {
 
 export namespace ListOutput {
   export type AsObject = {
+    hasNext: boolean,
+    todosList: Array<Todo.AsObject>,
   }
 }
 
 export class GetInput extends jspb.Message {
+  getSession(): auth_auth_pb.Session | undefined;
+  setSession(value?: auth_auth_pb.Session): GetInput;
+  hasSession(): boolean;
+  clearSession(): GetInput;
+
+  getId(): TodoId | undefined;
+  setId(value?: TodoId): GetInput;
+  hasId(): boolean;
+  clearId(): GetInput;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetInput.AsObject;
   static toObject(includeInstance: boolean, msg: GetInput): GetInput.AsObject;
@@ -43,10 +225,17 @@ export class GetInput extends jspb.Message {
 
 export namespace GetInput {
   export type AsObject = {
+    session?: auth_auth_pb.Session.AsObject,
+    id?: TodoId.AsObject,
   }
 }
 
 export class GetOutput extends jspb.Message {
+  getTodo(): Todo | undefined;
+  setTodo(value?: Todo): GetOutput;
+  hasTodo(): boolean;
+  clearTodo(): GetOutput;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetOutput.AsObject;
   static toObject(includeInstance: boolean, msg: GetOutput): GetOutput.AsObject;
@@ -57,10 +246,21 @@ export class GetOutput extends jspb.Message {
 
 export namespace GetOutput {
   export type AsObject = {
+    todo?: Todo.AsObject,
   }
 }
 
 export class CreateInput extends jspb.Message {
+  getSession(): auth_auth_pb.Session | undefined;
+  setSession(value?: auth_auth_pb.Session): CreateInput;
+  hasSession(): boolean;
+  clearSession(): CreateInput;
+
+  getTodo(): CreateTodo | undefined;
+  setTodo(value?: CreateTodo): CreateInput;
+  hasTodo(): boolean;
+  clearTodo(): CreateInput;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateInput.AsObject;
   static toObject(includeInstance: boolean, msg: CreateInput): CreateInput.AsObject;
@@ -71,6 +271,8 @@ export class CreateInput extends jspb.Message {
 
 export namespace CreateInput {
   export type AsObject = {
+    session?: auth_auth_pb.Session.AsObject,
+    todo?: CreateTodo.AsObject,
   }
 }
 
@@ -84,6 +286,86 @@ export class CreateOutput extends jspb.Message {
 }
 
 export namespace CreateOutput {
+  export type AsObject = {
+  }
+}
+
+export class UpdateInput extends jspb.Message {
+  getSession(): auth_auth_pb.Session | undefined;
+  setSession(value?: auth_auth_pb.Session): UpdateInput;
+  hasSession(): boolean;
+  clearSession(): UpdateInput;
+
+  getTodo(): UpdateTodo | undefined;
+  setTodo(value?: UpdateTodo): UpdateInput;
+  hasTodo(): boolean;
+  clearTodo(): UpdateInput;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UpdateInput.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateInput): UpdateInput.AsObject;
+  static serializeBinaryToWriter(message: UpdateInput, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateInput;
+  static deserializeBinaryFromReader(message: UpdateInput, reader: jspb.BinaryReader): UpdateInput;
+}
+
+export namespace UpdateInput {
+  export type AsObject = {
+    session?: auth_auth_pb.Session.AsObject,
+    todo?: UpdateTodo.AsObject,
+  }
+}
+
+export class UpdateOutput extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UpdateOutput.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateOutput): UpdateOutput.AsObject;
+  static serializeBinaryToWriter(message: UpdateOutput, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateOutput;
+  static deserializeBinaryFromReader(message: UpdateOutput, reader: jspb.BinaryReader): UpdateOutput;
+}
+
+export namespace UpdateOutput {
+  export type AsObject = {
+  }
+}
+
+export class DeleteInput extends jspb.Message {
+  getSession(): auth_auth_pb.Session | undefined;
+  setSession(value?: auth_auth_pb.Session): DeleteInput;
+  hasSession(): boolean;
+  clearSession(): DeleteInput;
+
+  getId(): TodoId | undefined;
+  setId(value?: TodoId): DeleteInput;
+  hasId(): boolean;
+  clearId(): DeleteInput;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteInput.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteInput): DeleteInput.AsObject;
+  static serializeBinaryToWriter(message: DeleteInput, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteInput;
+  static deserializeBinaryFromReader(message: DeleteInput, reader: jspb.BinaryReader): DeleteInput;
+}
+
+export namespace DeleteInput {
+  export type AsObject = {
+    session?: auth_auth_pb.Session.AsObject,
+    id?: TodoId.AsObject,
+  }
+}
+
+export class DeleteOutput extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteOutput.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteOutput): DeleteOutput.AsObject;
+  static serializeBinaryToWriter(message: DeleteOutput, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteOutput;
+  static deserializeBinaryFromReader(message: DeleteOutput, reader: jspb.BinaryReader): DeleteOutput;
+}
+
+export namespace DeleteOutput {
   export type AsObject = {
   }
 }

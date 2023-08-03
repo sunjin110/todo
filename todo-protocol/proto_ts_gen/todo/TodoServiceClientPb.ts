@@ -155,5 +155,85 @@ export class TodoRpcClient {
     this.methodInfoCreate);
   }
 
+  methodInfoUpdate = new grpcWeb.AbstractClientBase.MethodInfo(
+    todo_todo_pb.UpdateOutput,
+    (request: todo_todo_pb.UpdateInput) => {
+      return request.serializeBinary();
+    },
+    todo_todo_pb.UpdateOutput.deserializeBinary
+  );
+
+  update(
+    request: todo_todo_pb.UpdateInput,
+    metadata: grpcWeb.Metadata | null): Promise<todo_todo_pb.UpdateOutput>;
+
+  update(
+    request: todo_todo_pb.UpdateInput,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: todo_todo_pb.UpdateOutput) => void): grpcWeb.ClientReadableStream<todo_todo_pb.UpdateOutput>;
+
+  update(
+    request: todo_todo_pb.UpdateInput,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.Error,
+               response: todo_todo_pb.UpdateOutput) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/todo.TodoRpc/Update',
+        request,
+        metadata || {},
+        this.methodInfoUpdate,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/todo.TodoRpc/Update',
+    request,
+    metadata || {},
+    this.methodInfoUpdate);
+  }
+
+  methodInfoDelete = new grpcWeb.AbstractClientBase.MethodInfo(
+    todo_todo_pb.DeleteOutput,
+    (request: todo_todo_pb.DeleteInput) => {
+      return request.serializeBinary();
+    },
+    todo_todo_pb.DeleteOutput.deserializeBinary
+  );
+
+  delete(
+    request: todo_todo_pb.DeleteInput,
+    metadata: grpcWeb.Metadata | null): Promise<todo_todo_pb.DeleteOutput>;
+
+  delete(
+    request: todo_todo_pb.DeleteInput,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: todo_todo_pb.DeleteOutput) => void): grpcWeb.ClientReadableStream<todo_todo_pb.DeleteOutput>;
+
+  delete(
+    request: todo_todo_pb.DeleteInput,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.Error,
+               response: todo_todo_pb.DeleteOutput) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/todo.TodoRpc/Delete',
+        request,
+        metadata || {},
+        this.methodInfoDelete,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/todo.TodoRpc/Delete',
+    request,
+    metadata || {},
+    this.methodInfoDelete);
+  }
+
 }
 
