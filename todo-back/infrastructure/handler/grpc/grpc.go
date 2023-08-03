@@ -42,6 +42,7 @@ func Serve(ctx context.Context, config ServeConfig) error {
 			},
 		),
 		grpc.UnaryInterceptor(logInterceptor),
+		grpc.UnaryInterceptor(txTimeInterceptor),
 	)
 
 	if err := Routing(server); err != nil {

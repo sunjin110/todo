@@ -3,7 +3,9 @@ package grpc
 import (
 	"context"
 	"fmt"
+	"time"
 	"todo-back/domain/common/log"
+	"todo-back/domain/common/txtime"
 	zerolog "todo-back/infrastructure/common/log"
 
 	"github.com/google/uuid"
@@ -21,4 +23,9 @@ func logInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServer
 		logger.Error().Err(err).Send()
 	}
 	return res, err
+}
+
+func txTimeInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+	ctx = txtime.ContextWithTxTime(ctx, time.Now())
+	return handler(ctx, req)
 }
