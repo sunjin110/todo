@@ -1,6 +1,7 @@
 package session
 
 import (
+	"encoding/hex"
 	"fmt"
 	"testing"
 
@@ -27,7 +28,7 @@ func Test_VerifyAndExtract(t *testing.T) {
 	Convey("Test_VerifyAndExtract", t, func() {
 		origin, ok := VerifyAndExtract("c2b27a296fc16284c1aed4945d85cfbb3f93fa1c25d7c7b0d021cd89cf87514853f89f69cb83743be0431af30d73d197")
 		So(ok, ShouldBeTrue)
-		So(origin, ShouldEqual, "c2b27a296fc16284c1aed4945d85cfbb")
+		So(hex.EncodeToString(origin), ShouldEqual, "c2b27a296fc16284c1aed4945d85cfbb")
 	})
 }
 

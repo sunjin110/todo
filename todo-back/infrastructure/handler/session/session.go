@@ -56,8 +56,13 @@ func VerifyAndExtract(signedString string) ([]byte, bool) {
 		return nil, false
 	}
 
+	signatureBytes, err := hex.DecodeString(signatureHex)
+	if err != nil {
+		return nil, false
+	}
+
 	expectedSignature := signMessage(originalBytes)
-	if hmac.Equal(expectedSignature, []byte(signatureHex)) {
+	if hmac.Equal(expectedSignature, signatureBytes) {
 		return originalBytes, true
 	}
 	return nil, false
