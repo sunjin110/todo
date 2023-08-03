@@ -32,5 +32,8 @@ type User interface {
 	Update(ctx context.Context, id model.UserID, updatedUser model.User) error
 	Delete(ctx context.Context, id model.UserID) error
 	Get(ctx context.Context, id model.UserID) (model.User, error)
+
+	// GetByEmail err: ErrNotFound, Other
+	GetByEmail(ctx context.Context, email string) (model.User, error)
 	List(ctx context.Context, request UserListRequest) (UserListOutput, error)
 }

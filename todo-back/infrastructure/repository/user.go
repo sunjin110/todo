@@ -63,6 +63,18 @@ func (u *user) Get(ctx context.Context, id model.UserID) (model.User, error) {
 	return *dtoUser.ToModel(), nil
 }
 
+func (u *user) GetByEmail(ctx context.Context, email string) (model.User, error) {
+	dtoUser := dto.User{}
+	err := u.mongoDB.Collection(mongo.UserColl).FindOne(ctx, bson.M{"email": email}).Decode(&dtoUser)
+	if err != nil {
+		if err == mongo.ErrNotDocuments {
+			return model.User{}, repository.ErrNotFound
+		}
+		return model.User{}, fmt.Errorf("failed get user by email. email: %s, err: %w", email, err)
+	}
+	return *dtoUser.ToModel(), nil
+}
+
 func (u *user) List(ctx context.Context, request repository.UserListRequest) (repository.UserListOutput, error) {
 	opts := options.Find()
 	opts = mongo.AppendPaging(opts, request.Paging)
