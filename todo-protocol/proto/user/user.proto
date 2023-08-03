@@ -4,7 +4,16 @@ package user;
 
 option go_package = "todo-back/infrastructure/handler/grpc/proto_go_gen/user";
 
-service UserRpc {}
+import "auth/auth.proto";
+import "list/list.proto";
+
+service UserRpc {
+    rpc Create(CreateInput) returns (CreateOutput) {}
+    rpc Update(UpdateInput) returns (UpdateOutput) {}
+    rpc Delete(DeleteInput) returns (DeleteOutput) {}
+    rpc Get(GetInput) returns (GetOutput) {}
+    rpc List(ListInput) returns (ListOutput) {}
+}
 
 message UserId { string id = 1; }
 
@@ -12,5 +21,70 @@ message User {
     UserId id = 1;
     string name = 2;
     string email = 3;
+    auth.UserSignUpStatus status = 4;
 }
 
+message CreateUser {
+    string name = 1;
+    string email = 2;
+    auth.UserSignUpStatus status = 3;
+}
+
+message UpdateUser {
+    optional string name = 1;
+    optional string email = 2;
+    optional auth.UserSignUpStatus status = 3;
+}
+
+message CreateInput {
+    auth.Session session = 1;
+    CreateUser user = 2;
+}
+
+message CreateOutput {}
+
+message UpdateInput {
+    auth.Session session = 1;
+    UpdateUser user = 2;
+}
+
+message UpdateOutput {}
+
+message DeleteInput {
+    auth.Session session = 1;
+    UserId id = 2;
+}
+
+message DeleteOutput {}
+
+message UserFilter {
+    optional UserId id = 1;
+    optional string name = 2;
+    optional list.FilterKind name_filter_kind = 3;
+    optional string email = 4;
+    optional list.FilterKind email_filter_kind = 5;
+}
+
+message UserSort {
+    optional list.SortField last_login = 1;
+    optional list.SortField create_time = 2;
+}
+
+message ListInput {
+    list.Paging paging = 1;
+    optional UserFilter filter = 2;
+}
+
+message ListOutput {
+    bool has_next = 1;
+    repeated User users = 2;
+}
+
+message GetInput {
+    auth.Session session = 1;
+    UserId id = 2;
+}
+
+message GetOutput {
+    User user = 1;
+}
