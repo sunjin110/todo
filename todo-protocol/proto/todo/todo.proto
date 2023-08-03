@@ -11,14 +11,43 @@ service TodoRpc {
   rpc List(ListInput) returns (ListOutput) {}
   rpc Get(GetInput) returns (GetOutput) {}
   rpc Create(CreateInput) returns (CreateOutput) {}
+  rpc Update(UpdateInput) returns (UpdateOutput) {}
+  rpc Delete(DeleteInput) returns (DeleteOutput) {}
 }
 
-message ListInput {}
-message ListOutput {}
+message TodoFilter {
+  optional TodoId id = 1;
+  optional string title = 2;
+  optional list.FilterKind title_filter_kind = 3;
+  optional string description = 4;
+  optional list.FilterKind description_filter_kind = 5;
+  optional Status status = 6;
+}
+
+message TodoSort {
+  optional list.SortField create_time = 1;
+  optional list.SortField done_time = 2;
+}
+
+message ListInput {
+  list.Paging paging = 1;
+  optional TodoFilter filter = 2;
+  optional TodoSort sort = 3;
+}
+
+message ListOutput {
+  bool has_next = 1;
+  repeated Todo todos = 2;
+}
+
 message GetInput {}
 message GetOutput {}
 message CreateInput {}
 message CreateOutput {}
+message UpdateInput {}
+message UpdateOutput {}
+message DeleteInput {}
+message DeleteOutput {}
 
 message TodoId { string id = 1; }
 
