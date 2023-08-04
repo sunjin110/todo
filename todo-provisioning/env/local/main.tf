@@ -25,3 +25,12 @@ module "todo_sessions" {
   cloudflare_account_id = var.cloudflare_account_id_local
   env_namespace         = "local"
 }
+
+output "todo_session_api_token" {
+    sensitive = false
+    value = module.todo_sessions.todo_sessions_api_token
+}
+
+# output "permissions" {
+#     value = module.todo_sessions.permissions
+# }
