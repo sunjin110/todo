@@ -27,10 +27,7 @@ module "todo_sessions" {
 }
 
 output "todo_session_api_token" {
-    sensitive = false
+    sensitive = true
     value = module.todo_sessions.todo_sessions_api_token
 }
 
-# output "permissions" {
-#     value = module.todo_sessions.permissions
-# }
