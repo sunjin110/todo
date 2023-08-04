@@ -2,8 +2,8 @@
 terraform {
   required_providers {
     cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 4.0"
+      source = "cloudflare/cloudflare"
+      version = "~> 4"
     }
   }
 }
@@ -21,7 +21,7 @@ provider "cloudflare" {
 }
 
 module "todo" {
-  source                = "../../todo"
+  source                = "../../modules/todo_sessions"
   cloudflare_account_id = var.cloudflare_account_id_local
   env_namespace         = "local"
 }
