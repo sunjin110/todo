@@ -17,7 +17,7 @@ variable "cloudflare_account_id_local" {
 }
 
 provider "cloudflare" {
-  api_token = var.cloudlare_api_token
+  api_token = var.cloudflare_api_token_local
 }
 
 module "todo" {
