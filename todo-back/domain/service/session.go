@@ -6,15 +6,26 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"time"
 	"todo-back/domain/common/txtime"
+	"todo-back/domain/model"
+)
+
+var (
+	ErrorNotFoundSession = errors.New("not found session")
 )
 
 type SessionService interface {
 	GenerateSignedSession() (string, error)
 	VerifyAndExtract(signedString string) ([]byte, bool)
 	GetSessionExpireTime(ctx context.Context) (time.Time, error)
+	StartSession(ctx context.Context, user model.User, session model.Session) error
+
+	// GetUserBySession err: ErrorNotFoundSession, other
+	GetUserBySession(ctx context.Context, session model.Session) (model.User, error)
+	DeleteSession(ctx context.Context, session model.Session) error
 }
 
 const digit = 16
@@ -85,4 +96,16 @@ func (s *sessionService) VerifyAndExtract(signedString string) ([]byte, bool) {
 func (s *sessionService) GetSessionExpireTime(ctx context.Context) (time.Time, error) {
 	txTime := txtime.GetTxTime(ctx)
 	return txTime.Add(s.sessionDuration), nil
+}
+
+func (s *sessionService) StartSession(ctx context.Context, user model.User, session model.Session) error {
+	panic("todo")
+}
+
+func (s *sessionService) GetUserBySession(ctx context.Context, session model.Session) (model.User, error) {
+	panic("todo")
+}
+
+func (s *sessionService) DeleteSession(ctx context.Context, session model.Session) error {
+	panic("todo")
 }
