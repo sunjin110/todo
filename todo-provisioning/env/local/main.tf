@@ -20,7 +20,7 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token_local
 }
 
-module "todo" {
+module "todo_sessions" {
   source                = "../../modules/todo_sessions"
   cloudflare_account_id = var.cloudflare_account_id_local
   env_namespace         = "local"
