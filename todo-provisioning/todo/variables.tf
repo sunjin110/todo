@@ -1,8 +1,8 @@
 
 variable "cloudflare_account_id" {
-    type = string
+  type = string
 }
 
 variable "env_namespace" {
-    type = string
+  type = string
 }
