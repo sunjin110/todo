@@ -1,3 +1,7 @@
 /local_data
 
 .terraform
+
+terraform.tfvars
+
+terraform.tfstate
