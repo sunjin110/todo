@@ -79,7 +79,13 @@ func (a *authentication) SignIn(ctx context.Context, input *SignInInput) (output
 		return nil, fmt.Errorf("failed get expireTime. userId: %s, err: %w", user.ID.String(), err)
 	}
 
-	// KV storeに入れる
+	err = a.sessionService.StartSession(ctx, user, model.Session{
+		Session:    session,
+		ExpireTime: &expireTime,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed start session. userId: %s, err: %w", user.ID.String(), err)
+	}
 
 	return &SignInOutput{
 		Session: model.Session{

@@ -11,10 +11,12 @@ import (
 	"time"
 	"todo-back/domain/common/txtime"
 	"todo-back/domain/model"
+	"todo-back/domain/repository"
 )
 
 var (
 	ErrorNotFoundSession = errors.New("not found session")
+	ErrorNotFoundUser    = errors.New("not found user")
 )
 
 type SessionService interface {
@@ -31,14 +33,19 @@ type SessionService interface {
 const digit = 16
 
 type sessionService struct {
-	secretKey       string
-	sessionDuration time.Duration
+	secretKey         string
+	sessionDuration   time.Duration
+	sessionRepository repository.Session
+	userRepository    repository.User
 }
 
-func NewSessionService(secretKey string, sessionDuration time.Duration) SessionService {
+func NewSessionService(secretKey string, sessionDuration time.Duration,
+	sessionRepository repository.Session, userRepository repository.User) SessionService {
 	return &sessionService{
-		secretKey:       secretKey,
-		sessionDuration: sessionDuration,
+		secretKey:         secretKey,
+		sessionDuration:   sessionDuration,
+		sessionRepository: sessionRepository,
+		userRepository:    userRepository,
 	}
 }
 
@@ -99,13 +106,36 @@ func (s *sessionService) GetSessionExpireTime(ctx context.Context) (time.Time, e
 }
 
 func (s *sessionService) StartSession(ctx context.Context, user model.User, session model.Session) error {
-	panic("todo")
+	err := s.sessionRepository.Insert(ctx, session, user.ID)
+	if err != nil {
+		return fmt.Errorf("failed start session. err: %w", err)
+	}
+	return nil
 }
 
 func (s *sessionService) GetUserBySession(ctx context.Context, session model.Session) (model.User, error) {
-	panic("todo")
+	userID, err := s.sessionRepository.Get(ctx, session.Session)
+	if err != nil {
+		if err == repository.ErrNotFound {
+			return model.User{}, ErrorNotFoundSession
+		}
+		return model.User{}, fmt.Errorf("failed get user by session, err: %w", err)
+	}
+
+	user, err := s.userRepository.Get(ctx, userID)
+	if err != nil {
+		if err == repository.ErrNotFound {
+			return model.User{}, ErrorNotFoundUser
+		}
+		return model.User{}, fmt.Errorf("failed get user from user repository, err: %w", err)
+	}
+	return user, nil
 }
 
 func (s *sessionService) DeleteSession(ctx context.Context, session model.Session) error {
-	panic("todo")
+	err := s.sessionRepository.Delete(ctx, session)
+	if err != nil {
+		return fmt.Errorf("failed delete session. err: %w", err)
+	}
+	return nil
 }
