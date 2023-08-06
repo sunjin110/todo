@@ -44,7 +44,8 @@ func (t *todo) Create(ctx context.Context, todo model.Todo) (model.TodoID, error
 	if err != nil {
 		return "", fmt.Errorf("failed insert. todo: %+v, err: %w", todo, err)
 	}
-	return result.InsertedID.(model.TodoID), nil
+	todoID := result.InsertedID.(model.UserID)
+	return model.TodoID(todoID), nil
 }
 
 func (t *todo) Update(ctx context.Context, id model.TodoID, updatedTodo model.Todo) error {

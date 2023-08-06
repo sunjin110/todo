@@ -30,7 +30,8 @@ func (u *user) Create(ctx context.Context, user model.User) (model.UserID, error
 		return "", fmt.Errorf("failed insert user. user: %+v, err: %w", user, err)
 	}
 
-	return result.InsertedID.(model.UserID), nil
+	userID := result.InsertedID.(string)
+	return model.UserID(userID), nil
 }
 
 func (u *user) Update(ctx context.Context, id model.UserID, updatedUser model.User) error {

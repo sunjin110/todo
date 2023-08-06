@@ -18,6 +18,9 @@ func ToSignUpInput(input *authentication.SignUpInput) *application.SignUpInput {
 }
 
 func ToGrpcSignUpOutput(output *application.SignUpOutput) *authentication.SignUpOutput {
+	if output == nil {
+		return nil
+	}
 	return &authentication.SignUpOutput{
 		Session: ToGrpcSession(output.Session),
 		Status:  ToGrpcUserSignUpStatus(output.Status),
@@ -42,12 +45,20 @@ func ToSignInInput(input *authentication.SignInInput) *application.SignInInput {
 }
 
 func ToGrpcSignInOutput(output *application.SignInOutput) *authentication.SignInOutput {
+	if output == nil {
+		return nil
+	}
+
 	return &authentication.SignInOutput{
 		Session: ToGrpcSession(&output.Session),
 	}
 }
 
 func ToModelSession(session *authentication.Session) *model.Session {
+	if session == nil {
+		return nil
+	}
+
 	var expireTime *time.Time
 	if session.ExpireTime != nil {
 		et := session.ExpireTime.AsTime()
@@ -61,6 +72,10 @@ func ToModelSession(session *authentication.Session) *model.Session {
 }
 
 func ToGrpcSession(session *model.Session) *authentication.Session {
+	if session == nil {
+		return nil
+	}
+
 	var expireTime *timestamppb.Timestamp
 	if session.ExpireTime != nil {
 		expireTime = timestamppb.New(*session.ExpireTime)

@@ -121,6 +121,14 @@ func (a *authentication) SignUp(ctx context.Context, input *SignUpInput) (output
 			Status: model.SignUpAllowed,
 		}, nil
 	}
+
+	if user.SignUpStatus == model.SignUpWaitForAllow {
+		return &SignUpOutput{
+			Session: nil,
+			Status:  model.SignUpWaitForAllow,
+		}, nil
+	}
+
 	return nil, fmt.Errorf("not defined status type. userId: %s, status: %s", user.ID.String(), user.SignUpStatus)
 }
 
