@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"time"
 	"todo-back/application"
 	"todo-back/domain/common/log"
 	"todo-back/domain/service"
@@ -21,41 +20,28 @@ import (
 	"google.golang.org/grpc/keepalive"
 )
 
-type ServeConfig struct {
-	Addr              string
-	MaxConnectionAge  time.Duration
-	MaxConnectionIdle time.Duration
-}
-
-func (serverConfig *ServeConfig) MarshalLogObject(event log.Event) {
-	event.
-		Str("Addr", serverConfig.Addr).
-		Duration("MaxConnectionAge", serverConfig.MaxConnectionAge).
-		Duration("MaxConnectionIdle", serverConfig.MaxConnectionIdle)
-}
-
-func Serve(ctx context.Context, config ServeConfig) error {
+func Serve(ctx context.Context, config *config.Config) error {
 	logger := log.GetLogger(ctx)
 
-	listener, err := net.Listen("tcp", config.Addr)
+	listener, err := net.Listen("tcp", config.Server.Addr)
 	if err != nil {
 		return fmt.Errorf("failed listen. err: %w", err)
 	}
 	server := grpc.NewServer(
 		grpc.KeepaliveParams(
 			keepalive.ServerParameters{
-				MaxConnectionIdle: config.MaxConnectionIdle,
-				MaxConnectionAge:  config.MaxConnectionAge,
+				MaxConnectionIdle: config.Server.MaxConnectionIdle,
+				MaxConnectionAge:  config.Server.MaxConnectionAge,
 			},
 		),
 		grpc.UnaryInterceptor(logInterceptor),
 		grpc.UnaryInterceptor(txTimeInterceptor),
 	)
 
-	if err := Routing(server); err != nil {
+	if err := Routing(ctx, server, config); err != nil {
 		return fmt.Errorf("failed routing. err: %w", err)
 	}
-	logger.Info().Object("config", &config).Msg("server start")
+	logger.Info().Msg("server start...")
 	if err := server.Serve(listener); err != nil {
 		return fmt.Errorf("failed serve grpc server. err: %w", err)
 	}
