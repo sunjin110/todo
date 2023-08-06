@@ -11,10 +11,20 @@ import (
 )
 
 type Todo interface {
+	Get(ctx context.Context, input input.GetTodo) (*output.GetTodo, error)
+	Create(ctx context.Context, input input.CreateTodo) error
+	Update(ctx context.Context, input input.UpdateTodo) error
+	Delete(ctx context.Context, input input.DeleteTodo) error
 }
 
 type todo struct {
 	todoRepository repository.Todo
+}
+
+func NewTodo(todoRepository repository.Todo) Todo {
+	return &todo{
+		todoRepository: todoRepository,
+	}
 }
 
 func (todo *todo) List(ctx context.Context, input input.TodoList) {
