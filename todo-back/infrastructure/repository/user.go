@@ -13,10 +13,10 @@ import (
 )
 
 type user struct {
-	mongoDB mongo.Database
+	mongoDB *mongo.Database
 }
 
-func NewUser(mongoDB mongo.Database) repository.User {
+func NewUser(mongoDB *mongo.Database) repository.User {
 	return &user{
 		mongoDB: mongoDB,
 	}

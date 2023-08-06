@@ -16,7 +16,7 @@ type session struct {
 	namespaceID     string
 }
 
-func NewSession(cloudflareApiToken string, workersKVClient cloudflare.WorkersKVClient, namespaceID string) repository.Session {
+func NewSession(workersKVClient cloudflare.WorkersKVClient, namespaceID string) repository.Session {
 	return &session{
 		workersKVClient: workersKVClient,
 		namespaceID:     namespaceID,

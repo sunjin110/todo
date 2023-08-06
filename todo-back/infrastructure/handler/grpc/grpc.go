@@ -5,10 +5,17 @@ import (
 	"fmt"
 	"net"
 	"time"
+	"todo-back/application"
 	"todo-back/domain/common/log"
+	"todo-back/domain/service"
+	"todo-back/infrastructure/cloudflare"
+	"todo-back/infrastructure/config"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/alive"
+	"todo-back/infrastructure/handler/grpc/proto_go_gen/authentication"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/todo"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/user"
+	"todo-back/infrastructure/mongo"
+	infrastructure "todo-back/infrastructure/repository"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
@@ -55,9 +62,33 @@ func Serve(ctx context.Context, config ServeConfig) error {
 	return nil
 }
 
-func Routing(server *grpc.Server) error {
+func Routing(ctx context.Context, server *grpc.Server, config *config.Config) error {
+
+	cloudflareWorkspaceClient, err := cloudflare.NewWorkersKVClient(config.Session.CloudFlareApiToken, config.Session.CloudFlareAccountID)
+	if err != nil {
+		return fmt.Errorf("failed new workers kv client, err: %w", err)
+	}
+
+	mongoClient, err := mongo.Connect(ctx, config.MongoDB.URI)
+	if err != nil {
+		return fmt.Errorf("failed connect mongodb, err: %w", err)
+	}
+
+	mongoDB := mongoClient.Database(config.MongoDB.DB)
+
+	passwordHashService := service.NewPasswordHash(config.PasswordHashSecret)
+
+	sessionRepository := infrastructure.NewSession(cloudflareWorkspaceClient, config.Session.NamespaceID)
+	userRepository := infrastructure.NewUser(mongoDB)
+
+	sessionService := service.NewSessionService(config.Session.SessionSecretKey,
+		config.Session.SessionDuration, sessionRepository, userRepository)
+
+	authenticationApplication := application.NewAuthentication(passwordHashService, sessionService, userRepository)
+
 	user.RegisterUserRpcServer(server, NewUserRpcServer())
 	todo.RegisterTodoRpcServer(server, NewTodoRpcServer())
 	alive.RegisterAliveServer(server, NewAliveRpcServer())
+	authentication.RegisterAuthenticationServer(server, NewAuthenticationRpcService(authenticationApplication))
 	return nil
 }
