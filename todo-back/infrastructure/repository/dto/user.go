@@ -20,6 +20,7 @@ func (u *User) ToModel() *model.User {
 		ID:           model.UserID(u.ID),
 		Name:         u.Name,
 		Email:        u.Email,
+		PasswordHash: u.PasswordHash,
 		SignUpStatus: model.UserSignUpStatus(u.SignUpStatus),
 		CreateTime:   *convertUnixToTime(&u.CreateTime),
 		LastLogin:    convertUnixToTime(u.LastLogin),

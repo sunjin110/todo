@@ -54,7 +54,6 @@ func NewAuthentication(passwordHashService service.PasswordHash, sessionService 
 }
 
 func (a *authentication) SignUp(ctx context.Context, input *SignUpInput) (output *SignUpOutput, err error) {
-
 	// すでに存在するかどうかを確認
 	user, err := a.userRepository.GetByEmail(ctx, input.Email)
 	if err != nil && err != repository.ErrNotFound {
