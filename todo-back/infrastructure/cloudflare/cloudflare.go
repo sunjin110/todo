@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/cloudflare/cloudflare-go"
 )
@@ -11,6 +12,7 @@ import (
 type WorkersKVClient interface {
 	Get(ctx context.Context, namespaceID string, key string) ([]byte, error)
 	Insert(ctx context.Context, namespaceID string, key string, value []byte) error
+	InsertWithTTL(ctx context.Context, ttl time.Time, namespaceID string, key string, value string) error
 	Delete(ctx context.Context, namespaceID string, key string) error
 }
 
@@ -60,6 +62,28 @@ func (w *workersKVClient) Insert(ctx context.Context, namespaceID string, key st
 
 	err = aggregateErr(response.Errors)
 	return fmt.Errorf("failed workersKV insert, namespaceID: %s, key: %s, err: %w", namespaceID, key, err)
+}
+
+func (w *workersKVClient) InsertWithTTL(ctx context.Context, ttl time.Time, namespaceID string, key string, value string) error {
+	response, err := w.api.WriteWorkersKVEntries(ctx, w.resourceContainer, cloudflare.WriteWorkersKVEntriesParams{
+		NamespaceID: namespaceID,
+		KVs: []*cloudflare.WorkersKVPair{
+			{
+				Key:        key,
+				Value:      value,
+				Expiration: int(ttl.Unix()),
+				Base64:     false,
+			},
+		},
+	})
+	if err != nil {
+		return fmt.Errorf("failed workersKV insertWithTTL, namespaceID: %s, key: %s, err: %w", namespaceID, key, err)
+	}
+	if response.Success {
+		return nil
+	}
+	err = aggregateErr(response.Errors)
+	return fmt.Errorf("failed workersKV insertWithTTL, namespaceID: %s, key: %s, err: %w", namespaceID, key, err)
 }
 
 func (w *workersKVClient) Delete(ctx context.Context, namespaceID string, key string) error {
