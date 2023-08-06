@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 	"fmt"
+	"todo-back/domain/common/txtime"
 	"todo-back/domain/model"
 	"todo-back/domain/repository"
 	"todo-back/domain/service"
@@ -53,7 +54,67 @@ func NewAuthentication(passwordHashService service.PasswordHash, sessionService 
 }
 
 func (a *authentication) SignUp(ctx context.Context, input *SignUpInput) (output *SignUpOutput, err error) {
-	panic("todo")
+
+	// すでに存在するかどうかを確認
+	user, err := a.userRepository.GetByEmail(ctx, input.Email)
+	if err != nil && err != repository.ErrNotFound {
+		return nil, fmt.Errorf("failed get user. email: %s, err: %w", input.Email, err)
+	}
+
+	txTime := txtime.GetTxTime(ctx)
+
+	if err == repository.ErrNotFound {
+		// 仮登録状態にする
+		_, err = a.userRepository.Create(ctx, model.User{
+			ID:           model.NewUserID(),
+			Name:         input.Name,
+			Email:        input.Email,
+			SignUpStatus: model.SignUpWaitForAllow,
+			CreateTime:   txTime,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("failed insert user. err: %w", err)
+		}
+		return &SignUpOutput{
+			Session: nil,
+			Status:  model.SignUpWaitForAllow,
+		}, nil
+	}
+
+	if user.SignUpStatus == model.SignUpDenied {
+		return &SignUpOutput{
+			Session: nil,
+			Status:  model.SignUpDenied,
+		}, nil
+	}
+
+	if user.SignUpStatus == model.SignUpAllowed {
+		session, err := a.sessionService.GenerateSignedSession()
+		if err != nil {
+			return nil, fmt.Errorf("failed generate signed session. userId: %s, err: %w", user.ID.String(), err)
+		}
+		expireTime, err := a.sessionService.GetSessionExpireTime(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("failed get expireTime. userId: %s, err: %w", user.ID.String(), err)
+		}
+
+		err = a.sessionService.StartSession(ctx, user, model.Session{
+			Session:    session,
+			ExpireTime: &expireTime,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("failed start session. userId: %s, err: %w", user.ID.String(), err)
+		}
+
+		return &SignUpOutput{
+			Session: &model.Session{
+				Session:    session,
+				ExpireTime: &expireTime,
+			},
+			Status: model.SignUpAllowed,
+		}, nil
+	}
+	return nil, fmt.Errorf("not defined status type. userId: %s, status: %s", user.ID.String(), user.SignUpStatus)
 }
 
 func (a *authentication) SignIn(ctx context.Context, input *SignInInput) (output *SignInOutput, err error) {
