@@ -14,7 +14,8 @@ import (
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/todo"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/user"
 	"todo-back/infrastructure/mongo"
-	infrastructure "todo-back/infrastructure/repository"
+	"todo-back/infrastructure/repository"
+	infra_service "todo-back/infrastructure/service"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
@@ -63,9 +64,14 @@ func Routing(ctx context.Context, server *grpc.Server, config *config.Config) er
 	mongoDB := mongoClient.Database(config.MongoDB.DB)
 
 	passwordHashService := service.NewPasswordHash(config.PasswordHashSecret)
+	morphologicalAnalysisService, err := infra_service.NewMorphologicalAnalysis()
+	if err != nil {
+		return fmt.Errorf("failed new morphological analysis service. err: %w", err)
+	}
 
-	sessionRepository := infrastructure.NewSession(cloudflareWorkspaceClient, config.Session.NamespaceID)
-	userRepository := infrastructure.NewUser(mongoDB)
+	sessionRepository := repository.NewSession(cloudflareWorkspaceClient, config.Session.NamespaceID)
+	userRepository := repository.NewUser(mongoDB)
+	todoRepository := repository.NewTodo(mongoDB, morphologicalAnalysisService, service.JpMorphological)
 
 	sessionService := service.NewSessionService(config.Session.SessionSecretKey,
 		config.Session.SessionDuration, sessionRepository, userRepository)
@@ -73,7 +79,7 @@ func Routing(ctx context.Context, server *grpc.Server, config *config.Config) er
 	authenticationApplication := application.NewAuthentication(passwordHashService, sessionService, userRepository)
 
 	user.RegisterUserRpcServer(server, NewUserRpcServer())
-	todo.RegisterTodoRpcServer(server, NewTodoRpcServer())
+	todo.RegisterTodoRpcServer(server, NewTodoRpcServer(todoRepository))
 	alive.RegisterAliveServer(server, NewAliveRpcServer())
 	authentication.RegisterAuthenticationServer(server, NewAuthenticationRpcService(authenticationApplication))
 	return nil

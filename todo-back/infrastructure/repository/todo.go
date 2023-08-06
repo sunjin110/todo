@@ -1,4 +1,4 @@
-package infrastructure
+package repository
 
 import (
 	"context"
@@ -14,12 +14,12 @@ import (
 )
 
 type todo struct {
-	mongoDB                      mongo.Database
+	mongoDB                      *mongo.Database
 	morphologicalAnalysisService service.MorphologicalAnalysis
 	morphologicalLang            service.MorphologicalLang
 }
 
-func NewTodo(mongoDB mongo.Database, morphologicalAnalysisService service.MorphologicalAnalysis, morphologicalLang service.MorphologicalLang) repository.Todo {
+func NewTodo(mongoDB *mongo.Database, morphologicalAnalysisService service.MorphologicalAnalysis, morphologicalLang service.MorphologicalLang) repository.Todo {
 	return &todo{
 		mongoDB:                      mongoDB,
 		morphologicalAnalysisService: morphologicalAnalysisService,
