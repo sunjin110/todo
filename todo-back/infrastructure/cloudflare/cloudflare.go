@@ -9,6 +9,10 @@ import (
 	"github.com/cloudflare/cloudflare-go"
 )
 
+var (
+	ErrorWorkersKVNotFoundError = errors.New("not found value")
+)
+
 type WorkersKVClient interface {
 	Get(ctx context.Context, namespaceID string, key string) ([]byte, error)
 	Insert(ctx context.Context, namespaceID string, key string, value []byte) error
@@ -42,6 +46,9 @@ func (w workersKVClient) Get(ctx context.Context, namespaceID string, key string
 	})
 
 	if err != nil {
+		if _, ok := err.(*cloudflare.NotFoundError); ok {
+			return nil, ErrorWorkersKVNotFoundError
+		}
 		return nil, fmt.Errorf("failed get Workers KV. namespaceID: %s, key: %s, err: %w", namespaceID, key, err)
 	}
 	return b, nil
