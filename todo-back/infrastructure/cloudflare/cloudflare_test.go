@@ -181,13 +181,62 @@ func Test_WorkersKVClient_Get(t *testing.T) {
 				So(err, ShouldBeNil)
 
 				got, err := client.Get(context.Background(), tt.args.namespaceID, tt.args.key)
-				if err != nil {
+				if tt.wantErr != nil {
 					So(err, ShouldBeError)
 					So(err.Error(), ShouldEqual, tt.wantErr.Error())
 					return
 				}
 				So(err, ShouldBeNil)
 				So(got, ShouldResemble, tt.want)
+			})
+		}
+	})
+}
+
+// source .env.sh && go test -timeout 30s -run ^Test_WorkersKVClient_Delete$ todo-back/infrastructure/cloudflare
+func Test_WorkersKVClient_Delete(t *testing.T) {
+	Convey("Test_WorkersKVClient_Delete", t, func() {
+		type args struct {
+			namespaceID string
+			key         string
+		}
+		type initArgs struct {
+			cloudflareApiToken  string
+			cloudflareAccountID string
+		}
+		type test struct {
+			name     string
+			args     args
+			initArgs initArgs
+			wantErr  error
+		}
+
+		tests := []test{
+			{
+				name: "not found",
+				initArgs: initArgs{
+					cloudflareApiToken:  os.Getenv("TODO_SESSION_KV_ACCESS_TOKEN"),
+					cloudflareAccountID: os.Getenv("CLOUDFLARE_ACCOUNT_ID"),
+				},
+				args: args{
+					namespaceID: os.Getenv("TODO_SESSION_NAMESPACE_IDENTIFIER"),
+					key:         "not_found",
+				},
+			},
+		}
+
+		for _, tt := range tests {
+			Convey(tt.name, func() {
+				client, err := cloudflare.NewWorkersKVClient(tt.initArgs.cloudflareApiToken, tt.initArgs.cloudflareAccountID)
+				So(err, ShouldBeNil)
+
+				err = client.Delete(context.Background(), tt.args.namespaceID, tt.args.key)
+				if tt.wantErr != nil {
+					So(err, ShouldBeError)
+					So(err.Error(), ShouldEqual, tt.wantErr.Error())
+					return
+				}
+				So(err, ShouldBeNil)
 			})
 		}
 	})
