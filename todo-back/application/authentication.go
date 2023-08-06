@@ -64,11 +64,14 @@ func (a *authentication) SignUp(ctx context.Context, input *SignUpInput) (output
 	txTime := txtime.GetTxTime(ctx)
 
 	if err == repository.ErrNotFound {
+		passwordHash := a.passwordHashService.CreateHash(input.Password)
+
 		// 仮登録状態にする
 		_, err = a.userRepository.Create(ctx, model.User{
 			ID:           model.NewUserID(),
 			Name:         input.Name,
 			Email:        input.Email,
+			PasswordHash: passwordHash,
 			SignUpStatus: model.SignUpWaitForAllow,
 			CreateTime:   txTime,
 		})
@@ -89,6 +92,10 @@ func (a *authentication) SignUp(ctx context.Context, input *SignUpInput) (output
 	}
 
 	if user.SignUpStatus == model.SignUpAllowed {
+		if user.PasswordHash != a.passwordHashService.CreateHash(input.Password) {
+			return nil, ErrorPasswordNotMatch
+		}
+
 		session, err := a.sessionService.GenerateSignedSession()
 		if err != nil {
 			return nil, fmt.Errorf("failed generate signed session. userId: %s, err: %w", user.ID.String(), err)
