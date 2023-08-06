@@ -1,4 +1,4 @@
 
 .PHONY: run
 run:
-	go run cmd/server/main.go
+	source .env.sh && go run cmd/server/main.go

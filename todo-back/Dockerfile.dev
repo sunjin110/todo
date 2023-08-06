@@ -27,6 +27,8 @@ RUN --mount=type=cache,target=/go/pkg/mod/ \
     --mount=type=bind,target=. \
     CGO_ENABLED=0 go build -o /bin/server ./cmd/server
 
+COPY ./.env.sh /src/
+
 ################################################################################
 # Create a new stage for running the application that contains the minimal
 # runtime dependencies for the application. This often uses a different base
@@ -64,9 +66,14 @@ USER appuser
 
 # Copy the executable from the "build" stage.
 COPY --from=build /bin/server /bin/
+COPY --from=build /src/.env.sh /bin/
 
 # Expose the port that the application listens on.
 EXPOSE 3010
 
 # What the container should run when it is started.
-ENTRYPOINT [ "/bin/server" ]
+# ENTRYPOINT [ "/bin/server" ]
+
+# ENTRYPOINT [ "source", "/bin/.env.sh", "&&", "/bin/server"]
+
+ENTRYPOINT ["sh", "-c", "source /bin/.env.sh && /bin/server"]

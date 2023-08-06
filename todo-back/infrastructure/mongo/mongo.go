@@ -31,7 +31,7 @@ func Connect(ctx context.Context, uri string) (*Client, error) {
 	if err := client.Ping(ctx, readpref.Primary()); err != nil {
 		return nil, fmt.Errorf("failed ping mongodb. uri: %s, err: %w", uri, err)
 	}
-	return nil, nil
+	return client, nil
 }
 
 func AppendPaging(opts *options.FindOptions, paging *repository.Paging) *options.FindOptions {

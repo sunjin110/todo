@@ -34,8 +34,7 @@ func Serve(ctx context.Context, config *config.Config) error {
 				MaxConnectionAge:  config.Server.MaxConnectionAge,
 			},
 		),
-		grpc.UnaryInterceptor(logInterceptor),
-		grpc.UnaryInterceptor(txTimeInterceptor),
+		grpc.ChainUnaryInterceptor(logInterceptor, txTimeInterceptor),
 	)
 
 	if err := Routing(ctx, server, config); err != nil {
@@ -48,6 +47,7 @@ func Serve(ctx context.Context, config *config.Config) error {
 	return nil
 }
 
+// ぶっちゃけここで書くアレではないがもうしんどいのでここに書く
 func Routing(ctx context.Context, server *grpc.Server, config *config.Config) error {
 
 	cloudflareWorkspaceClient, err := cloudflare.NewWorkersKVClient(config.Session.CloudFlareApiToken, config.Session.CloudFlareAccountID)
