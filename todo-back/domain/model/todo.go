@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"time"
+	"todo-back/domain/common/primary"
+)
 
 type TodoStatus string
 
@@ -9,6 +12,10 @@ func (s TodoStatus) String() string {
 }
 
 type TodoID string
+
+func NewTodoID() TodoID {
+	return TodoID(primary.ID())
+}
 
 func (t TodoID) String() string {
 	return string(t)

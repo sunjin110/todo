@@ -19,3 +19,10 @@ type Session struct {
 	Session    string
 	ExpireTime *time.Time
 }
+
+// AuthenticatedSession 認証が終わった後のsession情報、認可情報はこれを信頼していい
+type AuthenticatedSession struct {
+	Session string
+	UserID  UserID
+	// 認可情報とかを載せていきたい
+}

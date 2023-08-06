@@ -415,6 +415,11 @@ export namespace CreateTodo {
 }
 
 export class UpdateTodo extends jspb.Message {
+  getId(): TodoId | undefined;
+  setId(value?: TodoId): UpdateTodo;
+  hasId(): boolean;
+  clearId(): UpdateTodo;
+
   getTitle(): string;
   setTitle(value: string): UpdateTodo;
 
@@ -440,6 +445,7 @@ export class UpdateTodo extends jspb.Message {
 
 export namespace UpdateTodo {
   export type AsObject = {
+    id?: TodoId.AsObject,
     title: string,
     description: string,
     status: string,
@@ -447,17 +453,17 @@ export namespace UpdateTodo {
 
   export enum TitleCase { 
     _TITLE_NOT_SET = 0,
-    TITLE = 1,
+    TITLE = 2,
   }
 
   export enum DescriptionCase { 
     _DESCRIPTION_NOT_SET = 0,
-    DESCRIPTION = 2,
+    DESCRIPTION = 3,
   }
 
   export enum StatusCase { 
     _STATUS_NOT_SET = 0,
-    STATUS = 3,
+    STATUS = 4,
   }
 }
 

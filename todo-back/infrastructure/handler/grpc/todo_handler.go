@@ -13,14 +13,18 @@ func NewTodoRpcServer() todo.TodoRpcServer {
 	return &todoRpcServer{}
 }
 
-func (server *todoRpcServer) List(ctx context.Context, input *todo.ListInput) (*todo.ListOutput, error) {
-	panic("todo")
+func (rpc *todoRpcServer) List(context.Context, *todo.ListInput) (*todo.ListOutput, error) {
+	panic("not implemented yet")
 }
-
-func (server *todoRpcServer) Get(ctx context.Context, input *todo.GetInput) (*todo.GetOutput, error) {
-	panic("todo")
+func (rpc *todoRpcServer) Get(context.Context, *todo.GetInput) (*todo.GetOutput, error) {
+	panic("not implemented yet")
 }
-
-func (server *todoRpcServer) Create(ctx context.Context, input *todo.CreateInput) (*todo.CreateOutput, error) {
-	panic("todo")
+func (rpc *todoRpcServer) Create(context.Context, *todo.CreateInput) (*todo.CreateOutput, error) {
+	panic("not implemented yet")
+}
+func (rpc *todoRpcServer) Update(context.Context, *todo.UpdateInput) (*todo.UpdateOutput, error) {
+	panic("not implemented yet")
+}
+func (rpc *todoRpcServer) Delete(context.Context, *todo.DeleteInput) (*todo.DeleteOutput, error) {
+	panic("not implemented yet")
 }
