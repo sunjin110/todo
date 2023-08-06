@@ -14,6 +14,7 @@ var (
 )
 
 type WorkersKVClient interface {
+	// Get err: ErrorWorkersKVNotFoundError, other
 	Get(ctx context.Context, namespaceID string, key string) ([]byte, error)
 	Insert(ctx context.Context, namespaceID string, key string, value []byte) error
 	InsertWithTTL(ctx context.Context, ttl time.Time, namespaceID string, key string, value string) error

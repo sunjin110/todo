@@ -1,9 +1,18 @@
 package repository
 
-import "todo-back/domain/model"
+import (
+	"context"
+	"errors"
+	"todo-back/domain/model"
+)
+
+var (
+	ErrorExpireTimeIsRequired = errors.New("expire time is required")
+)
 
 type Session interface {
-	Insert(session model.Session, userID model.UserID) error
-	Delete(session model.Session) error
-	Get(sessionID string) (model.UserID, error)
+	// Insert err: ErrorExpireTimeIsRequired, other
+	Insert(ctx context.Context, session model.Session, userID model.UserID) error
+	Delete(ctx context.Context, session model.Session) error
+	Get(ctx context.Context, sessionID string) (model.UserID, error)
 }
