@@ -95,6 +95,12 @@ func (a *authentication) SignIn(ctx context.Context, input *SignInInput) (output
 	}, nil
 }
 
-func (a *authentication) SignOut(ctx context.Context, input *SignOutInput) (err error) {
-	panic("todo")
+func (a *authentication) SignOut(ctx context.Context, input *SignOutInput) error {
+	err := a.sessionService.DeleteSession(ctx, model.Session{
+		Session: input.Session.Session,
+	})
+	if err != nil {
+		return fmt.Errorf("failed sign out, sessionID: %s, err: %w", input.Session.Session, err)
+	}
+	return nil
 }
