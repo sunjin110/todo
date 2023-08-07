@@ -8,6 +8,7 @@ import (
 	"todo-back/domain/common/txtime"
 	"todo-back/domain/model"
 	"todo-back/domain/repository"
+	"todo-back/domain/service"
 )
 
 type Todo interface {
@@ -19,11 +20,13 @@ type Todo interface {
 
 type todo struct {
 	todoRepository repository.Todo
+	sessionService service.SessionService
 }
 
-func NewTodo(todoRepository repository.Todo) Todo {
+func NewTodo(todoRepository repository.Todo, sessionService service.SessionService) Todo {
 	return &todo{
 		todoRepository: todoRepository,
+		sessionService: sessionService,
 	}
 }
 
@@ -32,6 +35,14 @@ func (todo *todo) List(ctx context.Context, input input.TodoList) {
 }
 
 func (t *todo) Get(ctx context.Context, input input.GetTodo) (*output.GetTodo, error) {
+	// 今後は認可操作などもしていく
+	_, err := t.sessionService.GetAuthenticatedSession(ctx, input.Session)
+	if err != nil {
+		if err == service.ErrorNotFoundSession ||
+			err == service.ErrorNotFoundUser {
+			return nil, ErrorAuthentication
+		}
+	}
 
 	todo, err := t.todoRepository.Get(ctx, input.TodoID)
 	if err != nil {
@@ -46,13 +57,20 @@ func (t *todo) Get(ctx context.Context, input input.GetTodo) (*output.GetTodo, e
 }
 
 func (t *todo) Create(ctx context.Context, input input.CreateTodo) error {
+	session, err := t.sessionService.GetAuthenticatedSession(ctx, input.Session)
+	if err != nil {
+		if err == service.ErrorNotFoundSession ||
+			err == service.ErrorNotFoundUser {
+			return ErrorAuthentication
+		}
+	}
 
 	txTime := txtime.GetTxTime(ctx)
 
-	_, err := t.todoRepository.Create(ctx, model.Todo{
+	_, err = t.todoRepository.Create(ctx, model.Todo{
 		ID:          model.NewTodoID(),
 		Title:       input.Todo.Title,
-		UserID:      input.Session.UserID, // 今は自分のものだけ作れるような作り
+		UserID:      session.UserID, // 今は自分のものだけ作れるような作り
 		Description: input.Todo.Description,
 		Status:      input.Todo.Status,
 		Schedule:    nil, // TODO後で作る
@@ -66,6 +84,14 @@ func (t *todo) Create(ctx context.Context, input input.CreateTodo) error {
 }
 
 func (t *todo) Update(ctx context.Context, input input.UpdateTodo) error {
+	_, err := t.sessionService.GetAuthenticatedSession(ctx, input.Session)
+	if err != nil {
+		if err == service.ErrorNotFoundSession ||
+			err == service.ErrorNotFoundUser {
+			return ErrorAuthentication
+		}
+	}
+
 	beforeTodo, err := t.todoRepository.Get(ctx, input.Todo.ID)
 	if err != nil {
 		if err == repository.ErrNotFound {
@@ -82,7 +108,15 @@ func (t *todo) Update(ctx context.Context, input input.UpdateTodo) error {
 }
 
 func (t *todo) Delete(ctx context.Context, input input.DeleteTodo) error {
-	err := t.todoRepository.Delete(ctx, input.TodoID)
+	_, err := t.sessionService.GetAuthenticatedSession(ctx, input.Session)
+	if err != nil {
+		if err == service.ErrorNotFoundSession ||
+			err == service.ErrorNotFoundUser {
+			return ErrorAuthentication
+		}
+	}
+
+	err = t.todoRepository.Delete(ctx, input.TodoID)
 	if err != nil {
 		return fmt.Errorf("failed delete todo, err: %w", err)
 	}

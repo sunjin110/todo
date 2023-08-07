@@ -76,10 +76,12 @@ func Routing(ctx context.Context, server *grpc.Server, config *config.Config) er
 	sessionService := service.NewSessionService(config.Session.SessionSecretKey,
 		config.Session.SessionDuration, sessionRepository, userRepository)
 
+	todoApplication := application.NewTodo(todoRepository, sessionService)
+
 	authenticationApplication := application.NewAuthentication(passwordHashService, sessionService, userRepository)
 
 	user.RegisterUserRpcServer(server, NewUserRpcServer())
-	todo.RegisterTodoRpcServer(server, NewTodoRpcServer(todoRepository))
+	todo.RegisterTodoRpcServer(server, NewTodoRpcServer(todoApplication))
 	alive.RegisterAliveServer(server, NewAliveRpcServer())
 	authentication.RegisterAuthenticationServer(server, NewAuthenticationRpcService(authenticationApplication))
 	return nil

@@ -25,8 +25,11 @@ type SessionService interface {
 	GetSessionExpireTime(ctx context.Context) (time.Time, error)
 	StartSession(ctx context.Context, user model.User, session model.Session) error
 
-	// GetUserBySession err: ErrorNotFoundSession, other
+	// GetUserBySession err: ErrorNotFoundSession, ErrorNotFoundUser, other
 	GetUserBySession(ctx context.Context, session model.Session) (model.User, error)
+
+	// GetAuthenticatedSession err: ErrorNotFoundSession, ErrorNotFoundUser
+	GetAuthenticatedSession(ctx context.Context, session model.Session) (model.AuthenticatedSession, error)
 	DeleteSession(ctx context.Context, session model.Session) error
 }
 
@@ -130,6 +133,27 @@ func (s *sessionService) GetUserBySession(ctx context.Context, session model.Ses
 		return model.User{}, fmt.Errorf("failed get user from user repository, err: %w", err)
 	}
 	return user, nil
+}
+
+func (s *sessionService) GetAuthenticatedSession(ctx context.Context, session model.Session) (model.AuthenticatedSession, error) {
+
+	user, err := s.GetUserBySession(ctx, session)
+	if err != nil {
+		if err == ErrorNotFoundUser {
+			return model.AuthenticatedSession{}, ErrorNotFoundUser
+		}
+		if err == ErrorNotFoundSession {
+			return model.AuthenticatedSession{}, ErrorNotFoundSession
+		}
+		return model.AuthenticatedSession{}, fmt.Errorf("failed get user by session. err: %w", err)
+	}
+
+	return model.AuthenticatedSession{
+		Session: session.Session,
+		UserID:  user.ID,
+		// TODO これから認可情報をどんどん追加していく
+	}, nil
+
 }
 
 func (s *sessionService) DeleteSession(ctx context.Context, session model.Session) error {

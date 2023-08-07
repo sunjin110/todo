@@ -2,26 +2,34 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 	"todo-back/application"
+	"todo-back/infrastructure/handler/grpc/convert"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/todo"
 )
 
 type todoRpcServer struct {
 	todo.UnimplementedTodoRpcServer
-	userApplication application.User
+	todoApplication application.Todo
 }
 
-func NewTodoRpcServer(userApplication application.User) todo.TodoRpcServer {
+func NewTodoRpcServer(todoApplication application.Todo) todo.TodoRpcServer {
 	return &todoRpcServer{
-		userApplication: userApplication,
+		todoApplication: todoApplication,
 	}
 }
 
 func (rpc *todoRpcServer) List(context.Context, *todo.ListInput) (*todo.ListOutput, error) {
 	panic("not implemented yet")
 }
-func (rpc *todoRpcServer) Get(context.Context, *todo.GetInput) (*todo.GetOutput, error) {
-	panic("not implemented yet")
+func (rpc *todoRpcServer) Get(ctx context.Context, in *todo.GetInput) (*todo.GetOutput, error) {
+	output, err := rpc.todoApplication.Get(ctx, *convert.ToModelGetTodoInput(in))
+	if err != nil {
+		return nil, fmt.Errorf("failed todo get. err: %w", err)
+	}
+
+	panic("todo")
+
 }
 func (rpc *todoRpcServer) Create(context.Context, *todo.CreateInput) (*todo.CreateOutput, error) {
 	panic("not implemented yet")

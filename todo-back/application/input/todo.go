@@ -13,7 +13,7 @@ type TodoList struct {
 }
 
 type GetTodo struct {
-	Session model.AuthenticatedSession
+	Session model.Session
 	TodoID  model.TodoID
 }
 
@@ -25,7 +25,7 @@ type CreateTodoModel struct {
 }
 
 type CreateTodo struct {
-	Session model.AuthenticatedSession
+	Session model.Session
 	Todo    CreateTodoModel
 }
 
@@ -37,11 +37,11 @@ type UpdateTodoModel struct {
 }
 
 type UpdateTodo struct {
-	Session model.AuthenticatedSession
+	Session model.Session
 	Todo    UpdateTodoModel
 }
 
 type DeleteTodo struct {
-	Session model.AuthenticatedSession
+	Session model.Session
 	TodoID  model.TodoID
 }
