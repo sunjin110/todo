@@ -20,6 +20,13 @@ func ToModelListTodoInput(in *todo.ListInput) *input.TodoList {
 	}
 }
 
+func ToGrpcListTodoOutput(out *output.ListTodo) *todo.ListOutput {
+	return &todo.ListOutput{
+		HasNext: out.HasNext,
+		Todos:   toGrpcTodoList(out.Todos),
+	}
+}
+
 func toRepositoryTodoSort(sort *todo.TodoSort) *repository.TodoSort {
 	if sort == nil {
 		return nil
@@ -52,7 +59,7 @@ func ToModelGetTodoInput(in *todo.GetInput) *input.GetTodo {
 
 func ToGRPCGetTodoOutput(out *output.GetTodo) *todo.GetOutput {
 	return &todo.GetOutput{
-		Todo: ToGrpcTodo(&out.Todo),
+		Todo: toGrpcTodo(&out.Todo),
 	}
 }
 
@@ -87,7 +94,15 @@ func ToModelDeleteTodoInput(in *todo.DeleteInput) *input.DeleteTodo {
 	}
 }
 
-func ToGrpcTodo(todoModel *model.Todo) *todo.Todo {
+func toGrpcTodoList(models []model.Todo) []*todo.Todo {
+	list := make([]*todo.Todo, 0, len(models))
+	for _, m := range models {
+		list = append(list, toGrpcTodo(&m))
+	}
+	return list
+}
+
+func toGrpcTodo(todoModel *model.Todo) *todo.Todo {
 	return &todo.Todo{
 		Id: &todo.TodoId{
 			Id: todoModel.ID.String(),

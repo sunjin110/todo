@@ -20,7 +20,11 @@ func NewTodoRpcServer(todoApplication application.Todo) todo.TodoRpcServer {
 }
 
 func (rpc *todoRpcServer) List(ctx context.Context, list *todo.ListInput) (*todo.ListOutput, error) {
-	panic("not implemented yet")
+	output, err := rpc.todoApplication.List(ctx, *convert.ToModelListTodoInput(list))
+	if err != nil {
+		return nil, fmt.Errorf("failed todo list, err: %w", err)
+	}
+	return convert.ToGrpcListTodoOutput(output), nil
 }
 
 func (rpc *todoRpcServer) Get(ctx context.Context, in *todo.GetInput) (*todo.GetOutput, error) {
