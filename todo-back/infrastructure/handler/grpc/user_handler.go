@@ -2,15 +2,19 @@ package grpc
 
 import (
 	"context"
+	"todo-back/application"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/user"
 )
 
 type userRpcServer struct {
 	user.UnimplementedUserRpcServer
+	userApplication application.User
 }
 
-func NewUserRpcServer() user.UserRpcServer {
-	return &userRpcServer{}
+func NewUserRpcServer(userApplication application.User) user.UserRpcServer {
+	return &userRpcServer{
+		userApplication: userApplication,
+	}
 }
 
 func (rpc *userRpcServer) Create(context.Context, *user.CreateInput) (*user.CreateOutput, error) {

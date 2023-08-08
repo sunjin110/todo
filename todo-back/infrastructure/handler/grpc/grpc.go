@@ -84,7 +84,9 @@ func Routing(ctx context.Context, server *grpc.Server, config *config.Config) er
 
 	authenticationApplication := application.NewAuthentication(passwordHashService, sessionService, userRepository)
 
-	user.RegisterUserRpcServer(server, NewUserRpcServer())
+	userApplication := application.NewUser(userRepository, sessionService)
+
+	user.RegisterUserRpcServer(server, NewUserRpcServer(userApplication))
 	todo.RegisterTodoRpcServer(server, NewTodoRpcServer(todoApplication))
 	alive.RegisterAliveServer(server, NewAliveRpcServer())
 	authentication.RegisterAuthenticationServer(server, NewAuthenticationRpcService(authenticationApplication))
