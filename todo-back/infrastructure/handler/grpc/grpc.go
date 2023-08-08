@@ -62,6 +62,10 @@ func Routing(ctx context.Context, server *grpc.Server, config *config.Config) er
 	}
 
 	mongoDB := mongoClient.Database(config.MongoDB.DB)
+	err = mongo.CreateIndex(ctx, mongoDB)
+	if err != nil {
+		return fmt.Errorf("failed create index. err: %w", err)
+	}
 
 	passwordHashService := service.NewPasswordHash(config.PasswordHashSecret)
 	morphologicalAnalysisService, err := infra_service.NewMorphologicalAnalysis()
