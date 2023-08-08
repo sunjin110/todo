@@ -426,8 +426,8 @@ export class UpdateTodo extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): UpdateTodo;
 
-  getStatus(): string;
-  setStatus(value: string): UpdateTodo;
+  getStatus(): Status;
+  setStatus(value: Status): UpdateTodo;
 
   getTitleCase(): UpdateTodo.TitleCase;
 
@@ -448,7 +448,7 @@ export namespace UpdateTodo {
     id?: TodoId.AsObject,
     title: string,
     description: string,
-    status: string,
+    status: Status,
   }
 
   export enum TitleCase { 
