@@ -6,7 +6,7 @@ import (
 )
 
 type TodoList struct {
-	Session model.AuthenticatedSession
+	Session model.Session
 	Paging  *repository.Paging
 	Sorting *repository.TodoSort
 	Filter  *repository.TodoFilter

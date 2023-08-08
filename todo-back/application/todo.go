@@ -12,6 +12,7 @@ import (
 )
 
 type Todo interface {
+	List(ctx context.Context, input input.TodoList) (*output.ListTodo, error)
 	Get(ctx context.Context, input input.GetTodo) (*output.GetTodo, error)
 	Create(ctx context.Context, input input.CreateTodo) error
 	Update(ctx context.Context, input input.UpdateTodo) error
@@ -30,8 +31,8 @@ func NewTodo(todoRepository repository.Todo, sessionService service.SessionServi
 	}
 }
 
-func (todo *todo) List(ctx context.Context, input input.TodoList) {
-
+func (todo *todo) List(ctx context.Context, input input.TodoList) (*output.ListTodo, error) {
+	panic("todo")
 }
 
 func (t *todo) Get(ctx context.Context, input input.GetTodo) (*output.GetTodo, error) {

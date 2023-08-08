@@ -19,7 +19,7 @@ func NewTodoRpcServer(todoApplication application.Todo) todo.TodoRpcServer {
 	}
 }
 
-func (rpc *todoRpcServer) List(context.Context, *todo.ListInput) (*todo.ListOutput, error) {
+func (rpc *todoRpcServer) List(ctx context.Context, list *todo.ListInput) (*todo.ListOutput, error) {
 	panic("not implemented yet")
 }
 

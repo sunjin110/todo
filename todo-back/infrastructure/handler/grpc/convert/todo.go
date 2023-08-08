@@ -4,11 +4,44 @@ import (
 	"todo-back/application/input"
 	"todo-back/application/output"
 	"todo-back/domain/model"
+	"todo-back/domain/repository"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/todo"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/user"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
+
+func ToModelListTodoInput(in *todo.ListInput) *input.TodoList {
+	return &input.TodoList{
+		Session: *ToModelSession(in.Session),
+		Paging:  toRepositoryPaging(in.Paging),
+		Sorting: toRepositoryTodoSort(in.Sort),
+		Filter:  toRepositoryTodoFilter(in.Filter),
+	}
+}
+
+func toRepositoryTodoSort(sort *todo.TodoSort) *repository.TodoSort {
+	if sort == nil {
+		return nil
+	}
+	return &repository.TodoSort{
+		CreateTime: toRepositorySortField(sort.CreateTime),
+		DoneTime:   toRepositorySortField(sort.DoneTime),
+	}
+}
+
+func toRepositoryTodoFilter(filter *todo.TodoFilter) *repository.TodoFilter {
+	if filter == nil {
+		return nil
+	}
+
+	return &repository.TodoFilter{
+		ID:          toRepositoryFilterField(toModelTodoID(filter.Id), nil),
+		Title:       toRepositoryFilterField(filter.Title, filter.TitleFilterKind),
+		Description: toRepositoryFilterField(filter.Description, filter.DescriptionFilterKind),
+		Status:      toRepositoryFilterField(toModelTodoStatus(filter.Status), nil),
+	}
+}
 
 func ToModelGetTodoInput(in *todo.GetInput) *input.GetTodo {
 	return &input.GetTodo{
@@ -29,18 +62,12 @@ func ToModelCreateTodoInput(in *todo.CreateInput) *input.CreateTodo {
 		Todo: input.CreateTodoModel{
 			Title:       in.Todo.Title,
 			Description: in.Todo.Description,
-			Status:      ToModelTodoStatus(in.Todo.Status),
+			Status:      *toModelTodoStatus(&in.Todo.Status),
 		},
 	}
 }
 
 func ToModelUpdateTodoInput(in *todo.UpdateInput) *input.UpdateTodo {
-
-	var status *model.TodoStatus
-	if in.Todo.Status != nil {
-		s := ToModelTodoStatus(*in.Todo.Status)
-		status = &s
-	}
 
 	return &input.UpdateTodo{
 		Session: *ToModelSession(in.Session),
@@ -48,7 +75,7 @@ func ToModelUpdateTodoInput(in *todo.UpdateInput) *input.UpdateTodo {
 			ID:          model.TodoID(in.Todo.Id.Id),
 			Title:       in.Todo.Title,
 			Description: in.Todo.Description,
-			Status:      status,
+			Status:      toModelTodoStatus(in.Todo.Status),
 		},
 	}
 }
@@ -88,15 +115,26 @@ func ToGrpcTodoStatus(status model.TodoStatus) todo.Status {
 	}
 }
 
-func ToModelTodoStatus(status todo.Status) model.TodoStatus {
-	switch status {
-	case todo.Status_scheduled:
-		return model.ScheduledStatus
-	case todo.Status_done:
-		return model.DoneStatus
-	case todo.Status_draft:
-		return model.DraftStatus
-	default:
-		return model.DoneStatus
+func toModelTodoStatus(status *todo.Status) *model.TodoStatus {
+	if status == nil {
+		return nil
 	}
+
+	switch *status {
+	case todo.Status_scheduled:
+		return toPointer(model.ScheduledStatus)
+	case todo.Status_done:
+		return toPointer(model.DoneStatus)
+	case todo.Status_draft:
+		return toPointer(model.DraftStatus)
+	default:
+		return toPointer(model.DoneStatus)
+	}
+}
+
+func toModelTodoID(id *todo.TodoId) *model.TodoID {
+	if id == nil {
+		return nil
+	}
+	return toPointer(model.TodoID(id.Id))
 }
