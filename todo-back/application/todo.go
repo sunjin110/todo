@@ -31,8 +31,29 @@ func NewTodo(todoRepository repository.Todo, sessionService service.SessionServi
 	}
 }
 
-func (todo *todo) List(ctx context.Context, input input.TodoList) (*output.ListTodo, error) {
-	panic("todo")
+func (t *todo) List(ctx context.Context, input input.TodoList) (*output.ListTodo, error) {
+	// 今後は認可操作などもしていく
+	_, err := t.sessionService.GetAuthenticatedSession(ctx, input.Session)
+	if err != nil {
+		if err == service.ErrorNotFoundSession ||
+			err == service.ErrorNotFoundUser {
+			return nil, ErrorAuthentication
+		}
+	}
+
+	out, err := t.todoRepository.List(ctx, repository.TodoListRequest{
+		Paging:  input.Paging,
+		Filter:  input.Filter,
+		Sorting: input.Sorting,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed list todo, input: %v, err: %w", input, err)
+	}
+
+	return &output.ListTodo{
+		HasNext: out.HasNext,
+		Todos:   out.TodoList,
+	}, nil
 }
 
 func (t *todo) Get(ctx context.Context, input input.GetTodo) (*output.GetTodo, error) {
