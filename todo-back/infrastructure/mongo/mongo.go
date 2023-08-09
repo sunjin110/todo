@@ -92,7 +92,7 @@ func HasNext[T any](list []T, paging *repository.Paging) bool {
 	if paging == nil {
 		return false
 	}
-	return len(list) < int(paging.Limit)
+	return len(list) > int(paging.Limit)
 }
 
 func GenerateList[T ToModeler[U], U any](dtoList []T, paging *repository.Paging) []U {
