@@ -6,10 +6,13 @@ GO_OUT_DIR := proto_go_gen
 # TypeScriptのための出力ディレクトリ
 TS_OUT_DIR := proto_ts_gen
 
+DART_OUT_DIR := proto_dart_gen
+
 .PHONY: gen-all
 gen-all:
 	@make go-protogen
 	@make ts-protogen
+	@make dart-protogen
 
 # コード生成のターゲット
 .PHONY: protogen
@@ -32,6 +35,14 @@ ts-protogen: $(PROTOS)
 		$$proto; \
 	done
 
+.PHONY: dart-protogen
+dart-protogen: $(PROTOS)
+	@mkdir -p $(DART_OUT_DIR)
+	@for proto in $^ ; do \
+		protoc -I proto \
+		--dart_out=grpc:$(DART_OUT_DIR) \
+		$$proto; \
+	done
 
 .PHONY: format
 format:
