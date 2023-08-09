@@ -27,13 +27,16 @@ message User {
 message CreateUser {
   string name = 1;
   string email = 2;
-  authentication.UserSignUpStatus status = 3;
+  optional string password = 3;
+  authentication.UserSignUpStatus status = 4;
 }
 
 message UpdateUser {
-  optional string name = 1;
-  optional string email = 2;
-  optional authentication.UserSignUpStatus status = 3;
+  UserId id = 1;
+  optional string name = 2;
+  optional string email = 3;
+  optional string password = 4;
+  optional authentication.UserSignUpStatus status = 5;
 }
 
 message CreateInput {

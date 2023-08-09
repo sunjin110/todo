@@ -61,8 +61,13 @@ export class CreateUser extends jspb.Message {
   getEmail(): string;
   setEmail(value: string): CreateUser;
 
+  getPassword(): string;
+  setPassword(value: string): CreateUser;
+
   getStatus(): authentication_authentication_pb.UserSignUpStatus;
   setStatus(value: authentication_authentication_pb.UserSignUpStatus): CreateUser;
+
+  getPasswordCase(): CreateUser.PasswordCase;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateUser.AsObject;
@@ -76,16 +81,30 @@ export namespace CreateUser {
   export type AsObject = {
     name: string,
     email: string,
+    password: string,
     status: authentication_authentication_pb.UserSignUpStatus,
+  }
+
+  export enum PasswordCase { 
+    _PASSWORD_NOT_SET = 0,
+    PASSWORD = 3,
   }
 }
 
 export class UpdateUser extends jspb.Message {
+  getId(): UserId | undefined;
+  setId(value?: UserId): UpdateUser;
+  hasId(): boolean;
+  clearId(): UpdateUser;
+
   getName(): string;
   setName(value: string): UpdateUser;
 
   getEmail(): string;
   setEmail(value: string): UpdateUser;
+
+  getPassword(): string;
+  setPassword(value: string): UpdateUser;
 
   getStatus(): authentication_authentication_pb.UserSignUpStatus;
   setStatus(value: authentication_authentication_pb.UserSignUpStatus): UpdateUser;
@@ -93,6 +112,8 @@ export class UpdateUser extends jspb.Message {
   getNameCase(): UpdateUser.NameCase;
 
   getEmailCase(): UpdateUser.EmailCase;
+
+  getPasswordCase(): UpdateUser.PasswordCase;
 
   getStatusCase(): UpdateUser.StatusCase;
 
@@ -106,24 +127,31 @@ export class UpdateUser extends jspb.Message {
 
 export namespace UpdateUser {
   export type AsObject = {
+    id?: UserId.AsObject,
     name: string,
     email: string,
+    password: string,
     status: authentication_authentication_pb.UserSignUpStatus,
   }
 
   export enum NameCase { 
     _NAME_NOT_SET = 0,
-    NAME = 1,
+    NAME = 2,
   }
 
   export enum EmailCase { 
     _EMAIL_NOT_SET = 0,
-    EMAIL = 2,
+    EMAIL = 3,
+  }
+
+  export enum PasswordCase { 
+    _PASSWORD_NOT_SET = 0,
+    PASSWORD = 4,
   }
 
   export enum StatusCase { 
     _STATUS_NOT_SET = 0,
-    STATUS = 3,
+    STATUS = 5,
   }
 }
 

@@ -22,7 +22,7 @@ type UserSort struct {
 }
 
 type UserFilter struct {
-	ID    *FilterField[model.TodoID]
+	ID    *FilterField[model.UserID]
 	Name  *FilterField[string]
 	Email *FilterField[string]
 }

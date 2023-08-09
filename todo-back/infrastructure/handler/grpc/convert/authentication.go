@@ -98,3 +98,21 @@ func ToGrpcUserSignUpStatus(status model.UserSignUpStatus) authentication.UserSi
 		return authentication.UserSignUpStatus_SignupSignUpStatusUnknown
 	}
 }
+
+func toModelUserSignUpStatus(status *authentication.UserSignUpStatus) *model.UserSignUpStatus {
+	if status == nil {
+		return nil
+	}
+	switch status {
+	case authentication.UserSignUpStatus_SignupSignUpStatusAllowed.Enum():
+		return toPointer(model.SignUpAllowed)
+	case authentication.UserSignUpStatus_SignupSignUpStatusDenied.Enum():
+		return toPointer(model.SignUpDenied)
+	case authentication.UserSignUpStatus_SignupSignUpStatusUnknown.Enum():
+		return toPointer(model.SignUpDenied)
+	case authentication.UserSignUpStatus_SignupSignUpStatusWaitForAllow.Enum():
+		return toPointer(model.SignUpWaitForAllow)
+	default:
+		return toPointer(model.SignUpDenied)
+	}
+}
