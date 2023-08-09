@@ -20,8 +20,10 @@ func logInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServer
 	logger.Info().Str("path", info.FullMethod).Str("req", fmt.Sprintf("%+v", req)).Send()
 	res, err := handler(ctx, req)
 	if err != nil {
-		logger.Error().Err(err).Send()
+		logger.Error().Interface("req", req).Str("FullMethod", info.FullMethod).Err(err).Send()
 	}
+
+	logger.Debug().Interface("res", res).Send()
 	return res, err
 }
 

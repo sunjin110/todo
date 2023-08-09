@@ -156,6 +156,11 @@ func (e *event) AnErr(k string, err error) common_log.Event {
 	return e
 }
 
+func (e *event) Interface(k string, v interface{}) common_log.Event {
+	e.innerEvent.Interface(k, v)
+	return e
+}
+
 func (e *event) Msg(msg string) {
 	e.innerEvent.Msg(msg)
 }

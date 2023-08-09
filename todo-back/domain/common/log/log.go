@@ -44,6 +44,7 @@ type Event interface {
 	Duration(k string, d time.Duration) Event
 	Err(err error) Event
 	AnErr(k string, err error) Event
+	Interface(k string, v interface{}) Event
 	Stack() Event
 	Msg(msg string)
 	Send()
