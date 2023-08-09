@@ -121,7 +121,19 @@ func (u *user) Update(ctx context.Context, input input.UpdateUser) error {
 }
 
 func (u *user) Delete(ctx context.Context, input input.DeleteUser) error {
-	panic("todo")
+	_, err := u.sessionService.GetAuthenticatedSession(ctx, input.Session)
+	if err != nil {
+		if err == service.ErrorNotFoundSession ||
+			err == service.ErrorNotFoundUser {
+			return ErrorAuthentication
+		}
+	}
+
+	err = u.userRepository.Delete(ctx, input.UserID)
+	if err != nil {
+		return fmt.Errorf("failed delete user. userID: %s, err: %w", input.UserID.String(), err)
+	}
+	return nil
 }
 
 func (u *user) generateUpdatedUser(beforeUser model.User, updatedUser input.UpdateUserModel) model.User {
