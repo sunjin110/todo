@@ -131,8 +131,8 @@ class TodoListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("リスト一覧"),
-        backgroundColor: Colors.green[300],
-        foregroundColor: Colors.white70,
+        // backgroundColor: Colors.green[300],
+        // foregroundColor: Colors.white70,
       ),
       // body: Center(child: Text("リスト一覧画面")),
       body: ListView(
