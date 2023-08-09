@@ -33,7 +33,27 @@ func NewUser(userRepository repository.User, sessionService service.SessionServi
 }
 
 func (u *user) List(ctx context.Context, input input.UserList) (*output.ListUser, error) {
-	panic("todo")
+	_, err := u.sessionService.GetAuthenticatedSession(ctx, input.Session)
+	if err != nil {
+		if err == service.ErrorNotFoundSession ||
+			err == service.ErrorNotFoundUser {
+			return nil, ErrorAuthentication
+		}
+	}
+
+	out, err := u.userRepository.List(ctx, repository.UserListRequest{
+		Paging: input.Paging,
+		Filter: input.Filter,
+		Sort:   input.Sorting,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed list user. input: %+v, err: %w", input, err)
+	}
+
+	return &output.ListUser{
+		HasNext: out.HasNext,
+		Users:   out.List,
+	}, nil
 }
 
 func (u *user) Get(ctx context.Context, input input.GetUser) (*output.GetUser, error) {
