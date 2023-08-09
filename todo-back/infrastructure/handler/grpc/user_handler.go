@@ -31,6 +31,8 @@ func (rpc *userRpcServer) Delete(context.Context, *user.DeleteInput) (*user.Dele
 }
 func (rpc *userRpcServer) Get(context.Context, *user.GetInput) (*user.GetOutput, error) {
 
+	// rpc.userApplication.Get(ctx, )
+
 	panic("not implemented yet")
 }
 func (rpc *userRpcServer) List(context.Context, *user.ListInput) (*user.ListOutput, error) {

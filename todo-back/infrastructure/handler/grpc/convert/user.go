@@ -2,6 +2,7 @@ package convert
 
 import (
 	"todo-back/application/input"
+	"todo-back/application/output"
 	"todo-back/domain/model"
 	"todo-back/domain/repository"
 	"todo-back/infrastructure/handler/grpc/proto_go_gen/user"
@@ -17,6 +18,27 @@ func ToModelGetUserInput(in *user.GetInput) *input.GetUser {
 	}
 }
 
+func ToGrpcGetUserOutput(out *output.GetUser) *user.GetOutput {
+	return &user.GetOutput{
+		User: toGrpcUser(&out.User),
+	}
+}
+
+func toGrpcUser(userModel *model.User) *user.User {
+	if userModel == nil {
+		return nil
+	}
+
+	return &user.User{
+		Id: &user.UserId{
+			Id: userModel.ID.String(),
+		},
+		Name:   userModel.Name,
+		Email:  userModel.Email,
+		Status: ToGrpcUserSignUpStatus(userModel.SignUpStatus),
+	}
+}
+
 func ToModelListUserInput(in *user.ListInput) *input.UserList {
 	if in == nil {
 		return nil
@@ -26,6 +48,22 @@ func ToModelListUserInput(in *user.ListInput) *input.UserList {
 		Paging:  toRepositoryPaging(in.Paging),
 		Sorting: toRepositoryUserSort(in.Sort),
 		Filter:  toRepositoryUserFilter(in.Filter),
+	}
+}
+
+func ToGrpcListUserOutput(out *output.ListUser) *user.ListOutput {
+	if out == nil {
+		return nil
+	}
+
+	users := make([]*user.User, 0, len(out.Users))
+	for _, userModel := range out.Users {
+		users = append(users, toGrpcUser(&userModel))
+	}
+
+	return &user.ListOutput{
+		HasNext: out.HasNext,
+		Users:   users,
 	}
 }
 
