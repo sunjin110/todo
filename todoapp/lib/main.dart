@@ -131,8 +131,34 @@ class TodoListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("リスト一覧"),
+        backgroundColor: Colors.green[300],
+        foregroundColor: Colors.white70,
       ),
-      body: Center(child: Text("リスト一覧画面")),
+      // body: Center(child: Text("リスト一覧画面")),
+      body: ListView(
+        children: [
+          Card(
+            child: ListTile(
+              title: Text("💰10月分の請求書を作る"),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("🛀お風呂に入る"),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("💩トイレに行く"),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("🦷歯を磨く"),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
