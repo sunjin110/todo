@@ -20,7 +20,8 @@ type GetUser struct {
 type CreateUserModel struct {
 	Name     string
 	Email    string
-	Password string
+	Password *string
+	Status   model.UserSignUpStatus
 }
 
 type CreateUser struct {
@@ -29,9 +30,11 @@ type CreateUser struct {
 }
 
 type UpdateUserModel struct {
+	ID       model.UserID
 	Name     *string
 	Email    *string
 	Password *string
+	Status   *model.UserSignUpStatus
 }
 
 type UpdateUser struct {
