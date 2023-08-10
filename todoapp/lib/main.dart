@@ -127,45 +127,43 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class TodoListPage extends StatelessWidget {
+class TodoListPage extends StatefulWidget {
+  @override
+  _TodoListPageState createState() => _TodoListPageState();
+}
+
+class _TodoListPageState extends State<TodoListPage> {
+  List<String> todoList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("リスト一覧"),
-        // backgroundColor: Colors.green[300],
-        // foregroundColor: Colors.white70,
       ),
-      // body: Center(child: Text("リスト一覧画面")),
-      body: ListView(
-        children: [
-          Card(
+      body: ListView.builder(
+        itemCount: todoList.length,
+        itemBuilder: (context, index) {
+          return Card(
             child: ListTile(
-              title: Text("💰10月分の請求書を作る"),
+              title: Text(todoList[index]),
             ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("🛀お風呂に入る"),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("💩トイレに行く"),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("🦷歯を磨く"),
-            ),
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        onPressed: () async {
+          final String? todoText = await Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) {
             return TodoAddPage();
           }));
+
+          if (todoText == null) {
+            return;
+          }
+          setState(() {
+            todoList.add(todoText);
+          });
         },
         child: Icon(Icons.add),
       ),
@@ -213,7 +211,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
                     backgroundColor: MaterialStatePropertyAll(Colors.blue),
                     foregroundColor: MaterialStatePropertyAll(Colors.white)),
                 onPressed: () {
-                  print("===== add\n");
+                  Navigator.of(context).pop(_text);
                 },
                 child: Text(
                   "リスト追加",
