@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -171,7 +173,14 @@ class TodoListPage extends StatelessWidget {
   }
 }
 
-class TodoAddPage extends StatelessWidget {
+class TodoAddPage extends StatefulWidget {
+  @override
+  _TodoAddPageState createState() => _TodoAddPageState();
+}
+
+class _TodoAddPageState extends State<TodoAddPage> {
+  String _text = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,7 +192,17 @@ class TodoAddPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(),
+            Text(_text, style: TextStyle(color: Colors.blue)),
+            const SizedBox(
+              height: 8,
+            ),
+            TextField(
+              onChanged: (String value) {
+                setState(() {
+                  _text = value;
+                });
+              },
+            ),
             const SizedBox(
               height: 8,
             ),
@@ -219,15 +238,6 @@ class TodoAddPage extends StatelessWidget {
           ],
         ),
       ),
-      // body: Center(
-
-      //   child: TextButton(
-      //     onPressed: () {
-      //       Navigator.of(context).pop();
-      //     },
-      //     child: Text("リスト追加画面(クリックで戻る)"),
-      //   ),
-      // ),
     );
   }
 }
