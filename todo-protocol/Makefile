@@ -35,13 +35,22 @@ ts-protogen: $(PROTOS)
 		$$proto; \
 	done
 
+# .PHONY: dart-protogen
+# dart-protogen: $(PROTOS)
+# 	@mkdir -p $(DART_OUT_DIR)
+# 	@for proto in $^ ; do \
+# 		protoc -I proto \
+# 		--dart_out=grpc:$(DART_OUT_DIR) \
+# 		$$proto ; \
+# 	done
+
 .PHONY: dart-protogen
 dart-protogen: $(PROTOS)
 	@mkdir -p $(DART_OUT_DIR)
 	@for proto in $^ ; do \
 		protoc -I proto \
 		--dart_out=grpc:$(DART_OUT_DIR) \
-		$$proto; \
+		$$proto google/protobuf/timestamp.proto; \
 	done
 
 .PHONY: format
