@@ -4,3 +4,9 @@ class Session {
 
   Session({required this.session, required this.expireTime});
 }
+
+enum UserSignUpStatus {
+  allowed,
+  waitForAllow,
+  denied,
+}
