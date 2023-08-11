@@ -1,24 +1,12 @@
 import 'package:todoapp/domain/model/user_auth.dart' as $model;
 
 abstract class AuthenticationUseCaseInterface {
-  Future<SignInOutput> signIn(SignInInput input);
+  Future<void> signIn(String email, String password);
 }
 
 class AuthenticationUseCase implements AuthenticationUseCaseInterface {
   @override
-  Future<SignInOutput> signIn(SignInInput input) async {
-    // return SignInOutput();
+  Future<void> signIn(String email, String password) async {
     throw UnimplementedError();
   }
-}
-
-class SignInOutput {
-  final $model.Session? session;
-  SignInOutput({required this.session});
-}
-
-class SignInInput {
-  final String email;
-  final String password;
-  SignInInput({required this.email, required this.password});
 }
