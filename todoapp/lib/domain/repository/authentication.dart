@@ -1,6 +1,6 @@
 import 'package:todoapp/domain/model/user_auth.dart' as $model;
 
-abstract class AuthenticationRepositoryImplement {
+abstract class AuthenticationRepository {
   Future<$model.Session> signIn(String email, String password);
   Future<SignUpOutput> signUp(String email, String password);
   Future<void> signOut($model.Session session);
