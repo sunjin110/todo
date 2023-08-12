@@ -17,7 +17,7 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
     input.email = email;
     input.password = password;
 
-    final response = await this.client.signIn(input);
+    final response = await client.signIn(input);
 
     return convertToModelSession(response.session);
   }
@@ -28,7 +28,7 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
     input.email = email;
     input.password = password;
 
-    final res = await this.client.signUp(input);
+    final res = await client.signUp(input);
 
     return $repository.SignUpOutput(
         session: convertToModelSession(res.session),
