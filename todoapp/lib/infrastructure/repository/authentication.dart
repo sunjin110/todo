@@ -5,6 +5,7 @@ import 'package:todoapp/infrastructure/grpc/grpc.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authentication.pb.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authentication.pbgrpc.dart'
     as $auth;
+import 'package:todoapp/infrastructure/grpc/proto_dart_gen/google/protobuf/timestamp.pb.dart';
 
 class AuthenticationRepository implements $repository.AuthenticationRepository {
   final $auth.AuthenticationClient client;
@@ -37,7 +38,9 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
 
   @override
   Future<void> signOut($model.Session session) async {
-    throw UnimplementedError();
+    var input = SignOutInput();
+    input.session = convertToGrpcSession(session);
+    await client.signOut(input);
   }
 }
 
@@ -45,6 +48,13 @@ $model.Session convertToModelSession(Session session) {
   return $model.Session(
       session: session.session,
       expireTime: convertTimestampToDateTime(session.expireTime));
+}
+
+Session convertToGrpcSession($model.Session session) {
+  var s = Session();
+  s.session = session.session;
+  s.expireTime = Timestamp.fromDateTime(session.expireTime);
+  return s;
 }
 
 $model.UserSignUpStatus convertToModelUserSignUpStatus(
