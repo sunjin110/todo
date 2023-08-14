@@ -99,6 +99,41 @@ class TodoRepository implements $repository.TodoRepository {
     return TodoId(id: id.id);
   }
 
+  static $todo.TodoId convertGrpcId(TodoId id) {
+    final grpcId = $todo.TodoId();
+    grpcId.id = id.toString();
+    return grpcId;
+  }
+
+  static $todo.CreateTodo convertCreateTodo(
+      $repository.CreateTodo repoCreateTodo) {
+    final createTodo = $todo.CreateTodo();
+    createTodo.title = repoCreateTodo.title;
+    createTodo.description = repoCreateTodo.description;
+    createTodo.status = convertGrpcStatus(repoCreateTodo.status)!;
+    return createTodo;
+  }
+
+  static $todo.UpdateTodo convertUpdateTodo(
+      $repository.UpdateTodo repoUpdateTodo) {
+    final updateTodo = $todo.UpdateTodo();
+    updateTodo.id = convertGrpcId(repoUpdateTodo.id);
+
+    if (repoUpdateTodo.title != null) {
+      updateTodo.title = repoUpdateTodo.title!;
+    }
+
+    if (repoUpdateTodo.description != null) {
+      updateTodo.description = repoUpdateTodo.description!;
+    }
+
+    if (repoUpdateTodo.status != null) {
+      updateTodo.status = convertGrpcStatus(repoUpdateTodo.status!)!;
+    }
+
+    return updateTodo;
+  }
+
   @override
   Future<$repository.ListOutput> list($repository.ListInput input) async {
     final grpcInput = $todo.ListInput();
@@ -117,8 +152,12 @@ class TodoRepository implements $repository.TodoRepository {
 
   @override
   Future<void> create(Session session, $repository.CreateTodo todo) {
-    // TODO: implement create
-    throw UnimplementedError();
+    final input = $todo.CreateInput();
+    input.session = convertToGrpcSession(session);
+    input.todo =
+
+        // TODO: implement create
+        throw UnimplementedError();
   }
 
   @override
