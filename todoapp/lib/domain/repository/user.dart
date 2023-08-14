@@ -30,8 +30,8 @@ class UserFilter {
 }
 
 class UserSort {
-  final SortField lastLogin;
-  final SortField createTime;
+  final SortField? lastLogin;
+  final SortField? createTime;
   UserSort({required this.lastLogin, required this.createTime});
 }
 
