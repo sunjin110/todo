@@ -93,6 +93,7 @@ message Todo {
   Status status = 4;
   user.UserId user_id = 5;
   google.protobuf.Timestamp create_time = 6;
+  optional google.protobuf.Timestamp done_time = 7;
 }
 
 enum Status {

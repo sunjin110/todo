@@ -18,6 +18,11 @@ class Todo {
 class TodoId {
   final String id;
   TodoId({required this.id});
+
+  @override
+  String toString() {
+    return id;
+  }
 }
 
 enum TodoStatus {

@@ -492,6 +492,13 @@ export class Todo extends jspb.Message {
   hasCreateTime(): boolean;
   clearCreateTime(): Todo;
 
+  getDoneTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setDoneTime(value?: google_protobuf_timestamp_pb.Timestamp): Todo;
+  hasDoneTime(): boolean;
+  clearDoneTime(): Todo;
+
+  getDoneTimeCase(): Todo.DoneTimeCase;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Todo.AsObject;
   static toObject(includeInstance: boolean, msg: Todo): Todo.AsObject;
@@ -508,6 +515,12 @@ export namespace Todo {
     status: Status,
     userId?: user_user_pb.UserId.AsObject,
     createTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    doneTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+  }
+
+  export enum DoneTimeCase { 
+    _DONE_TIME_NOT_SET = 0,
+    DONE_TIME = 7,
   }
 }
 

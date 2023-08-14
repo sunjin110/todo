@@ -269,6 +269,10 @@ const Todo$json = {
     {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.todo.Status', '10': 'status'},
     {'1': 'user_id', '3': 5, '4': 1, '5': 11, '6': '.user.UserId', '10': 'userId'},
     {'1': 'create_time', '3': 6, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createTime'},
+    {'1': 'done_time', '3': 7, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 0, '10': 'doneTime', '17': true},
+  ],
+  '8': [
+    {'1': '_done_time'},
   ],
 };
 
@@ -278,5 +282,6 @@ final $typed_data.Uint8List todoDescriptor = $convert.base64Decode(
     'RsZRIgCgtkZXNjcmlwdGlvbhgDIAEoCVILZGVzY3JpcHRpb24SJAoGc3RhdHVzGAQgASgOMgwu'
     'dG9kby5TdGF0dXNSBnN0YXR1cxIlCgd1c2VyX2lkGAUgASgLMgwudXNlci5Vc2VySWRSBnVzZX'
     'JJZBI7CgtjcmVhdGVfdGltZRgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCmNy'
-    'ZWF0ZVRpbWU=');
+    'ZWF0ZVRpbWUSPAoJZG9uZV90aW1lGAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcE'
+    'gAUghkb25lVGltZYgBAUIMCgpfZG9uZV90aW1l');
 

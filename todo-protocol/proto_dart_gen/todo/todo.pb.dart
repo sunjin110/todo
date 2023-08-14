@@ -853,6 +853,7 @@ class Todo extends $pb.GeneratedMessage {
     ..e<Status>(4, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: Status.done, valueOf: Status.valueOf, enumValues: Status.values)
     ..aOM<$1.UserId>(5, _omitFieldNames ? '' : 'userId', subBuilder: $1.UserId.create)
     ..aOM<$4.Timestamp>(6, _omitFieldNames ? '' : 'createTime', subBuilder: $4.Timestamp.create)
+    ..aOM<$4.Timestamp>(7, _omitFieldNames ? '' : 'doneTime', subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -936,6 +937,17 @@ class Todo extends $pb.GeneratedMessage {
   void clearCreateTime() => clearField(6);
   @$pb.TagNumber(6)
   $4.Timestamp ensureCreateTime() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  $4.Timestamp get doneTime => $_getN(6);
+  @$pb.TagNumber(7)
+  set doneTime($4.Timestamp v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasDoneTime() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearDoneTime() => clearField(7);
+  @$pb.TagNumber(7)
+  $4.Timestamp ensureDoneTime() => $_ensure(6);
 }
 
 
