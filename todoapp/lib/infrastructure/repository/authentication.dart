@@ -8,9 +8,9 @@ import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authen
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/google/protobuf/timestamp.pb.dart';
 
 class AuthenticationRepository implements $repository.AuthenticationRepository {
-  final $auth.AuthenticationClient client;
+  final $auth.AuthenticationClient _client;
 
-  AuthenticationRepository({required this.client});
+  AuthenticationRepository(this._client);
 
   @override
   Future<$model.Session> signIn(String email, String password) async {
@@ -18,7 +18,7 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
     input.email = email;
     input.password = password;
 
-    final response = await client.signIn(input);
+    final response = await _client.signIn(input);
 
     return convertToModelSession(response.session);
   }
@@ -29,7 +29,7 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
     input.email = email;
     input.password = password;
 
-    final res = await client.signUp(input);
+    final res = await _client.signUp(input);
 
     return $repository.SignUpOutput(
         session: convertToModelSession(res.session),
@@ -40,7 +40,7 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
   Future<void> signOut($model.Session session) async {
     var input = SignOutInput();
     input.session = convertToGrpcSession(session);
-    await client.signOut(input);
+    await _client.signOut(input);
   }
 }
 
