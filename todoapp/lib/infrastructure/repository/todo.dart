@@ -151,30 +151,35 @@ class TodoRepository implements $repository.TodoRepository {
   }
 
   @override
-  Future<void> create(Session session, $repository.CreateTodo todo) {
+  Future<void> create(Session session, $repository.CreateTodo todo) async {
     final input = $todo.CreateInput();
     input.session = convertToGrpcSession(session);
-    input.todo =
-
-        // TODO: implement create
-        throw UnimplementedError();
+    input.todo = convertCreateTodo(todo);
+    await client.create(input);
   }
 
   @override
-  Future<void> delete(Session session, TodoId id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(Session session, TodoId id) async {
+    final input = $todo.DeleteInput();
+    input.session = convertToGrpcSession(session);
+    input.id = convertGrpcId(id);
+    await client.delete(input);
   }
 
   @override
-  Future<Todo> get(Session session, TodoId id) {
-    // TODO: implement get
-    throw UnimplementedError();
+  Future<Todo> get(Session session, TodoId id) async {
+    final input = $todo.GetInput();
+    input.session = convertToGrpcSession(session);
+    input.id = convertGrpcId(id);
+    final res = await client.get(input);
+    return convertModelTodo(res.todo);
   }
 
   @override
-  Future<void> update(Session session, $repository.UpdateTodo todo) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<void> update(Session session, $repository.UpdateTodo todo) async {
+    final input = $todo.UpdateInput();
+    input.session = convertToGrpcSession(session);
+    input.todo = convertUpdateTodo(todo);
+    await client.update(input);
   }
 }
