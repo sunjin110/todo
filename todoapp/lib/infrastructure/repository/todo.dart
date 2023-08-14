@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/domain/model/user_auth.dart';
 import 'package:todoapp/domain/repository/todo.dart' as $repository;

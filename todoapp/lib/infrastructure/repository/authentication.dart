@@ -72,3 +72,14 @@ $model.UserSignUpStatus convertToModelUserSignUpStatus(
       throw UnimplementedError("not implemented sign up status");
   }
 }
+
+UserSignUpStatus convertToGrpcUserSignUpStatus($model.UserSignUpStatus status) {
+  switch (status) {
+    case $model.UserSignUpStatus.allowed:
+      return UserSignUpStatus.SignupSignUpStatusAllowed;
+    case $model.UserSignUpStatus.denied:
+      return UserSignUpStatus.SignupSignUpStatusDenied;
+    case $model.UserSignUpStatus.waitForAllow:
+      return UserSignUpStatus.SignupSignUpStatusWaitForAllow;
+  }
+}
