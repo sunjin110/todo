@@ -54,6 +54,7 @@ class _TodoListPageState extends State<TodoListPage> {
             return Card(
               child: ListTile(
                 title: Text(todoList[index].title),
+                subtitle: Text(todoList[index].description),
               ),
             );
           }),
