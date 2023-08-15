@@ -11,14 +11,12 @@ class SessionRepository implements $repository.SessionRepository {
 
   @override
   Future<void> delete() async {
-    // 1recordしか入らないのでこれでいい
-    realm.deleteAll<$dto.Session>();
+    await realm.writeAsync(() => realm.deleteAll<$dto.Session>());
   }
 
   @override
   Future<$model.Session?> get() async {
-    final result = realm.query<$dto.Session>(_key);
-    final sessionDto = result.elementAtOrNull(0);
+    final sessionDto = realm.find<$dto.Session>(_key);
     if (sessionDto == null) {
       return null;
     }
@@ -29,6 +27,6 @@ class SessionRepository implements $repository.SessionRepository {
   @override
   Future<void> set($model.Session session) async {
     final sessionDto = $dto.Session(_key, session.session, session.expireTime);
-    realm.add(sessionDto);
+    await realm.writeAsync(() => realm.add(sessionDto));
   }
 }
