@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/presenter/todo_add.dart';
 
 class TodoListPage extends StatefulWidget {
+  final TodoUseCase todoUseCase;
+
+  TodoListPage(this.todoUseCase);
+
   @override
   _TodoListPageState createState() => _TodoListPageState();
 }
@@ -11,6 +16,8 @@ class _TodoListPageState extends State<TodoListPage> {
 
   @override
   Widget build(BuildContext context) {
+    // widget.todoUseCase.list(0, 100);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("リスト一覧"),

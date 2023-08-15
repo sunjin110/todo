@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:todoapp/application/authentication.dart';
+import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/infrastructure/grpc/grpc.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authentication.pbgrpc.dart';
+import 'package:todoapp/infrastructure/grpc/proto_dart_gen/todo/todo.pbgrpc.dart';
 import 'package:todoapp/infrastructure/realm/realm.dart';
 import 'package:todoapp/infrastructure/repository/authentication.dart';
 import 'package:todoapp/infrastructure/repository/session.dart';
+import 'package:todoapp/infrastructure/repository/todo.dart';
 import 'package:todoapp/presenter/sign_in.dart';
 
 void main() {
@@ -33,9 +36,13 @@ class MyApp extends StatelessWidget {
     final realm = setupRealm();
     final sessionRepository = SessionRepository(realm);
 
+    final todoRepository = TodoRepository(client: TodoRpcClient(clientChannel));
+
     final authenticationUseCase = AuthenticationUseCase(
         authenticationRepository: authenticationRepository,
         sessionRepository: sessionRepository);
+
+    final todoUseCase = newTodoUseCase(sessionRepository, todoRepository);
 
     return MaterialApp(
       title: 'Todo App',
@@ -60,7 +67,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: const MyHomePage(title: 'Todo'),
       // home: TodoListPage(),
-      home: SignIn(authenticationUseCase),
+      home: SignIn(authenticationUseCase, todoUseCase),
     );
   }
 }

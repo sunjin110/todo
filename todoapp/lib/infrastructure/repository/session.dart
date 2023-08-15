@@ -26,6 +26,9 @@ class SessionRepository implements $repository.SessionRepository {
 
   @override
   Future<void> set($model.Session session) async {
+    // 先に削除
+    await delete();
+
     final sessionDto = $dto.Session(_key, session.session, session.expireTime);
     await realm.writeAsync(() => realm.add(sessionDto));
   }

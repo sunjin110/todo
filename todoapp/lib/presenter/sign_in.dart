@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/application/authentication.dart';
+import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/presenter/todo_list.dart';
 
 class SignIn extends StatefulWidget {
   final AuthenticationUseCaseInterface authenticationUseCase;
+  final TodoUseCase todoUseCase;
 
-  SignIn(this.authenticationUseCase);
+  SignIn(this.authenticationUseCase, this.todoUseCase);
 
   @override
   _SignInState createState() => _SignInState();
@@ -46,31 +48,16 @@ class _SignInState extends State<SignIn> {
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.blue),
                 ),
-                // onPressed: () async {
-                //   await widget.authenticationUseCase.signIn(email, password);
-
-                //   Navigator.of(context)
-                //       .push(MaterialPageRoute(builder: (context) {
-                //     return TodoListPage();
-                //   }));
-                // },
                 onPressed: () async {
                   await widget.authenticationUseCase
                       .signIn(email, password)
                       .then((value) => {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
-                              return TodoListPage();
+                              return TodoListPage(widget.todoUseCase);
                             }))
                           })
                       .catchError((err) => print(err));
-
-                  // Navigator.of(context)
-                  //     .push(MaterialPageRoute(builder: (context) {
-                  //   return TodoListPage();
-                  // }
-                  // )
-                  // );
                 },
                 child: Text("SignIn"),
               ),

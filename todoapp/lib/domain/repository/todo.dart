@@ -17,10 +17,7 @@ class ListInput {
   final TodoSort? sort;
 
   ListInput(
-      {required this.session,
-      required this.paging,
-      required this.filter,
-      required this.sort});
+      {required this.session, required this.paging, this.filter, this.sort});
 }
 
 class TodoFilter {
