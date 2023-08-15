@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/presenter/todo_add.dart';
+import 'package:todoapp/presenter/todo_defailt.dart';
 
 class TodoListPage extends StatefulWidget {
   final TodoUseCase todoUseCase;
@@ -57,6 +58,13 @@ class _TodoListPageState extends State<TodoListPage> {
               child: ListTile(
                 title: Text(todoList[index].title),
                 subtitle: Text(todoList[index].description),
+                onTap: () async {
+                  await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return TodoDetailPage(
+                        widget.todoUseCase, todoList[index].id);
+                  }));
+                },
               ),
             );
           }),

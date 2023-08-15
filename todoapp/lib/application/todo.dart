@@ -11,6 +11,9 @@ abstract class TodoUseCase {
   // UseCaseErrorCode.notFoundSession
   Future<TodoListOutput> list(DateTime txTime, int offset, int limit);
 
+  Future<Todo> get(TodoId id, DateTime txTime);
+
+//
   Future<void> add(DateTime txTime, String title, String description);
 }
 
@@ -42,6 +45,25 @@ class _TodoUseCase implements TodoUseCase {
       return TodoListOutput(hasNext: output.hasNext, list: output.todos);
     } catch (e) {
       print(e);
+      throw const UseCaseException(UseCaseErrorCode.internalError);
+    }
+  }
+
+  @override
+  Future<Todo> get(TodoId id, DateTime txTime) async {
+    final session = await _sessionRepository.get();
+    if (session == null) {
+      throw const UseCaseException(
+        UseCaseErrorCode.notFoundSession,
+      );
+    }
+    if (session.expireTime.isBefore(txTime)) {
+      throw const UseCaseException(UseCaseErrorCode.sessionExpired);
+    }
+
+    try {
+      return await _todoRepository.get(session, id);
+    } catch (e) {
       throw const UseCaseException(UseCaseErrorCode.internalError);
     }
   }
