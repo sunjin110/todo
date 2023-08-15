@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/application/authentication.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  final AuthenticationUseCaseInterface authenticationUseCase;
+
+  SignIn(this.authenticationUseCase);
+
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  String email = "";
+  String password = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,13 +26,15 @@ class SignIn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              decoration: InputDecoration(labelText: "email"),
+              decoration: const InputDecoration(labelText: "email"),
+              onChanged: (value) => email = value,
             ),
             const SizedBox(
               height: 8,
             ),
             TextField(
-              decoration: InputDecoration(labelText: "password"),
+              decoration: const InputDecoration(labelText: "password"),
+              onChanged: (value) => password = value,
             ),
             const SizedBox(
               height: 8,
@@ -28,9 +43,11 @@ class SignIn extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.blue)),
-                onPressed: () {
-                  print("TODO sign_in...");
+                  backgroundColor: MaterialStatePropertyAll(Colors.blue),
+                ),
+                onPressed: () async {
+                  print("onPress!!");
+                  await widget.authenticationUseCase.signIn(email, password);
                 },
                 child: Text("SignIn"),
               ),

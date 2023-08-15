@@ -1,6 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:grpc/grpc.dart';
+import 'package:todoapp/application/authentication.dart';
+import 'package:todoapp/infrastructure/grpc/grpc.dart';
+import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authentication.pbgrpc.dart';
+import 'package:todoapp/infrastructure/repository/authentication.dart';
 import 'package:todoapp/presenter/sign_in.dart';
 
 void main() {
@@ -13,6 +18,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // ここで初期化とかするんやろか
+
+    // grpc client
+    final clientChannel = newClientChannel("localhost", 3030);
+
+    final authenticationRepository =
+        AuthenticationRepository(AuthenticationClient(clientChannel));
+    final authenticationUseCase = AuthenticationUseCase(
+        authenticationRepository: authenticationRepository);
+
     return MaterialApp(
       title: 'Todo App',
       theme: ThemeData(
@@ -36,7 +51,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: const MyHomePage(title: 'Todo'),
       // home: TodoListPage(),
-      home: SignIn(),
+      home: SignIn(authenticationUseCase),
     );
   }
 }
