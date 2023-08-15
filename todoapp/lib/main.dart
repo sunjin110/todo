@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/application/authentication.dart';
 import 'package:todoapp/infrastructure/grpc/grpc.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authentication.pbgrpc.dart';
+import 'package:todoapp/infrastructure/realm/realm.dart';
 import 'package:todoapp/infrastructure/repository/authentication.dart';
+import 'package:todoapp/infrastructure/repository/session.dart';
 import 'package:todoapp/presenter/sign_in.dart';
 
 void main() {
@@ -27,8 +29,13 @@ class MyApp extends StatelessWidget {
 
     final authenticationRepository =
         AuthenticationRepository(AuthenticationClient(clientChannel));
+
+    final realm = setupRealm();
+    final sessionRepository = SessionRepository(realm);
+
     final authenticationUseCase = AuthenticationUseCase(
-        authenticationRepository: authenticationRepository);
+        authenticationRepository: authenticationRepository,
+        sessionRepository: sessionRepository);
 
     return MaterialApp(
       title: 'Todo App',
