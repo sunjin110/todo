@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/application/authentication.dart';
+import 'package:todoapp/presenter/todo_list.dart';
 
 class SignIn extends StatefulWidget {
   final AuthenticationUseCaseInterface authenticationUseCase;
@@ -47,6 +48,11 @@ class _SignInState extends State<SignIn> {
                 ),
                 onPressed: () async {
                   await widget.authenticationUseCase.signIn(email, password);
+
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return TodoListPage();
+                  }));
                 },
                 child: Text("SignIn"),
               ),
