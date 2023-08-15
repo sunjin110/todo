@@ -46,7 +46,6 @@ class _SignInState extends State<SignIn> {
                   backgroundColor: MaterialStatePropertyAll(Colors.blue),
                 ),
                 onPressed: () async {
-                  print("onPress!!");
                   await widget.authenticationUseCase.signIn(email, password);
                 },
                 child: Text("SignIn"),

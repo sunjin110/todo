@@ -11,9 +11,8 @@ class AuthenticationUseCase implements AuthenticationUseCaseInterface {
 
   @override
   Future<void> signIn(String email, String password) async {
-    print("========= signIn");
     final session = await authenticationRepository.signIn(email, password);
-    print(session);
+    print(session.session);
     return;
   }
 }

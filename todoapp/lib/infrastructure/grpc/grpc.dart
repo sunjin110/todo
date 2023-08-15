@@ -4,13 +4,11 @@ import 'package:todoapp/infrastructure/grpc/proto_dart_gen/google/protobuf/times
 import 'dart:ffi';
 
 DateTime convertTimestampToDateTime(Timestamp timestamp) {
-  return DateTime.fromMillisecondsSinceEpoch(
-      (timestamp.seconds * 1000 + (timestamp.nanos ~/ 1000000) as Int64) as int,
-      isUtc: true);
+  return timestamp.toDateTime();
 }
 
 ClientChannel newClientChannel(String host, int port) {
   return ClientChannel(host,
-      port: 3030,
+      port: port,
       options: ChannelOptions(credentials: ChannelCredentials.insecure()));
 }
