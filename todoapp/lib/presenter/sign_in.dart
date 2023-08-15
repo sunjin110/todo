@@ -46,13 +46,31 @@ class _SignInState extends State<SignIn> {
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.blue),
                 ),
-                onPressed: () async {
-                  await widget.authenticationUseCase.signIn(email, password);
+                // onPressed: () async {
+                //   await widget.authenticationUseCase.signIn(email, password);
 
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return TodoListPage();
-                  }));
+                //   Navigator.of(context)
+                //       .push(MaterialPageRoute(builder: (context) {
+                //     return TodoListPage();
+                //   }));
+                // },
+                onPressed: () async {
+                  await widget.authenticationUseCase
+                      .signIn(email, password)
+                      .then((value) => {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return TodoListPage();
+                            }))
+                          })
+                      .catchError((err) => print(err));
+
+                  // Navigator.of(context)
+                  //     .push(MaterialPageRoute(builder: (context) {
+                  //   return TodoListPage();
+                  // }
+                  // )
+                  // );
                 },
                 child: Text("SignIn"),
               ),
