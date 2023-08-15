@@ -10,5 +10,9 @@ class _Session {
   late DateTime expireTime;
 }
 
+SchemaObject getSessionSchemaObject() {
+  return Session.schema;
+}
 
 // https://zenn.dev/polycome_toto/articles/483921792a29b3 TODO
+
