@@ -18,10 +18,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("============= rebuild!");
     // ここで初期化とかするんやろか
 
     // grpc client
-    final clientChannel = newClientChannel("localhost", 3030);
+    // https://zuma-lab.com/posts/flutter-connect-to-the-localhost-api
+    // final clientChannel = newClientChannel("0.0.0.0", 3010);
+    final clientChannel = newClientChannel("192.168.10.101", 3010);
 
     final authenticationRepository =
         AuthenticationRepository(AuthenticationClient(clientChannel));
