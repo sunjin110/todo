@@ -9,7 +9,9 @@ import 'package:todoapp/domain/repository/todo.dart';
 
 abstract class TodoUseCase {
   // UseCaseErrorCode.notFoundSession
-  Future<TodoListOutput> list(int offset, int limit);
+  Future<TodoListOutput> list(DateTime txTime, int offset, int limit);
+
+  Future<void> add(DateTime txTime, String title, String description);
 }
 
 TodoUseCase newTodoUseCase(
@@ -23,17 +25,46 @@ class _TodoUseCase implements TodoUseCase {
   _TodoUseCase(this._sessionRepository, this._todoRepository);
 
   @override
-  Future<TodoListOutput> list(int offset, int limit) async {
+  Future<TodoListOutput> list(DateTime txTime, int offset, int limit) async {
     final session = await _sessionRepository.get();
     if (session == null) {
       throw const UseCaseException(
         UseCaseErrorCode.notFoundSession,
       );
     }
+    if (session.expireTime.isBefore(txTime)) {
+      throw const UseCaseException(UseCaseErrorCode.sessionExpired);
+    }
+
     try {
       final output = await _todoRepository.list(ListInput(
           session: session, paging: Paging(offset: offset, limit: limit)));
       return TodoListOutput(hasNext: output.hasNext, list: output.todos);
+    } catch (e) {
+      print(e);
+      throw const UseCaseException(UseCaseErrorCode.internalError);
+    }
+  }
+
+  @override
+  Future<void> add(DateTime txTime, String title, String description) async {
+    final session = await _sessionRepository.get();
+    if (session == null) {
+      throw const UseCaseException(
+        UseCaseErrorCode.notFoundSession,
+      );
+    }
+    if (session.expireTime.isBefore(txTime)) {
+      throw const UseCaseException(UseCaseErrorCode.sessionExpired);
+    }
+
+    try {
+      await _todoRepository.create(
+          session,
+          CreateTodo(
+              title: title,
+              description: description,
+              status: TodoStatus.scheduled));
     } catch (e) {
       print(e);
       throw const UseCaseException(UseCaseErrorCode.internalError);

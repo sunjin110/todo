@@ -19,7 +19,7 @@ class _TodoListPageState extends State<TodoListPage> {
   void initState() {
     super.initState();
     todoListData = Future<TodoListOutput>(() async {
-      return await widget.todoUseCase.list(0, 100);
+      return await widget.todoUseCase.list(DateTime.now(), 0, 100);
     });
   }
 
@@ -30,20 +30,20 @@ class _TodoListPageState extends State<TodoListPage> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return _TodoListPageState.page(context, []);
+              return page(context, []);
             case ConnectionState.waiting:
-              return _TodoListPageState.page(context, []);
+              return page(context, []);
             case ConnectionState.active:
-              return _TodoListPageState.page(context, []);
+              return page(context, []);
             case ConnectionState.done:
               final List<Todo> todoList =
                   snapshot.data != null ? snapshot.data!.list : [];
-              return _TodoListPageState.page(context, todoList);
+              return page(context, todoList);
           }
         });
   }
 
-  static Widget page(BuildContext context, List<Todo> todoList) {
+  Widget page(BuildContext context, List<Todo> todoList) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("リスト一覧"),
@@ -60,12 +60,12 @@ class _TodoListPageState extends State<TodoListPage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final String? todoText = await Navigator.of(context)
+          final bool isAdded = await Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) {
-            return TodoAddPage();
+            return TodoAddPage(widget.todoUseCase);
           }));
 
-          if (todoText == null) {
+          if (!isAdded) {
             return;
           }
 

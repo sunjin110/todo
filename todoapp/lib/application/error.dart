@@ -1,6 +1,7 @@
 enum UseCaseErrorCode {
   internalError('internal_error', '', ''),
-  notFoundSession('not_found_session', 'not_found_session', '認証切れ');
+  notFoundSession('not_found_session', 'not_found_session', '認証切れ'),
+  sessionExpired('session_expired', 'session_expired', '認証期限切れ');
 
   final String _code;
   final String _title;

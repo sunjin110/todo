@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/application/todo.dart';
 
 class TodoAddPage extends StatefulWidget {
+  final TodoUseCase todoUseCase;
+
+  TodoAddPage(this.todoUseCase);
+
   @override
   _TodoAddPageState createState() => _TodoAddPageState();
 }
 
 class _TodoAddPageState extends State<TodoAddPage> {
-  String _text = '';
+  String _title = '';
+  String _description = '';
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +25,20 @@ class _TodoAddPageState extends State<TodoAddPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(_text, style: TextStyle(color: Colors.blue)),
+            TextField(
+              onChanged: (String value) {
+                setState(() {
+                  _title = value;
+                });
+              },
+            ),
             const SizedBox(
               height: 8,
             ),
             TextField(
               onChanged: (String value) {
                 setState(() {
-                  _text = value;
+                  _description = value;
                 });
               },
             ),
@@ -39,8 +51,13 @@ class _TodoAddPageState extends State<TodoAddPage> {
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.blue),
                     foregroundColor: MaterialStatePropertyAll(Colors.white)),
-                onPressed: () {
-                  Navigator.of(context).pop(_text);
+                onPressed: () async {
+                  // TODO validation
+
+                  await widget.todoUseCase
+                      .add(DateTime.now(), _title, _description);
+
+                  Navigator.of(context).pop(true);
                 },
                 child: Text(
                   "リスト追加",
@@ -57,7 +74,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.black12)),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(false);
                 },
                 child: Text("キャンセル"),
               ),
