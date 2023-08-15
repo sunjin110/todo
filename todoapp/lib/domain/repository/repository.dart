@@ -1,8 +1,6 @@
-import 'dart:ffi';
-
 class Paging {
-  final Int32 offset;
-  final Int32 limit;
+  final int offset;
+  final int limit;
   Paging({required this.offset, required this.limit});
 }
 
@@ -19,7 +17,7 @@ enum FilterKind {
 
 class SortField {
   final SortKind sortKind;
-  final Int32 priority;
+  final int priority;
   SortField({required this.sortKind, required this.priority});
 }
 

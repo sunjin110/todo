@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/application/todo.dart';
+import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/presenter/todo_add.dart';
 
 class TodoListPage extends StatefulWidget {
@@ -12,26 +13,50 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
-  List<String> todoList = [];
+  late Future<TodoListOutput> todoListData;
+
+  @override
+  void initState() {
+    super.initState();
+    todoListData = Future<TodoListOutput>(() async {
+      return await widget.todoUseCase.list(0, 100);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // widget.todoUseCase.list(0, 100);
+    return FutureBuilder(
+        future: todoListData,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return _TodoListPageState.page(context, []);
+            case ConnectionState.waiting:
+              return _TodoListPageState.page(context, []);
+            case ConnectionState.active:
+              return _TodoListPageState.page(context, []);
+            case ConnectionState.done:
+              final List<Todo> todoList =
+                  snapshot.data != null ? snapshot.data!.list : [];
+              return _TodoListPageState.page(context, todoList);
+          }
+        });
+  }
 
+  static Widget page(BuildContext context, List<Todo> todoList) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("リスト一覧"),
+        title: const Text("リスト一覧"),
       ),
       body: ListView.builder(
-        itemCount: todoList.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(todoList[index]),
-            ),
-          );
-        },
-      ),
+          itemCount: todoList.length,
+          itemBuilder: (context, index) {
+            return Card(
+              child: ListTile(
+                title: Text(todoList[index].title),
+              ),
+            );
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final String? todoText = await Navigator.of(context)
@@ -42,9 +67,8 @@ class _TodoListPageState extends State<TodoListPage> {
           if (todoText == null) {
             return;
           }
-          setState(() {
-            todoList.add(todoText);
-          });
+
+          print("todo 追加、まあリフレッシュでいいと思う");
         },
         child: Icon(Icons.add),
       ),

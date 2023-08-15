@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/material.dart';
 import 'package:todoapp/application/error.dart';
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/domain/repository/repository.dart';
@@ -29,12 +30,14 @@ class _TodoUseCase implements TodoUseCase {
         UseCaseErrorCode.notFoundSession,
       );
     }
-
-    final output = await _todoRepository.list(ListInput(
-        session: session,
-        paging: Paging(offset: offset as Int32, limit: limit as Int32)));
-
-    return TodoListOutput(hasNext: output.hasNext, list: output.todos);
+    try {
+      final output = await _todoRepository.list(ListInput(
+          session: session, paging: Paging(offset: offset, limit: limit)));
+      return TodoListOutput(hasNext: output.hasNext, list: output.todos);
+    } catch (e) {
+      print(e);
+      throw const UseCaseException(UseCaseErrorCode.internalError);
+    }
   }
 }
 
