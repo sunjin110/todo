@@ -18,9 +18,11 @@ class _TodoListPageState extends State<TodoListPage> {
   @override
   void initState() {
     super.initState();
-    todoListData = Future<TodoListOutput>(() async {
-      return await widget.todoUseCase.list(DateTime.now(), 0, 100);
-    });
+    todoListData = _list();
+  }
+
+  Future<TodoListOutput> _list() async {
+    return await widget.todoUseCase.list(DateTime.now(), 0, 100);
   }
 
   @override
@@ -69,7 +71,9 @@ class _TodoListPageState extends State<TodoListPage> {
             return;
           }
 
-          print("todo 追加、まあリフレッシュでいいと思う");
+          setState(() {
+            todoListData = _list();
+          });
         },
         child: Icon(Icons.add),
       ),
