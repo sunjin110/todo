@@ -25,16 +25,14 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
     return await widget.todoUseCase.get(widget.id, DateTime.now());
   }
 
-  String? _title = "";
-  String? _description = "";
+  // String? _title = "";
+  // String? _description = "";
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: todo,
       builder: (context, snapshot) {
-        // _title = snapshot.data?.title;
-
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return _page(context, null);
@@ -43,27 +41,22 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
           case ConnectionState.active:
             return _page(context, null);
           case ConnectionState.done:
-            // if (snapshot.hasData && snapshot.data is Todo) {
-            //   Todo todoData = snapshot.data as Todo;
-            //   _title = todoData.title;
-            //   _description = todoData
-            //       .description; // If you want to display the description later.
-            // }
             if (snapshot.data == null) {
               return _page(context, null);
             }
-
             return _page(context, snapshot.data);
         }
       },
     );
   }
 
+  final _editTitleFieldController = TextEditingController();
+  final _editDescFieldController = TextEditingController();
+
   Widget _page(BuildContext context, Todo? todoData) {
-    if (todoData == null) {
-      print("============== todoはnullだった...");
-    } else {
-      print("nullじゃない!!!");
+    if (todoData != null) {
+      _editTitleFieldController.text = todoData.title;
+      _editDescFieldController.text = todoData.description;
     }
 
     return Scaffold(
@@ -76,13 +69,15 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
-              initialValue: todoData?.title ?? _title,
+              controller: _editTitleFieldController,
               decoration: const InputDecoration(labelText: "title"),
-              onChanged: (value) {
-                setState(() {
-                  _title = value;
-                });
-              },
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextFormField(
+              controller: _editDescFieldController,
+              decoration: const InputDecoration(labelText: "description"),
             )
           ],
         ),
