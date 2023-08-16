@@ -70,12 +70,12 @@ class _TodoListPageState extends State<TodoListPage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final bool isAdded = await Navigator.of(context)
+          final bool? isAdded = await Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) {
             return TodoAddPage(widget.todoUseCase);
           }));
 
-          if (!isAdded) {
+          if (isAdded == null || !isAdded) {
             return;
           }
 

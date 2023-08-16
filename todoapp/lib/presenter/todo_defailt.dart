@@ -84,16 +84,34 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
             const SizedBox(
               height: 8,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                child: const Text("更新"),
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.blue),
+                    foregroundColor: MaterialStatePropertyAll(Colors.white)),
                 onPressed: () async {
                   await widget.todoUseCase
                       .update(widget.id, DateTime.now(), _title, _description);
                 },
+                child: const Text("更新"),
               ),
-            )
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("戻る"),
+              ),
+            ),
           ],
         ),
       ),
