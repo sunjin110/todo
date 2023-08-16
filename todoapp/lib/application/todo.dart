@@ -15,6 +15,9 @@ abstract class TodoUseCase {
 
 //
   Future<void> add(DateTime txTime, String title, String description);
+
+  Future<void> update(
+      TodoId id, DateTime txTime, String? title, String? description);
 }
 
 TodoUseCase newTodoUseCase(
@@ -87,6 +90,29 @@ class _TodoUseCase implements TodoUseCase {
               title: title,
               description: description,
               status: TodoStatus.scheduled));
+    } catch (e) {
+      print(e);
+      throw const UseCaseException(UseCaseErrorCode.internalError);
+    }
+  }
+
+  @override
+  Future<void> update(
+      TodoId id, DateTime txTime, String? title, String? description) async {
+    final session = await _sessionRepository.get();
+    if (session == null) {
+      throw const UseCaseException(UseCaseErrorCode.notFoundSession);
+    }
+    if (session.expireTime.isBefore(txTime)) {
+      throw const UseCaseException(UseCaseErrorCode.sessionExpired);
+    }
+
+    try {
+      await _todoRepository.update(
+          session,
+          UpdateTodo(
+              id: id, title: title, description: description, status: null));
+      return;
     } catch (e) {
       print(e);
       throw const UseCaseException(UseCaseErrorCode.internalError);

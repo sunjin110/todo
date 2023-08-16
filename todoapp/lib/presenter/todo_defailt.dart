@@ -25,8 +25,8 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
     return await widget.todoUseCase.get(widget.id, DateTime.now());
   }
 
-  String? _title = "";
-  String? _description = "";
+  String? _title;
+  String? _description;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +80,19 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
               controller: _editDescFieldController,
               decoration: const InputDecoration(labelText: "description"),
               onChanged: (value) => _description = value,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: const Text("更新"),
+                onPressed: () async {
+                  await widget.todoUseCase
+                      .update(widget.id, DateTime.now(), _title, _description);
+                },
+              ),
             )
           ],
         ),
