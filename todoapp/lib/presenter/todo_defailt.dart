@@ -25,8 +25,8 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
     return await widget.todoUseCase.get(widget.id, DateTime.now());
   }
 
-  // String? _title = "";
-  // String? _description = "";
+  String? _title = "";
+  String? _description = "";
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +71,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
             TextFormField(
               controller: _editTitleFieldController,
               decoration: const InputDecoration(labelText: "title"),
+              onChanged: (value) => _title = value,
             ),
             const SizedBox(
               height: 8,
@@ -78,6 +79,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
             TextFormField(
               controller: _editDescFieldController,
               decoration: const InputDecoration(labelText: "description"),
+              onChanged: (value) => _description = value,
             )
           ],
         ),
