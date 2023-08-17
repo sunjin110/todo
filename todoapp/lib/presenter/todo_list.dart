@@ -48,8 +48,6 @@ class _TodoListPageState extends State<TodoListPage> {
         });
   }
 
-  final _todoStatusMap = HashMap<String, TodoStatus>();
-
   Widget page(BuildContext context, List<Todo> todoList) {
     return Scaffold(
       appBar: AppBar(
@@ -59,9 +57,6 @@ class _TodoListPageState extends State<TodoListPage> {
           itemCount: todoList.length,
           itemBuilder: (context, index) {
             var todo = todoList[index];
-
-            _todoStatusMap[todo.id.toString()] = todo.status;
-
             return Card(
               child: CheckboxListTile(
                 activeColor: Colors.blue,
@@ -97,7 +92,6 @@ class _TodoListPageState extends State<TodoListPage> {
                     print("trueにしようとしています");
                     setState(() {
                       todo.status = TodoStatus.done;
-                      _todoStatusMap[todo.id.toString()] = TodoStatus.done;
                     });
                     return;
                   }
@@ -105,10 +99,9 @@ class _TodoListPageState extends State<TodoListPage> {
                   print("falseにしようとしています");
                   setState(() {
                     todo.status = TodoStatus.scheduled;
-                    _todoStatusMap[todo.id.toString()] = TodoStatus.scheduled;
                   });
                 },
-                value: _todoStatusMap[todo.id.toString()] == TodoStatus.done,
+                value: todo.status == TodoStatus.done,
               ),
             );
           }),
