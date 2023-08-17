@@ -28,6 +28,8 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
   String? _title;
   String? _description;
 
+  bool? isUpdated;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -59,62 +61,74 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
       _editDescFieldController.text = todoData.description;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("リスト詳細"),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(64),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: _editTitleFieldController,
-              decoration: const InputDecoration(labelText: "title"),
-              onChanged: (value) => _title = value,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            TextFormField(
-              controller: _editDescFieldController,
-              decoration: const InputDecoration(labelText: "description"),
-              onChanged: (value) => _description = value,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.blue),
-                    foregroundColor: MaterialStatePropertyAll(Colors.white)),
-                onPressed: () async {
-                  await widget.todoUseCase
-                      .update(widget.id, DateTime.now(), _title, _description);
-                },
-                child: const Text("更新"),
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.white),
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("リスト詳細"),
+          ),
+          body: Container(
+            padding: EdgeInsets.all(64),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: _editTitleFieldController,
+                  decoration: const InputDecoration(labelText: "title"),
+                  onChanged: (value) => _title = value,
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("戻る"),
-              ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  controller: _editDescFieldController,
+                  decoration: const InputDecoration(labelText: "description"),
+                  onChanged: (value) => _description = value,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Colors.blue),
+                        foregroundColor:
+                            MaterialStatePropertyAll(Colors.white)),
+                    onPressed: () async {
+                      try {
+                        await widget.todoUseCase.update(
+                            widget.id, DateTime.now(), _title, _description);
+
+                        isUpdated = true;
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    child: const Text("更新"),
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(isUpdated);
+                    },
+                    child: const Text("戻る"),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
+        onWillPop: () {
+          Navigator.of(context).pop(isUpdated);
+          return Future.value(false);
+        });
   }
 }

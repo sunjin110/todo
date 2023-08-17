@@ -59,11 +59,18 @@ class _TodoListPageState extends State<TodoListPage> {
                 title: Text(todoList[index].title),
                 subtitle: Text(todoList[index].description),
                 onTap: () async {
-                  await Navigator.of(context)
+                  final bool? isUpdated = await Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     return TodoDetailPage(
                         widget.todoUseCase, todoList[index].id);
                   }));
+
+                  if (isUpdated == null || !isUpdated) {
+                    return;
+                  }
+                  setState(() {
+                    todoListData = _list();
+                  });
                 },
               ),
             );
