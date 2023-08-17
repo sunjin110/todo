@@ -10,5 +10,9 @@ dev-up:
 	docker compose --file docker-compose.dev.yml build
 	docker compose --file docker-compose.dev.yml up 
 
+.PHONY: dev-down
+dev-down:
+	docker compose --file docker-compose.dev.yml down
+
 cleanup-local:
 	rm -rf local_data

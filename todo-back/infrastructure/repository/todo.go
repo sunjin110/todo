@@ -61,10 +61,14 @@ func (t *todo) Update(ctx context.Context, id model.TodoID, updatedTodo model.To
 
 	todoDto := dto.NewTodo(updatedTodo, titleSegments, descSegments)
 
-	_, err = t.mongoDB.Collection(mongo.TodoColl).UpdateOne(ctx, bson.M{"_id": id.String()}, &todoDto)
+	result, err := t.mongoDB.Collection(mongo.TodoColl).ReplaceOne(ctx, bson.M{"_id": id.String()}, &todoDto)
 	if err != nil {
 		return fmt.Errorf("failed update. err: %w", err)
 	}
+	if result.MatchedCount == 0 {
+		return repository.ErrNotFound
+	}
+
 	return nil
 }
 
