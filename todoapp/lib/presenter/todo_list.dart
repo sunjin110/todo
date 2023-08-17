@@ -54,24 +54,34 @@ class _TodoListPageState extends State<TodoListPage> {
       body: ListView.builder(
           itemCount: todoList.length,
           itemBuilder: (context, index) {
+            final todo = todoList[index];
             return Card(
-              child: ListTile(
-                title: Text(todoList[index].title),
-                subtitle: Text(todoList[index].description),
-                onTap: () async {
-                  final bool? isUpdated = await Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return TodoDetailPage(
-                        widget.todoUseCase, todoList[index].id);
-                  }));
+              child: CheckboxListTile(
+                activeColor: Colors.blue,
+                title: Text(todo.title),
+                subtitle: Text(todo.description),
+                secondary: TextButton(
+                  onPressed: () async {
+                    final bool? isUpdated = await Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return TodoDetailPage(
+                          widget.todoUseCase, todoList[index].id);
+                    }));
 
-                  if (isUpdated == null || !isUpdated) {
-                    return;
-                  }
-                  setState(() {
-                    todoListData = _list();
-                  });
+                    if (isUpdated == null || !isUpdated) {
+                      return;
+                    }
+                    setState(() {
+                      todoListData = _list();
+                    });
+                  },
+                  child: const Text("詳細"),
+                ),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (value) {
+                  print("value $value が渡されました。TODO done or draft");
                 },
+                value: true, // todo flags
               ),
             );
           }),
@@ -90,7 +100,7 @@ class _TodoListPageState extends State<TodoListPage> {
             todoListData = _list();
           });
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
