@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
 
@@ -98,6 +99,8 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
                       try {
                         await widget.todoUseCase.update(
                             widget.id, DateTime.now(), _title, _description);
+
+                        Fluttertoast.showToast(msg: "更新に成功しました");
 
                         isUpdated = true;
                       } catch (e) {

@@ -4,7 +4,7 @@ class Todo {
   final String description;
   final DateTime createTime;
   final DateTime? doneTime;
-  final TodoStatus status;
+  TodoStatus status;
 
   Todo(
       {required this.id,

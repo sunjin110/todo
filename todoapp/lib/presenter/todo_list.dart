@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
@@ -46,6 +48,8 @@ class _TodoListPageState extends State<TodoListPage> {
         });
   }
 
+  final _todoStatusMap = HashMap<String, TodoStatus>();
+
   Widget page(BuildContext context, List<Todo> todoList) {
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +58,10 @@ class _TodoListPageState extends State<TodoListPage> {
       body: ListView.builder(
           itemCount: todoList.length,
           itemBuilder: (context, index) {
-            final todo = todoList[index];
+            var todo = todoList[index];
+
+            _todoStatusMap[todo.id.toString()] = todo.status;
+
             return Card(
               child: CheckboxListTile(
                 activeColor: Colors.blue,
@@ -78,10 +85,30 @@ class _TodoListPageState extends State<TodoListPage> {
                   child: const Text("詳細"),
                 ),
                 controlAffinity: ListTileControlAffinity.leading,
-                onChanged: (value) {
+                onChanged: (bool? value) {
                   print("value $value が渡されました。TODO done or draft");
+                  print("todo id is ${todo.id.toString()}");
+
+                  if (value == null) {
+                    return;
+                  }
+
+                  if (value) {
+                    print("trueにしようとしています");
+                    setState(() {
+                      todo.status = TodoStatus.done;
+                      _todoStatusMap[todo.id.toString()] = TodoStatus.done;
+                    });
+                    return;
+                  }
+
+                  print("falseにしようとしています");
+                  setState(() {
+                    todo.status = TodoStatus.scheduled;
+                    _todoStatusMap[todo.id.toString()] = TodoStatus.scheduled;
+                  });
                 },
-                value: true, // todo flags
+                value: _todoStatusMap[todo.id.toString()] == TodoStatus.done,
               ),
             );
           }),
