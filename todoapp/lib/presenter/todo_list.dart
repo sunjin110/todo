@@ -1,10 +1,13 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/presenter/todo_add.dart';
 import 'package:todoapp/presenter/todo_defailt.dart';
+
+final logger = Logger();
 
 class TodoListPage extends StatefulWidget {
   final TodoUseCase todoUseCase;
@@ -82,21 +85,22 @@ class _TodoListPageState extends State<TodoListPage> {
                 controlAffinity: ListTileControlAffinity.leading,
                 onChanged: (bool? value) {
                   print("value $value が渡されました。TODO done or draft");
-                  print("todo id is ${todo.id.toString()}");
+                  // print("todo id is ${todo.id.toString()}");
+                  logger.d("todoId is ${todo.id.toString()}");
 
                   if (value == null) {
                     return;
                   }
 
                   if (value) {
-                    print("trueにしようとしています");
+                    logger.d("trueにします");
                     setState(() {
                       todo.status = TodoStatus.done;
                     });
                     return;
                   }
 
-                  print("falseにしようとしています");
+                  logger.d("falseにします");
                   setState(() {
                     todo.status = TodoStatus.scheduled;
                   });
