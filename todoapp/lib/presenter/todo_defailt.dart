@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logger/logger.dart';
+import 'package:todoapp/application/error.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
 
 class TodoDetailPage extends StatefulWidget {
   final TodoUseCase todoUseCase;
   final TodoId id;
+  final Logger logger = Logger();
 
   TodoDetailPage(this.todoUseCase, this.id);
 
@@ -108,6 +111,28 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
                       }
                     },
                     child: const Text("更新"),
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () async {
+                      try {
+                        await widget.todoUseCase
+                            .delete(widget.id, DateTime.now())
+                            .then((value) {
+                          isUpdated = true;
+                          Fluttertoast.showToast(msg: "削除しました");
+                          Navigator.of(context).pop(isUpdated);
+                        });
+                      } on UseCaseException catch (e) {
+                        widget.logger.e("failed delete", error: e);
+                      }
+                    },
+                    child: const Text("削除"),
                   ),
                 ),
                 const SizedBox(
