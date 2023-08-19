@@ -1,31 +1,29 @@
 enum UseCaseErrorCode {
-  internalError('internal_error', '', ''),
-  notFoundSession('not_found_session', 'not_found_session', '認証切れ'),
-  sessionExpired('session_expired', 'session_expired', '認証期限切れ');
-
-  final String _code;
-  final String _title;
-  final String _message;
-
-  const UseCaseErrorCode(this._code, this._title, this._message);
-
-  String get code => _code;
-  String get title => _title;
-  String get message => _message;
-
-  static UseCaseErrorCode? fromCode(String code) =>
-      values.firstWhere((element) => element.code == code);
+  internal,
+  session, // session切れなどの問題
 }
 
-class UseCaseException {
-  final UseCaseErrorCode errorCode;
-  final dynamic info;
-  const UseCaseException(this.errorCode, {this.info});
-  factory UseCaseException.fromCode(String errorCode) {
-    final errorInfo = UseCaseErrorCode.fromCode(errorCode);
-    if (errorInfo == null) {
-      throw const UseCaseException(UseCaseErrorCode.internalError);
+class UseCaseException implements Exception {
+  final String _message;
+  final UseCaseErrorCode _errorCode;
+  final Exception? exception;
+  const UseCaseException(this._errorCode, this._message, {this.exception});
+
+  UseCaseException.wrap(
+      UseCaseErrorCode errorCode, String message, Exception this.exception)
+      : _errorCode = errorCode,
+        _message = message;
+
+  @override
+  String toString() {
+    if (exception == null) {
+      return _message;
     }
-    return UseCaseException(errorInfo);
+
+    return "$_message ${exception.toString()}";
+  }
+
+  UseCaseErrorCode errorCode() {
+    return _errorCode;
   }
 }

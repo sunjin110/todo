@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logger/logger.dart';
 import 'package:todoapp/application/authentication.dart';
 import 'package:todoapp/application/todo.dart';
+import 'package:todoapp/domain/service/authentication.dart';
 import 'package:todoapp/infrastructure/grpc/grpc.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authentication.pbgrpc.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/todo/todo.pbgrpc.dart';
@@ -13,6 +15,8 @@ import 'package:todoapp/infrastructure/repository/authentication.dart';
 import 'package:todoapp/infrastructure/repository/session.dart';
 import 'package:todoapp/infrastructure/repository/todo.dart';
 import 'package:todoapp/presenter/sign_in.dart';
+
+final logger = Logger();
 
 void main() {
   runApp(const MyApp());
@@ -24,8 +28,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print("============= rebuild!");
-    // ここで初期化とかするんやろか
+    logger.d("rebuild");
 
     // grpc client
     // https://zuma-lab.com/posts/flutter-connect-to-the-localhost-api
@@ -40,11 +43,13 @@ class MyApp extends StatelessWidget {
 
     final todoRepository = TodoRepository(client: TodoRpcClient(clientChannel));
 
+    final authenticationService = newAuthenticationService(sessionRepository);
+
     final authenticationUseCase = AuthenticationUseCase(
         authenticationRepository: authenticationRepository,
         sessionRepository: sessionRepository);
 
-    final todoUseCase = newTodoUseCase(sessionRepository, todoRepository);
+    final todoUseCase = newTodoUseCase(todoRepository, authenticationService);
 
     return MaterialApp(
       title: 'Todo App',

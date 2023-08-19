@@ -2,7 +2,7 @@ import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/domain/model/user_auth.dart';
 import 'package:todoapp/domain/repository/repository.dart';
 
-abstract class TodoRepository {
+abstract interface class TodoRepository {
   Future<ListOutput> list(ListInput input);
   Future<Todo> get(Session session, TodoId id);
   Future<void> create(Session session, CreateTodo todo);

@@ -1,7 +1,8 @@
+import 'package:todoapp/application/error.dart';
 import 'package:todoapp/infrastructure/repository/authentication.dart';
 import 'package:todoapp/infrastructure/repository/session.dart';
 
-abstract class AuthenticationUseCaseInterface {
+abstract interface class AuthenticationUseCaseInterface {
   Future<void> signIn(String email, String password);
 }
 
