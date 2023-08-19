@@ -100,8 +100,8 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
                             MaterialStatePropertyAll(Colors.white)),
                     onPressed: () async {
                       try {
-                        await widget.todoUseCase.update(
-                            widget.id, DateTime.now(), _title, _description);
+                        await widget.todoUseCase.update(widget.id,
+                            DateTime.now(), _title, _description, null);
 
                         Fluttertoast.showToast(msg: "更新に成功しました");
 

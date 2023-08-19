@@ -1,7 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:todoapp/application/error.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/presenter/todo_add.dart';
@@ -11,6 +13,7 @@ final logger = Logger();
 
 class TodoListPage extends StatefulWidget {
   final TodoUseCase todoUseCase;
+  final Logger logger = Logger();
 
   TodoListPage(this.todoUseCase);
 
@@ -83,26 +86,24 @@ class _TodoListPageState extends State<TodoListPage> {
                   child: const Text("詳細"),
                 ),
                 controlAffinity: ListTileControlAffinity.leading,
-                onChanged: (bool? value) {
-                  print("value $value が渡されました。TODO done or draft");
-                  // print("todo id is ${todo.id.toString()}");
-                  logger.d("todoId is ${todo.id.toString()}");
-
+                onChanged: (bool? value) async {
                   if (value == null) {
                     return;
                   }
 
-                  if (value) {
-                    logger.d("trueにします");
-                    setState(() {
-                      todo.status = TodoStatus.done;
-                    });
-                    return;
-                  }
+                  final updatedStatus =
+                      value ? TodoStatus.done : TodoStatus.scheduled;
 
-                  logger.d("falseにします");
                   setState(() {
-                    todo.status = TodoStatus.scheduled;
+                    todo.status = updatedStatus;
+                  });
+                  widget.todoUseCase
+                      .update(
+                          todo.id, DateTime.now(), null, null, updatedStatus)
+                      .then((value) {
+                    Fluttertoast.showToast(msg: "statusを変更しました");
+                  }).catchError((e) {
+                    widget.logger.e("failed update status", error: e);
                   });
                 },
                 value: todo.status == TodoStatus.done,

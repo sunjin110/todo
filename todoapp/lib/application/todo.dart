@@ -10,8 +10,8 @@ abstract interface class TodoUseCase {
   Future<TodoListOutput> list(DateTime txTime, int offset, int limit);
   Future<Todo> get(TodoId id, DateTime txTime);
   Future<void> add(DateTime txTime, String title, String description);
-  Future<void> update(
-      TodoId id, DateTime txTime, String? title, String? description);
+  Future<void> update(TodoId id, DateTime txTime, String? title,
+      String? description, TodoStatus? status);
   Future<void> delete(TodoId id, DateTime txTime);
 }
 
@@ -70,15 +70,15 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
   }
 
   @override
-  Future<void> update(
-      TodoId id, DateTime txTime, String? title, String? description) async {
+  Future<void> update(TodoId id, DateTime txTime, String? title,
+      String? description, TodoStatus? status) async {
     final Session session = await verification(txTime);
 
     try {
       await _todoRepository.update(
           session,
           UpdateTodo(
-              id: id, title: title, description: description, status: null));
+              id: id, title: title, description: description, status: status));
     } on Exception catch (e) {
       throw UseCaseException.wrap(
           UseCaseErrorCode.internal, "failed todo update. ", e);
