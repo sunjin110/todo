@@ -6,16 +6,18 @@ import 'package:logger/logger.dart';
 import 'package:todoapp/application/error.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
+import 'package:todoapp/presenter/presenter.dart';
 import 'package:todoapp/presenter/todo_add.dart';
 import 'package:todoapp/presenter/todo_defailt.dart';
 
 final logger = Logger();
 
 class TodoListPage extends StatefulWidget {
-  final TodoUseCase todoUseCase;
+  final TodoUseCase _todoUseCase;
+  final ErrorHandler _errorHandler;
   final Logger logger = Logger();
 
-  TodoListPage(this.todoUseCase);
+  TodoListPage(this._todoUseCase, this._errorHandler);
 
   @override
   _TodoListPageState createState() => _TodoListPageState();
@@ -31,7 +33,7 @@ class _TodoListPageState extends State<TodoListPage> {
   }
 
   Future<TodoListOutput> _list() async {
-    return await widget.todoUseCase.list(DateTime.now(), 0, 100);
+    return await widget._todoUseCase.list(DateTime.now(), 0, 100);
   }
 
   @override
@@ -47,6 +49,10 @@ class _TodoListPageState extends State<TodoListPage> {
             case ConnectionState.active:
               return page(context, []);
             case ConnectionState.done:
+              if (snapshot.hasError) {
+                widget._errorHandler.handling(context, snapshot.error!);
+              }
+
               final List<Todo> todoList =
                   snapshot.data != null ? snapshot.data!.list : [];
               return page(context, todoList);
@@ -73,7 +79,7 @@ class _TodoListPageState extends State<TodoListPage> {
                     final bool? isUpdated = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return TodoDetailPage(
-                          widget.todoUseCase, todoList[index].id);
+                          widget._todoUseCase, todoList[index].id);
                     }));
 
                     if (isUpdated == null || !isUpdated) {
@@ -97,13 +103,14 @@ class _TodoListPageState extends State<TodoListPage> {
                   setState(() {
                     todo.status = updatedStatus;
                   });
-                  widget.todoUseCase
+                  widget._todoUseCase
                       .update(
                           todo.id, DateTime.now(), null, null, updatedStatus)
                       .then((value) {
                     Fluttertoast.showToast(msg: "statusを変更しました");
                   }).catchError((e) {
                     widget.logger.e("failed update status", error: e);
+                    widget._errorHandler.handling(context, e);
                   });
                 },
                 value: todo.status == TodoStatus.done,
@@ -114,7 +121,7 @@ class _TodoListPageState extends State<TodoListPage> {
         onPressed: () async {
           final bool? isAdded = await Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) {
-            return TodoAddPage(widget.todoUseCase);
+            return TodoAddPage(widget._todoUseCase);
           }));
 
           if (isAdded == null || !isAdded) {

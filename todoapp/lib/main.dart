@@ -14,7 +14,9 @@ import 'package:todoapp/infrastructure/realm/realm.dart';
 import 'package:todoapp/infrastructure/repository/authentication.dart';
 import 'package:todoapp/infrastructure/repository/session.dart';
 import 'package:todoapp/infrastructure/repository/todo.dart';
+import 'package:todoapp/presenter/presenter.dart';
 import 'package:todoapp/presenter/sign_in.dart';
+import 'package:todoapp/presenter/todo_list.dart';
 
 final logger = Logger();
 
@@ -49,6 +51,8 @@ class MyApp extends StatelessWidget {
         authenticationRepository: authenticationRepository,
         sessionRepository: sessionRepository);
 
+    final errorHandler = ErrorHandler(authenticationUseCase);
+
     final todoUseCase = newTodoUseCase(todoRepository, authenticationService);
 
     return MaterialApp(
@@ -69,12 +73,12 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Todo'),
       // home: TodoListPage(),
-      home: SignIn(authenticationUseCase, todoUseCase),
+      home: TodoListPage(todoUseCase, errorHandler),
     );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todoapp/application/authentication.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/presenter/todo_list.dart';
 
 class SignIn extends StatefulWidget {
   final AuthenticationUseCaseInterface authenticationUseCase;
-  final TodoUseCase todoUseCase;
 
-  SignIn(this.authenticationUseCase, this.todoUseCase);
+  SignIn(this.authenticationUseCase);
 
   @override
   _SignInState createState() => _SignInState();
@@ -51,13 +51,11 @@ class _SignInState extends State<SignIn> {
                 onPressed: () async {
                   await widget.authenticationUseCase
                       .signIn(email, password)
-                      .then((value) => {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return TodoListPage(widget.todoUseCase);
-                            }))
-                          })
-                      .catchError((err) => print(err));
+                      .then((value) => Navigator.of(context).pop())
+                      .catchError((e) {
+                    logger.e("failed sign in", error: e);
+                    Fluttertoast.showToast(msg: "sign inに失敗しました");
+                  });
                 },
                 child: Text("SignIn"),
               ),

@@ -178,6 +178,7 @@ class TodoRepository implements $repository.TodoRepository {
     final input = $todo.UpdateInput();
     input.session = convertToGrpcSession(session);
     input.todo = convertUpdateTodo(todo);
+
     await client.update(input);
   }
 }

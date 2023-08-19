@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:todoapp/application/application.dart';
 import 'package:todoapp/application/error.dart';
 import 'package:todoapp/domain/model/todo.dart';
@@ -22,13 +23,14 @@ TodoUseCase newTodoUseCase(TodoRepository todoRepository,
 
 class _TodoUseCase extends BaseUseCase implements TodoUseCase {
   final TodoRepository _todoRepository;
+  final Logger logger = Logger();
   _TodoUseCase(
       this._todoRepository, AuthenticationService authenticationService)
       : super(authenticationService);
 
   @override
   Future<TodoListOutput> list(DateTime txTime, int offset, int limit) async {
-    final session = await verification(txTime);
+    final session = await localVerification(txTime);
 
     try {
       final output = await _todoRepository.list(ListInput(
@@ -42,7 +44,7 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
 
   @override
   Future<Todo> get(TodoId id, DateTime txTime) async {
-    final Session session = await verification(txTime);
+    final Session session = await localVerification(txTime);
 
     try {
       return await _todoRepository.get(session, id);
@@ -54,7 +56,7 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
 
   @override
   Future<void> add(DateTime txTime, String title, String description) async {
-    final Session session = await verification(txTime);
+    final Session session = await localVerification(txTime);
 
     try {
       await _todoRepository.create(
@@ -72,7 +74,7 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
   @override
   Future<void> update(TodoId id, DateTime txTime, String? title,
       String? description, TodoStatus? status) async {
-    final Session session = await verification(txTime);
+    final Session session = await localVerification(txTime);
 
     try {
       await _todoRepository.update(
@@ -81,13 +83,13 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
               id: id, title: title, description: description, status: status));
     } on Exception catch (e) {
       throw UseCaseException.wrap(
-          UseCaseErrorCode.internal, "failed todo update. ", e);
+          UseCaseErrorCode.internal, "use_case: failed todo update. ", e);
     }
   }
 
   @override
   Future<void> delete(TodoId id, DateTime txTime) async {
-    final Session session = await verification(txTime);
+    final Session session = await localVerification(txTime);
 
     try {
       await _todoRepository.delete(session, id);

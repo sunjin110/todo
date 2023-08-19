@@ -8,7 +8,7 @@ class BaseUseCase {
 
   BaseUseCase(this._authenticationService);
 
-  Future<Session> verification(DateTime txTime) async {
+  Future<Session> localVerification(DateTime txTime) async {
     try {
       return await _authenticationService.verification(txTime);
     } on ServiceException catch (e) {

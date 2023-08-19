@@ -52,8 +52,6 @@ class _TodoAddPageState extends State<TodoAddPage> {
                     backgroundColor: MaterialStatePropertyAll(Colors.blue),
                     foregroundColor: MaterialStatePropertyAll(Colors.white)),
                 onPressed: () async {
-                  // TODO validation
-
                   await widget.todoUseCase
                       .add(DateTime.now(), _title, _description);
 
