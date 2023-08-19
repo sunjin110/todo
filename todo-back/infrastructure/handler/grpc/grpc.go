@@ -35,7 +35,7 @@ func Serve(ctx context.Context, config *config.Config) error {
 				MaxConnectionAge:  config.Server.MaxConnectionAge,
 			},
 		),
-		grpc.ChainUnaryInterceptor(logInterceptor, txTimeInterceptor),
+		grpc.ChainUnaryInterceptor(logInterceptor, txTimeInterceptor, errorHandlingInterceptor),
 	)
 
 	if err := Routing(ctx, server, config); err != nil {

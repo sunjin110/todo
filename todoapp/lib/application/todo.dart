@@ -3,6 +3,7 @@ import 'package:todoapp/application/application.dart';
 import 'package:todoapp/application/error.dart';
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/domain/model/user_auth.dart';
+import 'package:todoapp/domain/repository/error.dart';
 import 'package:todoapp/domain/repository/repository.dart';
 import 'package:todoapp/domain/repository/todo.dart';
 import 'package:todoapp/domain/service/authentication.dart';
@@ -36,6 +37,11 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
       final output = await _todoRepository.list(ListInput(
           session: session, paging: Paging(offset: offset, limit: limit)));
       return TodoListOutput(hasNext: output.hasNext, list: output.todos);
+    } on RepositoryException catch (e) {
+      if (e.errorCode == RepositoryErrorCode.unauthorized) {
+        throw UseCaseException.wrap(UseCaseErrorCode.session, "", e);
+      }
+      rethrow;
     } on Exception catch (e) {
       throw UseCaseException.wrap(
           UseCaseErrorCode.internal, "failed todoRepository.list", e);
@@ -48,6 +54,11 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
 
     try {
       return await _todoRepository.get(session, id);
+    } on RepositoryException catch (e) {
+      if (e.errorCode == RepositoryErrorCode.unauthorized) {
+        throw UseCaseException.wrap(UseCaseErrorCode.session, "", e);
+      }
+      rethrow;
     } on Exception catch (e) {
       throw UseCaseException.wrap(UseCaseErrorCode.internal,
           "failed todoRepository.get ${id.toString()}", e);
@@ -65,6 +76,11 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
               title: title,
               description: description,
               status: TodoStatus.scheduled));
+    } on RepositoryException catch (e) {
+      if (e.errorCode == RepositoryErrorCode.unauthorized) {
+        throw UseCaseException.wrap(UseCaseErrorCode.session, "", e);
+      }
+      rethrow;
     } on Exception catch (e) {
       throw UseCaseException.wrap(
           UseCaseErrorCode.internal, "failed add todo. title: $title", e);
@@ -81,6 +97,11 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
           session,
           UpdateTodo(
               id: id, title: title, description: description, status: status));
+    } on RepositoryException catch (e) {
+      if (e.errorCode == RepositoryErrorCode.unauthorized) {
+        throw UseCaseException.wrap(UseCaseErrorCode.session, "", e);
+      }
+      rethrow;
     } on Exception catch (e) {
       throw UseCaseException.wrap(
           UseCaseErrorCode.internal, "use_case: failed todo update. ", e);
@@ -93,6 +114,11 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
 
     try {
       await _todoRepository.delete(session, id);
+    } on RepositoryException catch (e) {
+      if (e.errorCode == RepositoryErrorCode.unauthorized) {
+        throw UseCaseException.wrap(UseCaseErrorCode.session, "", e);
+      }
+      rethrow;
     } on Exception catch (e) {
       throw UseCaseException.wrap(
           UseCaseErrorCode.internal, "failed delete todo. id: $id", e);

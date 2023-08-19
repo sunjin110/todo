@@ -109,7 +109,6 @@ class _TodoListPageState extends State<TodoListPage> {
                       .then((value) {
                     Fluttertoast.showToast(msg: "statusを変更しました");
                   }).catchError((e) {
-                    widget.logger.e("failed update status", error: e);
                     widget._errorHandler.handling(context, e);
                   });
                 },

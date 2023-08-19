@@ -53,7 +53,8 @@ class _SignInState extends State<SignIn> {
                       .signIn(email, password)
                       .then((value) => Navigator.of(context).pop())
                       .catchError((e) {
-                    logger.e("failed sign in", error: e);
+                    logger.e("failed sign in",
+                        error: e, stackTrace: StackTrace.current);
                     Fluttertoast.showToast(msg: "sign inに失敗しました");
                   });
                 },

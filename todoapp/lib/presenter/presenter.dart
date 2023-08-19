@@ -10,7 +10,7 @@ class ErrorHandler {
   final AuthenticationUseCase _authenticationUseCase;
   ErrorHandler(this._authenticationUseCase);
   handling(BuildContext context, Object e) {
-    logger.e("err. err type is ${e.runtimeType.toString()}",
+    logger.e("errType: ${e.runtimeType.toString()}",
         time: DateTime.now(), error: e, stackTrace: StackTrace.current);
 
     if (e is UseCaseException) {

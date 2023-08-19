@@ -1,5 +1,7 @@
+import 'package:grpc/grpc.dart';
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/domain/model/user_auth.dart';
+import 'package:todoapp/domain/repository/error.dart';
 import 'package:todoapp/domain/repository/todo.dart' as $repository;
 import 'package:todoapp/infrastructure/grpc/grpc.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/todo/todo.pbgrpc.dart'
@@ -179,6 +181,15 @@ class TodoRepository implements $repository.TodoRepository {
     input.session = convertToGrpcSession(session);
     input.todo = convertUpdateTodo(todo);
 
-    await client.update(input);
+    try {
+      await client.update(input);
+    } on GrpcError catch (e) {
+      if (e.code == StatusCode.unauthenticated) {
+        throw RepositoryException.wrap(
+            RepositoryErrorCode.unauthorized, "failed todo update", e);
+      }
+      throw RepositoryException.wrap(
+          RepositoryErrorCode.internal, "failed todo update", e);
+    }
   }
 }
