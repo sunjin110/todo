@@ -17,7 +17,7 @@ class ErrorHandler {
         time: DateTime.now(), error: e, stackTrace: StackTrace.current);
 
     if (e is UseCaseException) {
-      switch (e.errorCode()) {
+      switch (e.errorCode) {
         case UseCaseErrorCode.session:
           Fluttertoast.showToast(msg: "セッションエラーです");
           Navigator.of(context).pushAndRemoveUntil(

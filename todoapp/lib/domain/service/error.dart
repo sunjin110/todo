@@ -24,7 +24,5 @@ class ServiceException implements Exception {
     return "$_message ${exception.toString()}";
   }
 
-  ServiceErrorCode errorCode() {
-    return _errorCode;
-  }
+  ServiceErrorCode get errorCode => _errorCode;
 }
