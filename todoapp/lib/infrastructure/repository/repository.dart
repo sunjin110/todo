@@ -12,15 +12,15 @@ FilterKind convertFilterKind($repository.FilterKind filterKind) {
 
 Paging convertPaging($repository.Paging paging) {
   final grpcPaging = Paging();
-  grpcPaging.limit = paging.limit as int;
-  grpcPaging.offset = paging.offset as int;
+  grpcPaging.limit = paging.limit;
+  grpcPaging.offset = paging.offset;
   return grpcPaging;
 }
 
 SortField convertSortField($repository.SortField sortField) {
   final grpcSortField = SortField();
   grpcSortField.sortKind = convertSortKind(sortField.sortKind);
-  grpcSortField.priority = sortField.priority as int;
+  grpcSortField.priority = sortField.priority;
   return grpcSortField;
 }
 

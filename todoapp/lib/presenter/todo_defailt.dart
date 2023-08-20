@@ -10,7 +10,7 @@ class TodoDetailPage extends StatefulWidget {
   final TodoId id;
   final Logger logger = Logger();
 
-  TodoDetailPage(this.todoUseCase, this.id);
+  TodoDetailPage(this.todoUseCase, this.id, {super.key});
 
   @override
   _TodoDetailPageState createState() => _TodoDetailPageState();
@@ -68,10 +68,10 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
     return WillPopScope(
         child: Scaffold(
           appBar: AppBar(
-            title: Text("リスト詳細"),
+            title: const Text("リスト詳細"),
           ),
           body: Container(
-            padding: EdgeInsets.all(64),
+            padding: const EdgeInsets.all(64),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

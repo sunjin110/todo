@@ -1,14 +1,10 @@
-import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
-import 'package:todoapp/application/error.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
-import 'package:todoapp/presenter/dummy.dart';
 import 'package:todoapp/presenter/presenter.dart';
-import 'package:todoapp/presenter/sign_in.dart';
 import 'package:todoapp/presenter/todo_add.dart';
 import 'package:todoapp/presenter/todo_defailt.dart';
 
@@ -19,7 +15,7 @@ class TodoListPage extends StatefulWidget {
   final ErrorHandler _errorHandler;
   final Logger logger = Logger();
 
-  TodoListPage(this._todoUseCase, this._errorHandler);
+  TodoListPage(this._todoUseCase, this._errorHandler, {super.key});
 
   @override
   _TodoListPageState createState() => _TodoListPageState();

@@ -1,4 +1,3 @@
-import 'package:todoapp/application/error.dart';
 import 'package:todoapp/infrastructure/repository/authentication.dart';
 import 'package:todoapp/infrastructure/repository/session.dart';
 

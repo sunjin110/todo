@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:todoapp/application/authentication.dart';
 import 'package:todoapp/application/todo.dart';
@@ -15,7 +14,6 @@ import 'package:todoapp/infrastructure/repository/authentication.dart';
 import 'package:todoapp/infrastructure/repository/session.dart';
 import 'package:todoapp/infrastructure/repository/todo.dart';
 import 'package:todoapp/presenter/presenter.dart';
-import 'package:todoapp/presenter/sign_in.dart';
 import 'package:todoapp/presenter/todo_list.dart';
 
 final logger = Logger();

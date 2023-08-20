@@ -10,7 +10,7 @@ class SignIn extends StatefulWidget {
   final TodoUseCase _todoUseCase;
   final ErrorHandler _errorHandling;
 
-  SignIn(this._authenticationUseCase, this._todoUseCase, this._errorHandling);
+  const SignIn(this._authenticationUseCase, this._todoUseCase, this._errorHandling, {super.key});
 
   @override
   _SignInState createState() => _SignInState();
@@ -24,10 +24,10 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ログイン画面"),
+        title: const Text("ログイン画面"),
       ),
       body: Container(
-        padding: EdgeInsets.all(64),
+        padding: const EdgeInsets.all(64),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -45,7 +45,7 @@ class _SignInState extends State<SignIn> {
             const SizedBox(
               height: 8,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: TextButton(
                 style: const ButtonStyle(
@@ -65,7 +65,7 @@ class _SignInState extends State<SignIn> {
                     Fluttertoast.showToast(msg: "sign inに失敗しました");
                   });
                 },
-                child: Text("SignIn"),
+                child: const Text("SignIn"),
               ),
             )
           ],

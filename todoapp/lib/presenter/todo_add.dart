@@ -4,7 +4,7 @@ import 'package:todoapp/application/todo.dart';
 class TodoAddPage extends StatefulWidget {
   final TodoUseCase todoUseCase;
 
-  TodoAddPage(this.todoUseCase);
+  const TodoAddPage(this.todoUseCase, {super.key});
 
   @override
   _TodoAddPageState createState() => _TodoAddPageState();
@@ -18,10 +18,10 @@ class _TodoAddPageState extends State<TodoAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("リスト追加画面"),
+        title: const Text("リスト追加画面"),
       ),
       body: Container(
-        padding: EdgeInsets.all(64),
+        padding: const EdgeInsets.all(64),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -45,7 +45,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
             const SizedBox(
               height: 8,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: const ButtonStyle(
@@ -57,7 +57,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
 
                   Navigator.of(context).pop(true);
                 },
-                child: Text(
+                child: const Text(
                   "リスト追加",
                   style: TextStyle(color: Colors.white),
                 ),
@@ -66,7 +66,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
             const SizedBox(
               height: 8,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: TextButton(
                 style: const ButtonStyle(
@@ -74,7 +74,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: Text("キャンセル"),
+                child: const Text("キャンセル"),
               ),
             )
           ],
