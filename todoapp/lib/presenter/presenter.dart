@@ -27,12 +27,7 @@ class ErrorHandler {
               (route) => false);
           return;
         default:
-          Fluttertoast.showToast(
-              msg: "エラーが発生しました. (とりあえずlogin画面へ) ${e.toString()}");
-
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return SignIn(_authenticationUseCase, _todoUseCase, this);
-          }));
+          Fluttertoast.showToast(msg: "エラーが発生しました.${e.toString()}");
           return;
       }
     }
