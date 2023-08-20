@@ -25,7 +25,7 @@ class ErrorHandler {
                   builder: (context) =>
                       SignIn(_authenticationUseCase, _todoUseCase, this)),
               (route) => false);
-
+          return;
         default:
           Fluttertoast.showToast(
               msg: "エラーが発生しました. (とりあえずlogin画面へ) ${e.toString()}");
