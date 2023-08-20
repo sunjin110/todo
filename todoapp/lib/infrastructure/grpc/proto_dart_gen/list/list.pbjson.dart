@@ -38,8 +38,8 @@ const SortKind$json = {
 };
 
 /// Descriptor for `SortKind`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List sortKindDescriptor = $convert.base64Decode(
-    'CghTb3J0S2luZBINCglGaWx0ZXJBc2MQABIOCgpGaWx0ZXJEZXNjEAE=');
+final $typed_data.Uint8List sortKindDescriptor = $convert
+    .base64Decode('CghTb3J0S2luZBINCglGaWx0ZXJBc2MQABIOCgpGaWx0ZXJEZXNjEAE=');
 
 @$core.Deprecated('Use pagingDescriptor instead')
 const Paging$json = {
@@ -58,7 +58,14 @@ final $typed_data.Uint8List pagingDescriptor = $convert.base64Decode(
 const SortField$json = {
   '1': 'SortField',
   '2': [
-    {'1': 'sort_kind', '3': 1, '4': 1, '5': 14, '6': '.list.SortKind', '10': 'sortKind'},
+    {
+      '1': 'sort_kind',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.list.SortKind',
+      '10': 'sortKind'
+    },
     {'1': 'priority', '3': 2, '4': 1, '5': 5, '10': 'priority'},
   ],
 };
@@ -67,4 +74,3 @@ const SortField$json = {
 final $typed_data.Uint8List sortFieldDescriptor = $convert.base64Decode(
     'CglTb3J0RmllbGQSKwoJc29ydF9raW5kGAEgASgOMg4ubGlzdC5Tb3J0S2luZFIIc29ydEtpbm'
     'QSGgoIcHJpb3JpdHkYAiABKAVSCHByaW9yaXR5');
-

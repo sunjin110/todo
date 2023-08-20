@@ -49,8 +49,24 @@ final $typed_data.Uint8List signUpInputDescriptor = $convert.base64Decode(
 const SignUpOutput$json = {
   '1': 'SignUpOutput',
   '2': [
-    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '9': 0, '10': 'session', '17': true},
-    {'1': 'status', '3': 2, '4': 1, '5': 14, '6': '.authentication.UserSignUpStatus', '10': 'status'},
+    {
+      '1': 'session',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.authentication.Session',
+      '9': 0,
+      '10': 'session',
+      '17': true
+    },
+    {
+      '1': 'status',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.authentication.UserSignUpStatus',
+      '10': 'status'
+    },
   ],
   '8': [
     {'1': '_session'},
@@ -81,7 +97,14 @@ final $typed_data.Uint8List signInInputDescriptor = $convert.base64Decode(
 const SignInOutput$json = {
   '1': 'SignInOutput',
   '2': [
-    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {
+      '1': 'session',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.authentication.Session',
+      '10': 'session'
+    },
   ],
 };
 
@@ -94,7 +117,14 @@ final $typed_data.Uint8List signInOutputDescriptor = $convert.base64Decode(
 const SignOutInput$json = {
   '1': 'SignOutInput',
   '2': [
-    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {
+      '1': 'session',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.authentication.Session',
+      '10': 'session'
+    },
   ],
 };
 
@@ -109,15 +139,24 @@ const SignOutOutput$json = {
 };
 
 /// Descriptor for `SignOutOutput`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List signOutOutputDescriptor = $convert.base64Decode(
-    'Cg1TaWduT3V0T3V0cHV0');
+final $typed_data.Uint8List signOutOutputDescriptor =
+    $convert.base64Decode('Cg1TaWduT3V0T3V0cHV0');
 
 @$core.Deprecated('Use sessionDescriptor instead')
 const Session$json = {
   '1': 'Session',
   '2': [
     {'1': 'session', '3': 1, '4': 1, '5': 9, '10': 'session'},
-    {'1': 'expire_time', '3': 2, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 0, '10': 'expireTime', '17': true},
+    {
+      '1': 'expire_time',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Timestamp',
+      '9': 0,
+      '10': 'expireTime',
+      '17': true
+    },
   ],
   '8': [
     {'1': '_expire_time'},
@@ -129,4 +168,3 @@ final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode(
     'CgdTZXNzaW9uEhgKB3Nlc3Npb24YASABKAlSB3Nlc3Npb24SQAoLZXhwaXJlX3RpbWUYAiABKA'
     'syGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSABSCmV4cGlyZVRpbWWIAQFCDgoMX2V4cGly'
     'ZV90aW1l');
-

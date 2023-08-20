@@ -29,26 +29,29 @@ class AuthenticationClient extends $grpc.Client {
       '/authentication.Authentication/SignIn',
       ($0.SignInInput value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.SignInOutput.fromBuffer(value));
-  static final _$signOut = $grpc.ClientMethod<$0.SignOutInput, $0.SignOutOutput>(
-      '/authentication.Authentication/SignOut',
-      ($0.SignOutInput value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.SignOutOutput.fromBuffer(value));
+  static final _$signOut =
+      $grpc.ClientMethod<$0.SignOutInput, $0.SignOutOutput>(
+          '/authentication.Authentication/SignOut',
+          ($0.SignOutInput value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.SignOutOutput.fromBuffer(value));
 
   AuthenticationClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.SignUpOutput> signUp($0.SignUpInput request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.SignUpOutput> signUp($0.SignUpInput request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$signUp, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.SignInOutput> signIn($0.SignInInput request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.SignInOutput> signIn($0.SignInInput request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$signIn, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.SignOutOutput> signOut($0.SignOutInput request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.SignOutOutput> signOut($0.SignOutInput request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$signOut, request, options: options);
   }
 }
@@ -81,19 +84,25 @@ abstract class AuthenticationServiceBase extends $grpc.Service {
         ($0.SignOutOutput value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.SignUpOutput> signUp_Pre($grpc.ServiceCall call, $async.Future<$0.SignUpInput> request) async {
+  $async.Future<$0.SignUpOutput> signUp_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.SignUpInput> request) async {
     return signUp(call, await request);
   }
 
-  $async.Future<$0.SignInOutput> signIn_Pre($grpc.ServiceCall call, $async.Future<$0.SignInInput> request) async {
+  $async.Future<$0.SignInOutput> signIn_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.SignInInput> request) async {
     return signIn(call, await request);
   }
 
-  $async.Future<$0.SignOutOutput> signOut_Pre($grpc.ServiceCall call, $async.Future<$0.SignOutInput> request) async {
+  $async.Future<$0.SignOutOutput> signOut_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.SignOutInput> request) async {
     return signOut(call, await request);
   }
 
-  $async.Future<$0.SignUpOutput> signUp($grpc.ServiceCall call, $0.SignUpInput request);
-  $async.Future<$0.SignInOutput> signIn($grpc.ServiceCall call, $0.SignInInput request);
-  $async.Future<$0.SignOutOutput> signOut($grpc.ServiceCall call, $0.SignOutInput request);
+  $async.Future<$0.SignUpOutput> signUp(
+      $grpc.ServiceCall call, $0.SignUpInput request);
+  $async.Future<$0.SignInOutput> signIn(
+      $grpc.ServiceCall call, $0.SignInInput request);
+  $async.Future<$0.SignOutOutput> signOut(
+      $grpc.ServiceCall call, $0.SignOutInput request);
 }
