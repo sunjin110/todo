@@ -6,7 +6,9 @@ import 'package:logger/logger.dart';
 import 'package:todoapp/application/error.dart';
 import 'package:todoapp/application/todo.dart';
 import 'package:todoapp/domain/model/todo.dart';
+import 'package:todoapp/presenter/dummy.dart';
 import 'package:todoapp/presenter/presenter.dart';
+import 'package:todoapp/presenter/sign_in.dart';
 import 'package:todoapp/presenter/todo_add.dart';
 import 'package:todoapp/presenter/todo_defailt.dart';
 
@@ -41,6 +43,27 @@ class _TodoListPageState extends State<TodoListPage> {
     return FutureBuilder(
         future: todoListData,
         builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            logger.d("エラーだったのでlogin画面に遷移させます", error: snapshot.error);
+            // setState(() {
+            //   _listError = snapshot.error;
+            // });
+
+            // _listError = snapshot.error;
+
+            // widget._errorHandler.handling(context, snapshot.error!);
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            //   return SignIn(null);
+            // }))
+            // widget._errorHandler.handling(context, snapshot.error!);
+            // return page(context, []);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              widget._errorHandler.handling(context, snapshot.error!);
+            });
+            // return const SizedBox.shrink();
+            return page(context, []);
+          }
+
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               return page(context, []);
@@ -49,10 +72,6 @@ class _TodoListPageState extends State<TodoListPage> {
             case ConnectionState.active:
               return page(context, []);
             case ConnectionState.done:
-              if (snapshot.hasError) {
-                widget._errorHandler.handling(context, snapshot.error!);
-              }
-
               final List<Todo> todoList =
                   snapshot.data != null ? snapshot.data!.list : [];
               return page(context, todoList);

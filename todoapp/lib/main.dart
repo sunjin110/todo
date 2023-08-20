@@ -51,9 +51,8 @@ class MyApp extends StatelessWidget {
         authenticationRepository: authenticationRepository,
         sessionRepository: sessionRepository);
 
-    final errorHandler = ErrorHandler(authenticationUseCase);
-
     final todoUseCase = newTodoUseCase(todoRepository, authenticationService);
+    final errorHandler = ErrorHandler(authenticationUseCase, todoUseCase);
 
     return MaterialApp(
       title: 'Todo App',
