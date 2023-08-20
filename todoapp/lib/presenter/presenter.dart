@@ -37,9 +37,5 @@ class ErrorHandler {
       }
     }
     Fluttertoast.showToast(msg: "予期しないエラーが発生. ${e.toString()}");
-
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return SignIn(_authenticationUseCase, _todoUseCase, this);
-    }));
   }
 }
