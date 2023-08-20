@@ -1,12 +1,14 @@
 import 'package:grpc/grpc.dart';
 import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/domain/model/user_auth.dart';
-import 'package:todoapp/domain/repository/error.dart';
 import 'package:todoapp/domain/repository/todo.dart' as $repository;
 import 'package:todoapp/infrastructure/grpc/grpc.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/todo/todo.pbgrpc.dart'
     as $todo;
+import 'package:todoapp/infrastructure/grpc/proto_dart_gen/todo/todo.pb.dart'
+    as $grpc;
 import 'package:todoapp/infrastructure/repository/authentication.dart';
+import 'package:todoapp/infrastructure/repository/error.dart';
 import 'package:todoapp/infrastructure/repository/repository.dart';
 
 class TodoRepository implements $repository.TodoRepository {
@@ -145,7 +147,13 @@ class TodoRepository implements $repository.TodoRepository {
     if (input.sort != null) {
       grpcInput.sort = TodoRepository.convertSort(input.sort!);
     }
-    final res = await client.list(grpcInput);
+    final $grpc.ListOutput res;
+    try {
+      res = await client.list(grpcInput);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed list todo");
+    }
+
     return $repository.ListOutput(
         hasNext: res.hasNext, todos: convertModelTodoList(res.todos));
   }
@@ -155,7 +163,12 @@ class TodoRepository implements $repository.TodoRepository {
     final input = $todo.CreateInput();
     input.session = convertToGrpcSession(session);
     input.todo = convertCreateTodo(todo);
-    await client.create(input);
+
+    try {
+      await client.create(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed create todo");
+    }
   }
 
   @override
@@ -163,7 +176,12 @@ class TodoRepository implements $repository.TodoRepository {
     final input = $todo.DeleteInput();
     input.session = convertToGrpcSession(session);
     input.id = convertGrpcId(id);
-    await client.delete(input);
+
+    try {
+      await client.delete(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed todo delete. id: $id");
+    }
   }
 
   @override
@@ -171,7 +189,12 @@ class TodoRepository implements $repository.TodoRepository {
     final input = $todo.GetInput();
     input.session = convertToGrpcSession(session);
     input.id = convertGrpcId(id);
-    final res = await client.get(input);
+    final $grpc.GetOutput res;
+    try {
+      res = await client.get(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed get todo");
+    }
     return convertModelTodo(res.todo);
   }
 
@@ -184,12 +207,7 @@ class TodoRepository implements $repository.TodoRepository {
     try {
       await client.update(input);
     } on GrpcError catch (e) {
-      if (e.code == StatusCode.unauthenticated) {
-        throw RepositoryException.wrap(
-            RepositoryErrorCode.unauthorized, "failed todo update", e);
-      }
-      throw RepositoryException.wrap(
-          RepositoryErrorCode.internal, "failed todo update", e);
+      throw defaultGrpcToRepositoryError(e, "failed update todo");
     }
   }
 }

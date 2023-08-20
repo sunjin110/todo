@@ -1,9 +1,13 @@
+import 'package:grpc/grpc.dart';
 import 'package:todoapp/domain/model/user.dart';
 import 'package:todoapp/domain/model/user_auth.dart';
 import 'package:todoapp/domain/repository/user.dart' as $repository;
+import 'package:todoapp/infrastructure/grpc/proto_dart_gen/user/user.pb.dart'
+    as $grpc;
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/user/user.pbgrpc.dart'
     as $user;
 import 'package:todoapp/infrastructure/repository/authentication.dart';
+import 'package:todoapp/infrastructure/repository/error.dart';
 import 'package:todoapp/infrastructure/repository/repository.dart';
 
 class UserRepository implements $repository.UserRepository {
@@ -15,7 +19,12 @@ class UserRepository implements $repository.UserRepository {
     final input = $user.CreateInput();
     input.session = convertToGrpcSession(session);
     input.user = UserConverter.toGrpcCreateUser(user);
-    await client.create(input);
+
+    try {
+      await client.create(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed create user");
+    }
   }
 
   @override
@@ -23,7 +32,11 @@ class UserRepository implements $repository.UserRepository {
     final input = $user.DeleteInput();
     input.session = convertToGrpcSession(session);
     input.id = UserConverter.toGrpcUserId(id);
-    await client.delete(input);
+    try {
+      await client.delete(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed delete user");
+    }
   }
 
   @override
@@ -31,7 +44,13 @@ class UserRepository implements $repository.UserRepository {
     final input = $user.GetInput();
     input.session = convertToGrpcSession(session);
     input.id = UserConverter.toGrpcUserId(id);
-    final res = await client.get(input);
+
+    final $grpc.GetOutput res;
+    try {
+      res = await client.get(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed get user");
+    }
     return UserConverter.toModelUser(res.user);
   }
 
@@ -48,7 +67,12 @@ class UserRepository implements $repository.UserRepository {
     }
     grpcInput.paging = convertPaging(input.paging);
 
-    final res = await client.list(grpcInput);
+    final $grpc.ListOutput res;
+    try {
+      res = await client.list(grpcInput);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed list user");
+    }
     return $repository.ListOutput(
         hasNext: res.hasNext, users: UserConverter.toModelUsers(res.users));
   }
@@ -58,7 +82,11 @@ class UserRepository implements $repository.UserRepository {
     final input = $user.UpdateInput();
     input.session = convertToGrpcSession(session);
     input.user = UserConverter.toGrpcUpdateUser(user);
-    await client.update(input);
+    try {
+      await client.update(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed update user");
+    }
   }
 }
 

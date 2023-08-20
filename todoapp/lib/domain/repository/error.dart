@@ -1,6 +1,7 @@
 enum RepositoryErrorCode {
   internal,
   unauthorized,
+  unavailable,
 }
 
 class RepositoryException implements Exception {

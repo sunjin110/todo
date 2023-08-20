@@ -1,4 +1,4 @@
-import 'package:grpc/grpc.dart' as $grpc;
+import 'package:grpc/grpc.dart';
 import 'package:todoapp/domain/model/user_auth.dart' as $model;
 import 'package:todoapp/domain/repository/authentication.dart' as $repository;
 import 'package:todoapp/infrastructure/grpc/grpc.dart';
@@ -6,6 +6,7 @@ import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authen
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/authentication/authentication.pbgrpc.dart'
     as $auth;
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/google/protobuf/timestamp.pb.dart';
+import 'package:todoapp/infrastructure/repository/error.dart';
 
 class AuthenticationRepository implements $repository.AuthenticationRepository {
   final $auth.AuthenticationClient _client;
@@ -18,7 +19,12 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
     input.email = email;
     input.password = password;
 
-    final response = await _client.signIn(input);
+    final SignInOutput response;
+    try {
+      response = await _client.signIn(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed sign in. email: $email");
+    }
 
     return convertToModelSession(response.session);
   }
@@ -29,7 +35,12 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
     input.email = email;
     input.password = password;
 
-    final res = await _client.signUp(input);
+    final SignUpOutput res;
+    try {
+      res = await _client.signUp(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed sign up");
+    }
 
     return $repository.SignUpOutput(
         session: convertToModelSession(res.session),
@@ -40,7 +51,12 @@ class AuthenticationRepository implements $repository.AuthenticationRepository {
   Future<void> signOut($model.Session session) async {
     var input = SignOutInput();
     input.session = convertToGrpcSession(session);
-    await _client.signOut(input);
+
+    try {
+      await _client.signOut(input);
+    } on GrpcError catch (e) {
+      throw defaultGrpcToRepositoryError(e, "failed sign out");
+    }
   }
 }
 

@@ -62,4 +62,9 @@ class UpdateTodo {
       required this.title,
       required this.description,
       required this.status});
+
+  @override
+  String toString() {
+    return "${super.toString()} id: $id, title:$title, description:$description, status:$status";
+  }
 }
