@@ -7,8 +7,19 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - 3010:3010
-    # environment:
-      # MONGO_DB_URI: mongodb://root:password@localhost:27017/todo
+    environment:
+      TODO_SERVER_ADDRESS: ":3010"
+      TODO_SERVER_MAX_CONNECTION_AGE: 300
+      TODO_SERVER_MAX_CONNECTION_IDLE: 300
+      TODO_PASSWORD_HASH_SECRET: "local_password_hash"
+      MONGO_DB_URI: "mongodb://root:password@mongo:27017/admin"
+      TODO_MONGO_DB_NAME: "todo"
+      TODO_CLOUDFLARE_ACCOUNT_ID: $TODO_CLOUDFLARE_ACCOUNT_ID
+      TODO_SESSION_SECRET_KEY: "local_session_secret_key"
+      TODO_SESSION_DURATION: "60"
+      TODO_SESSION_NAMESPACE_IDENTIFIER: $TODO_SESSION_NAMESPACE_IDENTIFIER
+      TODO_SESSION_KV_ACCESS_TOKEN: $TODO_SESSION_KV_ACCESS_TOKEN
+
     depends_on:
       mongo:
         condition: service_healthy
@@ -25,10 +36,10 @@ services:
       - ./local/mongo/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | /bin/mongosh mongo:27017/test --quiet
-      interval: 10s
+      interval: 3s
       timeout: 2s
-      retries: 5
-      start_period: 5s
+      retries: 10
+      start_period: 3s
     command: mongod
     ports: 
       - 27017:27017

@@ -28,7 +28,17 @@ type Environment struct {
 }
 
 func (e *Environment) MarshalLogObject(marshaler common_log.Event) {
+	marshaler.Str("Addr", e.Addr)
+	marshaler.Str("MaxConnectionAge", e.MaxConnectionAge)
+	marshaler.Str("MaxConnectionIdle", e.MaxConnectionIdle)
+	marshaler.Int("PasswordHashSecret len", len(e.PasswordHashSecret))
 	marshaler.Str("MongoDBURI", e.MongoDBURI)
+	marshaler.Str("TODO_MONGO_DB_NAME", e.MongoDBName)
+	marshaler.Str("CloudflareAccountID", e.CloudflareAccountID)
+	marshaler.Int("SessionSecretKey len", len(e.SessionSecretKey))
+	marshaler.Str("SessionDuration", e.SessionDuration)
+	marshaler.Str("SessionNamespaceIdentifier", e.SessionNamespaceIdentifier)
+	marshaler.Int("SessionKVAccessToken len", len(e.SessionKVAccessToken))
 }
 
 func (e *Environment) ToConfig() (*config.Config, error) {
