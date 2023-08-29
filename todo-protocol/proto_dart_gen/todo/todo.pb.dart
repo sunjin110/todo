@@ -714,6 +714,7 @@ class CreateTodo extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'title')
     ..aOS(2, _omitFieldNames ? '' : 'description')
     ..e<Status>(3, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: Status.done, valueOf: Status.valueOf, enumValues: Status.values)
+    ..aOM<$4.Timestamp>(4, _omitFieldNames ? '' : 'startTime', subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -764,6 +765,17 @@ class CreateTodo extends $pb.GeneratedMessage {
   $core.bool hasStatus() => $_has(2);
   @$pb.TagNumber(3)
   void clearStatus() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $4.Timestamp get startTime => $_getN(3);
+  @$pb.TagNumber(4)
+  set startTime($4.Timestamp v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasStartTime() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearStartTime() => clearField(4);
+  @$pb.TagNumber(4)
+  $4.Timestamp ensureStartTime() => $_ensure(3);
 }
 
 class UpdateTodo extends $pb.GeneratedMessage {

@@ -12,7 +12,7 @@ type Todo struct {
 	DescriptionSegments []string      `bson:"desc_segments"`
 	UserID              string        `bson:"user_id"`
 	Status              string        `bson:"status"`
-	Schedule            *TodoSchedule `bson:"schedule"`
+	Schedule            *TodoSchedule `bson:"schedule,omitempty"`
 	CreateTime          int64         `bson:"ct"` // unix time
 	DoneTime            *int64        `bson:"dt"`
 }
@@ -60,6 +60,7 @@ func NewTodo(todoModel model.Todo, titleSegments []string, descriptionSegments [
 		Status:              todoModel.Status.String(),
 		CreateTime:          *convertTimeToUnix(&todoModel.CreateTime),
 		DoneTime:            convertTimeToUnix(todoModel.DoneTime),
+		Schedule:            NewTodoSchedule(todoModel.Schedule),
 	}
 }
 

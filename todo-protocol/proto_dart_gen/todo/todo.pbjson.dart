@@ -228,13 +228,19 @@ const CreateTodo$json = {
     {'1': 'title', '3': 1, '4': 1, '5': 9, '10': 'title'},
     {'1': 'description', '3': 2, '4': 1, '5': 9, '10': 'description'},
     {'1': 'status', '3': 3, '4': 1, '5': 14, '6': '.todo.Status', '10': 'status'},
+    {'1': 'start_time', '3': 4, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 0, '10': 'startTime', '17': true},
+  ],
+  '8': [
+    {'1': '_start_time'},
   ],
 };
 
 /// Descriptor for `CreateTodo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List createTodoDescriptor = $convert.base64Decode(
     'CgpDcmVhdGVUb2RvEhQKBXRpdGxlGAEgASgJUgV0aXRsZRIgCgtkZXNjcmlwdGlvbhgCIAEoCV'
-    'ILZGVzY3JpcHRpb24SJAoGc3RhdHVzGAMgASgOMgwudG9kby5TdGF0dXNSBnN0YXR1cw==');
+    'ILZGVzY3JpcHRpb24SJAoGc3RhdHVzGAMgASgOMgwudG9kby5TdGF0dXNSBnN0YXR1cxI+Cgpz'
+    'dGFydF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgAUglzdGFydFRpbW'
+    'WIAQFCDQoLX3N0YXJ0X3RpbWU=');
 
 @$core.Deprecated('Use updateTodoDescriptor instead')
 const UpdateTodo$json = {

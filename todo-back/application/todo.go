@@ -89,13 +89,20 @@ func (t *todo) Create(ctx context.Context, input input.CreateTodo) error {
 
 	txTime := txtime.GetTxTime(ctx)
 
+	var schedule *model.TodoSchedule
+	if input.Todo.StartTime != nil {
+		schedule = &model.TodoSchedule{
+			PlannedStartTime: input.Todo.StartTime,
+		}
+	}
+
 	_, err = t.todoRepository.Create(ctx, model.Todo{
 		ID:          model.NewTodoID(),
 		Title:       input.Todo.Title,
 		UserID:      session.UserID, // 今は自分のものだけ作れるような作り
 		Description: input.Todo.Description,
 		Status:      input.Todo.Status,
-		Schedule:    nil, // TODO後で作る
+		Schedule:    schedule,
 		CreateTime:  txTime,
 		DoneTime:    nil, // 後で作る
 	})

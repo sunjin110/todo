@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"time"
 	"todo-back/application/input"
 	"todo-back/application/output"
 	"todo-back/domain/model"
@@ -64,12 +65,19 @@ func ToGRPCGetTodoOutput(out *output.GetTodo) *todo.GetOutput {
 }
 
 func ToModelCreateTodoInput(in *todo.CreateInput) *input.CreateTodo {
+	var startTime *time.Time
+	if in.Todo.StartTime != nil {
+		st := in.Todo.StartTime.AsTime()
+		startTime = &st
+	}
+
 	return &input.CreateTodo{
 		Session: *ToModelSession(in.Session),
 		Todo: input.CreateTodoModel{
 			Title:       in.Todo.Title,
 			Description: in.Todo.Description,
 			Status:      *toModelTodoStatus(&in.Todo.Status),
+			StartTime:   startTime,
 		},
 	}
 }

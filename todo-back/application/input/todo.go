@@ -1,6 +1,7 @@
 package input
 
 import (
+	"time"
 	"todo-back/domain/model"
 	"todo-back/domain/repository"
 )
@@ -21,6 +22,7 @@ type CreateTodoModel struct {
 	Title       string
 	Description string
 	Status      model.TodoStatus
+	StartTime   *time.Time
 	// そのほかも色々要素を追加するのだ
 }
 

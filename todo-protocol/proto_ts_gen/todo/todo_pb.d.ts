@@ -398,6 +398,13 @@ export class CreateTodo extends jspb.Message {
   getStatus(): Status;
   setStatus(value: Status): CreateTodo;
 
+  getStartTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setStartTime(value?: google_protobuf_timestamp_pb.Timestamp): CreateTodo;
+  hasStartTime(): boolean;
+  clearStartTime(): CreateTodo;
+
+  getStartTimeCase(): CreateTodo.StartTimeCase;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateTodo.AsObject;
   static toObject(includeInstance: boolean, msg: CreateTodo): CreateTodo.AsObject;
@@ -411,6 +418,12 @@ export namespace CreateTodo {
     title: string,
     description: string,
     status: Status,
+    startTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+  }
+
+  export enum StartTimeCase { 
+    _START_TIME_NOT_SET = 0,
+    START_TIME = 4,
   }
 }
 
