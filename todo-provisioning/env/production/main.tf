@@ -44,6 +44,13 @@ module "todo_sessions" {
   env_namespace         = "production"
 }
 
+module "todo_db" {
+  source = "../../modules/todo_db"
+  name = "production_todo_db"
+  env = "production"
+  mongoatlas_project_id = "64edb35143d369529cc27fa8"
+}
+
 output "todo_session_api_token" {
     sensitive = true
     value = module.todo_sessions.todo_sessions_api_token
