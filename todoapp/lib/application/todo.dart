@@ -11,7 +11,8 @@ import 'package:todoapp/domain/service/authentication.dart';
 abstract interface class TodoUseCase {
   Future<TodoListOutput> list(DateTime txTime, int offset, int limit);
   Future<Todo> get(TodoId id, DateTime txTime);
-  Future<void> add(DateTime txTime, String title, String description);
+  Future<void> add(
+      DateTime txTime, String title, String description, DateTime? startTime);
   Future<void> update(TodoId id, DateTime txTime, String? title,
       String? description, TodoStatus? status);
   Future<void> delete(TodoId id, DateTime txTime);
@@ -54,16 +55,19 @@ class _TodoUseCase extends BaseUseCase implements TodoUseCase {
   }
 
   @override
-  Future<void> add(DateTime txTime, String title, String description) async {
+  Future<void> add(DateTime txTime, String title, String description,
+      DateTime? startTime) async {
     final Session session = await localVerification(txTime);
 
     try {
       await _todoRepository.create(
           session,
           CreateTodo(
-              title: title,
-              description: description,
-              status: TodoStatus.scheduled));
+            title: title,
+            description: description,
+            status: TodoStatus.scheduled,
+            startTime: startTime,
+          ));
     } catch (e) {
       throw defaultUseCaseErrorHandling(e, "failed add todo");
     }

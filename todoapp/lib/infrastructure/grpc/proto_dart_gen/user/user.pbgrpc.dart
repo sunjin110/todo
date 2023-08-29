@@ -45,30 +45,26 @@ class UserRpcClient extends $grpc.Client {
   UserRpcClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options, interceptors: interceptors);
+      : super(channel, options: options,
+        interceptors: interceptors);
 
-  $grpc.ResponseFuture<$1.CreateOutput> create($1.CreateInput request,
-      {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.CreateOutput> create($1.CreateInput request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$create, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.UpdateOutput> update($1.UpdateInput request,
-      {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.UpdateOutput> update($1.UpdateInput request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$update, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.DeleteOutput> delete($1.DeleteInput request,
-      {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.DeleteOutput> delete($1.DeleteInput request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$delete, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.GetOutput> get($1.GetInput request,
-      {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.GetOutput> get($1.GetInput request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$get, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.ListOutput> list($1.ListInput request,
-      {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.ListOutput> list($1.ListInput request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$list, request, options: options);
   }
 }
@@ -115,38 +111,29 @@ abstract class UserRpcServiceBase extends $grpc.Service {
         ($1.ListOutput value) => value.writeToBuffer()));
   }
 
-  $async.Future<$1.CreateOutput> create_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.CreateInput> request) async {
+  $async.Future<$1.CreateOutput> create_Pre($grpc.ServiceCall call, $async.Future<$1.CreateInput> request) async {
     return create(call, await request);
   }
 
-  $async.Future<$1.UpdateOutput> update_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.UpdateInput> request) async {
+  $async.Future<$1.UpdateOutput> update_Pre($grpc.ServiceCall call, $async.Future<$1.UpdateInput> request) async {
     return update(call, await request);
   }
 
-  $async.Future<$1.DeleteOutput> delete_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.DeleteInput> request) async {
+  $async.Future<$1.DeleteOutput> delete_Pre($grpc.ServiceCall call, $async.Future<$1.DeleteInput> request) async {
     return delete(call, await request);
   }
 
-  $async.Future<$1.GetOutput> get_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.GetInput> request) async {
+  $async.Future<$1.GetOutput> get_Pre($grpc.ServiceCall call, $async.Future<$1.GetInput> request) async {
     return get(call, await request);
   }
 
-  $async.Future<$1.ListOutput> list_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.ListInput> request) async {
+  $async.Future<$1.ListOutput> list_Pre($grpc.ServiceCall call, $async.Future<$1.ListInput> request) async {
     return list(call, await request);
   }
 
-  $async.Future<$1.CreateOutput> create(
-      $grpc.ServiceCall call, $1.CreateInput request);
-  $async.Future<$1.UpdateOutput> update(
-      $grpc.ServiceCall call, $1.UpdateInput request);
-  $async.Future<$1.DeleteOutput> delete(
-      $grpc.ServiceCall call, $1.DeleteInput request);
+  $async.Future<$1.CreateOutput> create($grpc.ServiceCall call, $1.CreateInput request);
+  $async.Future<$1.UpdateOutput> update($grpc.ServiceCall call, $1.UpdateInput request);
+  $async.Future<$1.DeleteOutput> delete($grpc.ServiceCall call, $1.DeleteInput request);
   $async.Future<$1.GetOutput> get($grpc.ServiceCall call, $1.GetInput request);
-  $async.Future<$1.ListOutput> list(
-      $grpc.ServiceCall call, $1.ListInput request);
+  $async.Future<$1.ListOutput> list($grpc.ServiceCall call, $1.ListInput request);
 }

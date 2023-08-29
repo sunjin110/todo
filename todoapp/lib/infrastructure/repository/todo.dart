@@ -3,6 +3,7 @@ import 'package:todoapp/domain/model/todo.dart';
 import 'package:todoapp/domain/model/user_auth.dart';
 import 'package:todoapp/domain/repository/todo.dart' as $repository;
 import 'package:todoapp/infrastructure/grpc/grpc.dart';
+import 'package:todoapp/infrastructure/grpc/proto_dart_gen/google/protobuf/timestamp.pb.dart';
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/todo/todo.pbgrpc.dart'
     as $todo;
 import 'package:todoapp/infrastructure/grpc/proto_dart_gen/todo/todo.pb.dart'
@@ -113,6 +114,10 @@ class TodoRepository implements $repository.TodoRepository {
     createTodo.title = repoCreateTodo.title;
     createTodo.description = repoCreateTodo.description;
     createTodo.status = convertGrpcStatus(repoCreateTodo.status)!;
+
+    if (repoCreateTodo.startTime != null) {
+      createTodo.startTime = Timestamp.fromDateTime(repoCreateTodo.startTime!);
+    }
     return createTodo;
   }
 

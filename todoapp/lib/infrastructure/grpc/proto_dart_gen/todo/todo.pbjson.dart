@@ -31,56 +31,12 @@ final $typed_data.Uint8List statusDescriptor = $convert.base64Decode(
 const TodoFilter$json = {
   '1': 'TodoFilter',
   '2': [
-    {
-      '1': 'id',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.todo.TodoId',
-      '9': 0,
-      '10': 'id',
-      '17': true
-    },
+    {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.todo.TodoId', '9': 0, '10': 'id', '17': true},
     {'1': 'title', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'title', '17': true},
-    {
-      '1': 'title_filter_kind',
-      '3': 3,
-      '4': 1,
-      '5': 14,
-      '6': '.list.FilterKind',
-      '9': 2,
-      '10': 'titleFilterKind',
-      '17': true
-    },
-    {
-      '1': 'description',
-      '3': 4,
-      '4': 1,
-      '5': 9,
-      '9': 3,
-      '10': 'description',
-      '17': true
-    },
-    {
-      '1': 'description_filter_kind',
-      '3': 5,
-      '4': 1,
-      '5': 14,
-      '6': '.list.FilterKind',
-      '9': 4,
-      '10': 'descriptionFilterKind',
-      '17': true
-    },
-    {
-      '1': 'status',
-      '3': 6,
-      '4': 1,
-      '5': 14,
-      '6': '.todo.Status',
-      '9': 5,
-      '10': 'status',
-      '17': true
-    },
+    {'1': 'title_filter_kind', '3': 3, '4': 1, '5': 14, '6': '.list.FilterKind', '9': 2, '10': 'titleFilterKind', '17': true},
+    {'1': 'description', '3': 4, '4': 1, '5': 9, '9': 3, '10': 'description', '17': true},
+    {'1': 'description_filter_kind', '3': 5, '4': 1, '5': 14, '6': '.list.FilterKind', '9': 4, '10': 'descriptionFilterKind', '17': true},
+    {'1': 'status', '3': 6, '4': 1, '5': 14, '6': '.todo.Status', '9': 5, '10': 'status', '17': true},
   ],
   '8': [
     {'1': '_id'},
@@ -107,26 +63,8 @@ final $typed_data.Uint8List todoFilterDescriptor = $convert.base64Decode(
 const TodoSort$json = {
   '1': 'TodoSort',
   '2': [
-    {
-      '1': 'create_time',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.list.SortField',
-      '9': 0,
-      '10': 'createTime',
-      '17': true
-    },
-    {
-      '1': 'done_time',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.list.SortField',
-      '9': 1,
-      '10': 'doneTime',
-      '17': true
-    },
+    {'1': 'create_time', '3': 1, '4': 1, '5': 11, '6': '.list.SortField', '9': 0, '10': 'createTime', '17': true},
+    {'1': 'done_time', '3': 2, '4': 1, '5': 11, '6': '.list.SortField', '9': 1, '10': 'doneTime', '17': true},
   ],
   '8': [
     {'1': '_create_time'},
@@ -144,42 +82,10 @@ final $typed_data.Uint8List todoSortDescriptor = $convert.base64Decode(
 const ListInput$json = {
   '1': 'ListInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
-    {
-      '1': 'paging',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.list.Paging',
-      '10': 'paging'
-    },
-    {
-      '1': 'filter',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.todo.TodoFilter',
-      '9': 0,
-      '10': 'filter',
-      '17': true
-    },
-    {
-      '1': 'sort',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.todo.TodoSort',
-      '9': 1,
-      '10': 'sort',
-      '17': true
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {'1': 'paging', '3': 2, '4': 1, '5': 11, '6': '.list.Paging', '10': 'paging'},
+    {'1': 'filter', '3': 3, '4': 1, '5': 11, '6': '.todo.TodoFilter', '9': 0, '10': 'filter', '17': true},
+    {'1': 'sort', '3': 4, '4': 1, '5': 11, '6': '.todo.TodoSort', '9': 1, '10': 'sort', '17': true},
   ],
   '8': [
     {'1': '_filter'},
@@ -212,14 +118,7 @@ final $typed_data.Uint8List listOutputDescriptor = $convert.base64Decode(
 const GetInput$json = {
   '1': 'GetInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
     {'1': 'id', '3': 2, '4': 1, '5': 11, '6': '.todo.TodoId', '10': 'id'},
   ],
 };
@@ -245,22 +144,8 @@ final $typed_data.Uint8List getOutputDescriptor = $convert.base64Decode(
 const CreateInput$json = {
   '1': 'CreateInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
-    {
-      '1': 'todo',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.todo.CreateTodo',
-      '10': 'todo'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {'1': 'todo', '3': 2, '4': 1, '5': 11, '6': '.todo.CreateTodo', '10': 'todo'},
   ],
 };
 
@@ -275,29 +160,15 @@ const CreateOutput$json = {
 };
 
 /// Descriptor for `CreateOutput`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List createOutputDescriptor =
-    $convert.base64Decode('CgxDcmVhdGVPdXRwdXQ=');
+final $typed_data.Uint8List createOutputDescriptor = $convert.base64Decode(
+    'CgxDcmVhdGVPdXRwdXQ=');
 
 @$core.Deprecated('Use updateInputDescriptor instead')
 const UpdateInput$json = {
   '1': 'UpdateInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
-    {
-      '1': 'todo',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.todo.UpdateTodo',
-      '10': 'todo'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {'1': 'todo', '3': 2, '4': 1, '5': 11, '6': '.todo.UpdateTodo', '10': 'todo'},
   ],
 };
 
@@ -312,21 +183,14 @@ const UpdateOutput$json = {
 };
 
 /// Descriptor for `UpdateOutput`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateOutputDescriptor =
-    $convert.base64Decode('CgxVcGRhdGVPdXRwdXQ=');
+final $typed_data.Uint8List updateOutputDescriptor = $convert.base64Decode(
+    'CgxVcGRhdGVPdXRwdXQ=');
 
 @$core.Deprecated('Use deleteInputDescriptor instead')
 const DeleteInput$json = {
   '1': 'DeleteInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
     {'1': 'id', '3': 2, '4': 1, '5': 11, '6': '.todo.TodoId', '10': 'id'},
   ],
 };
@@ -342,8 +206,8 @@ const DeleteOutput$json = {
 };
 
 /// Descriptor for `DeleteOutput`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteOutputDescriptor =
-    $convert.base64Decode('CgxEZWxldGVPdXRwdXQ=');
+final $typed_data.Uint8List deleteOutputDescriptor = $convert.base64Decode(
+    'CgxEZWxldGVPdXRwdXQ=');
 
 @$core.Deprecated('Use todoIdDescriptor instead')
 const TodoId$json = {
@@ -354,8 +218,8 @@ const TodoId$json = {
 };
 
 /// Descriptor for `TodoId`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List todoIdDescriptor =
-    $convert.base64Decode('CgZUb2RvSWQSDgoCaWQYASABKAlSAmlk');
+final $typed_data.Uint8List todoIdDescriptor = $convert.base64Decode(
+    'CgZUb2RvSWQSDgoCaWQYASABKAlSAmlk');
 
 @$core.Deprecated('Use createTodoDescriptor instead')
 const CreateTodo$json = {
@@ -363,21 +227,20 @@ const CreateTodo$json = {
   '2': [
     {'1': 'title', '3': 1, '4': 1, '5': 9, '10': 'title'},
     {'1': 'description', '3': 2, '4': 1, '5': 9, '10': 'description'},
-    {
-      '1': 'status',
-      '3': 3,
-      '4': 1,
-      '5': 14,
-      '6': '.todo.Status',
-      '10': 'status'
-    },
+    {'1': 'status', '3': 3, '4': 1, '5': 14, '6': '.todo.Status', '10': 'status'},
+    {'1': 'start_time', '3': 4, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 0, '10': 'startTime', '17': true},
+  ],
+  '8': [
+    {'1': '_start_time'},
   ],
 };
 
 /// Descriptor for `CreateTodo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List createTodoDescriptor = $convert.base64Decode(
     'CgpDcmVhdGVUb2RvEhQKBXRpdGxlGAEgASgJUgV0aXRsZRIgCgtkZXNjcmlwdGlvbhgCIAEoCV'
-    'ILZGVzY3JpcHRpb24SJAoGc3RhdHVzGAMgASgOMgwudG9kby5TdGF0dXNSBnN0YXR1cw==');
+    'ILZGVzY3JpcHRpb24SJAoGc3RhdHVzGAMgASgOMgwudG9kby5TdGF0dXNSBnN0YXR1cxI+Cgpz'
+    'dGFydF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgAUglzdGFydFRpbW'
+    'WIAQFCDQoLX3N0YXJ0X3RpbWU=');
 
 @$core.Deprecated('Use updateTodoDescriptor instead')
 const UpdateTodo$json = {
@@ -385,25 +248,8 @@ const UpdateTodo$json = {
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.todo.TodoId', '10': 'id'},
     {'1': 'title', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'title', '17': true},
-    {
-      '1': 'description',
-      '3': 3,
-      '4': 1,
-      '5': 9,
-      '9': 1,
-      '10': 'description',
-      '17': true
-    },
-    {
-      '1': 'status',
-      '3': 4,
-      '4': 1,
-      '5': 14,
-      '6': '.todo.Status',
-      '9': 2,
-      '10': 'status',
-      '17': true
-    },
+    {'1': 'description', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'description', '17': true},
+    {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.todo.Status', '9': 2, '10': 'status', '17': true},
   ],
   '8': [
     {'1': '_title'},
@@ -426,40 +272,10 @@ const Todo$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.todo.TodoId', '10': 'id'},
     {'1': 'title', '3': 2, '4': 1, '5': 9, '10': 'title'},
     {'1': 'description', '3': 3, '4': 1, '5': 9, '10': 'description'},
-    {
-      '1': 'status',
-      '3': 4,
-      '4': 1,
-      '5': 14,
-      '6': '.todo.Status',
-      '10': 'status'
-    },
-    {
-      '1': 'user_id',
-      '3': 5,
-      '4': 1,
-      '5': 11,
-      '6': '.user.UserId',
-      '10': 'userId'
-    },
-    {
-      '1': 'create_time',
-      '3': 6,
-      '4': 1,
-      '5': 11,
-      '6': '.google.protobuf.Timestamp',
-      '10': 'createTime'
-    },
-    {
-      '1': 'done_time',
-      '3': 7,
-      '4': 1,
-      '5': 11,
-      '6': '.google.protobuf.Timestamp',
-      '9': 0,
-      '10': 'doneTime',
-      '17': true
-    },
+    {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.todo.Status', '10': 'status'},
+    {'1': 'user_id', '3': 5, '4': 1, '5': 11, '6': '.user.UserId', '10': 'userId'},
+    {'1': 'create_time', '3': 6, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createTime'},
+    {'1': 'done_time', '3': 7, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 0, '10': 'doneTime', '17': true},
   ],
   '8': [
     {'1': '_done_time'},
@@ -474,3 +290,4 @@ final $typed_data.Uint8List todoDescriptor = $convert.base64Decode(
     'JJZBI7CgtjcmVhdGVfdGltZRgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCmNy'
     'ZWF0ZVRpbWUSPAoJZG9uZV90aW1lGAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcE'
     'gAUghkb25lVGltZYgBAUIMCgpfZG9uZV90aW1l');
+

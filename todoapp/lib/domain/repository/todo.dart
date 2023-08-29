@@ -48,8 +48,12 @@ class CreateTodo {
   final String title;
   final String description;
   final TodoStatus status;
+  final DateTime? startTime;
   CreateTodo(
-      {required this.title, required this.description, required this.status});
+      {required this.title,
+      required this.description,
+      required this.status,
+      required this.startTime});
 }
 
 class UpdateTodo {

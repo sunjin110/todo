@@ -22,8 +22,8 @@ const UserId$json = {
 };
 
 /// Descriptor for `UserId`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userIdDescriptor =
-    $convert.base64Decode('CgZVc2VySWQSDgoCaWQYASABKAlSAmlk');
+final $typed_data.Uint8List userIdDescriptor = $convert.base64Decode(
+    'CgZVc2VySWQSDgoCaWQYASABKAlSAmlk');
 
 @$core.Deprecated('Use userDescriptor instead')
 const User$json = {
@@ -32,14 +32,7 @@ const User$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.user.UserId', '10': 'id'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
-    {
-      '1': 'status',
-      '3': 4,
-      '4': 1,
-      '5': 14,
-      '6': '.authentication.UserSignUpStatus',
-      '10': 'status'
-    },
+    {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.authentication.UserSignUpStatus', '10': 'status'},
   ],
 };
 
@@ -55,23 +48,8 @@ const CreateUser$json = {
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
-    {
-      '1': 'password',
-      '3': 3,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'password',
-      '17': true
-    },
-    {
-      '1': 'status',
-      '3': 4,
-      '4': 1,
-      '5': 14,
-      '6': '.authentication.UserSignUpStatus',
-      '10': 'status'
-    },
+    {'1': 'password', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'password', '17': true},
+    {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.authentication.UserSignUpStatus', '10': 'status'},
   ],
   '8': [
     {'1': '_password'},
@@ -91,25 +69,8 @@ const UpdateUser$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.user.UserId', '10': 'id'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'name', '17': true},
     {'1': 'email', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'email', '17': true},
-    {
-      '1': 'password',
-      '3': 4,
-      '4': 1,
-      '5': 9,
-      '9': 2,
-      '10': 'password',
-      '17': true
-    },
-    {
-      '1': 'status',
-      '3': 5,
-      '4': 1,
-      '5': 14,
-      '6': '.authentication.UserSignUpStatus',
-      '9': 3,
-      '10': 'status',
-      '17': true
-    },
+    {'1': 'password', '3': 4, '4': 1, '5': 9, '9': 2, '10': 'password', '17': true},
+    {'1': 'status', '3': 5, '4': 1, '5': 14, '6': '.authentication.UserSignUpStatus', '9': 3, '10': 'status', '17': true},
   ],
   '8': [
     {'1': '_name'},
@@ -131,22 +92,8 @@ final $typed_data.Uint8List updateUserDescriptor = $convert.base64Decode(
 const CreateInput$json = {
   '1': 'CreateInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
-    {
-      '1': 'user',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.user.CreateUser',
-      '10': 'user'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.user.CreateUser', '10': 'user'},
   ],
 };
 
@@ -161,29 +108,15 @@ const CreateOutput$json = {
 };
 
 /// Descriptor for `CreateOutput`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List createOutputDescriptor =
-    $convert.base64Decode('CgxDcmVhdGVPdXRwdXQ=');
+final $typed_data.Uint8List createOutputDescriptor = $convert.base64Decode(
+    'CgxDcmVhdGVPdXRwdXQ=');
 
 @$core.Deprecated('Use updateInputDescriptor instead')
 const UpdateInput$json = {
   '1': 'UpdateInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
-    {
-      '1': 'user',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.user.UpdateUser',
-      '10': 'user'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.user.UpdateUser', '10': 'user'},
   ],
 };
 
@@ -198,21 +131,14 @@ const UpdateOutput$json = {
 };
 
 /// Descriptor for `UpdateOutput`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateOutputDescriptor =
-    $convert.base64Decode('CgxVcGRhdGVPdXRwdXQ=');
+final $typed_data.Uint8List updateOutputDescriptor = $convert.base64Decode(
+    'CgxVcGRhdGVPdXRwdXQ=');
 
 @$core.Deprecated('Use deleteInputDescriptor instead')
 const DeleteInput$json = {
   '1': 'DeleteInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
     {'1': 'id', '3': 2, '4': 1, '5': 11, '6': '.user.UserId', '10': 'id'},
   ],
 };
@@ -228,45 +154,18 @@ const DeleteOutput$json = {
 };
 
 /// Descriptor for `DeleteOutput`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteOutputDescriptor =
-    $convert.base64Decode('CgxEZWxldGVPdXRwdXQ=');
+final $typed_data.Uint8List deleteOutputDescriptor = $convert.base64Decode(
+    'CgxEZWxldGVPdXRwdXQ=');
 
 @$core.Deprecated('Use userFilterDescriptor instead')
 const UserFilter$json = {
   '1': 'UserFilter',
   '2': [
-    {
-      '1': 'id',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.user.UserId',
-      '9': 0,
-      '10': 'id',
-      '17': true
-    },
+    {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.user.UserId', '9': 0, '10': 'id', '17': true},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'name', '17': true},
-    {
-      '1': 'name_filter_kind',
-      '3': 3,
-      '4': 1,
-      '5': 14,
-      '6': '.list.FilterKind',
-      '9': 2,
-      '10': 'nameFilterKind',
-      '17': true
-    },
+    {'1': 'name_filter_kind', '3': 3, '4': 1, '5': 14, '6': '.list.FilterKind', '9': 2, '10': 'nameFilterKind', '17': true},
     {'1': 'email', '3': 4, '4': 1, '5': 9, '9': 3, '10': 'email', '17': true},
-    {
-      '1': 'email_filter_kind',
-      '3': 5,
-      '4': 1,
-      '5': 14,
-      '6': '.list.FilterKind',
-      '9': 4,
-      '10': 'emailFilterKind',
-      '17': true
-    },
+    {'1': 'email_filter_kind', '3': 5, '4': 1, '5': 14, '6': '.list.FilterKind', '9': 4, '10': 'emailFilterKind', '17': true},
   ],
   '8': [
     {'1': '_id'},
@@ -290,26 +189,8 @@ final $typed_data.Uint8List userFilterDescriptor = $convert.base64Decode(
 const UserSort$json = {
   '1': 'UserSort',
   '2': [
-    {
-      '1': 'last_login',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.list.SortField',
-      '9': 0,
-      '10': 'lastLogin',
-      '17': true
-    },
-    {
-      '1': 'create_time',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.list.SortField',
-      '9': 1,
-      '10': 'createTime',
-      '17': true
-    },
+    {'1': 'last_login', '3': 1, '4': 1, '5': 11, '6': '.list.SortField', '9': 0, '10': 'lastLogin', '17': true},
+    {'1': 'create_time', '3': 2, '4': 1, '5': 11, '6': '.list.SortField', '9': 1, '10': 'createTime', '17': true},
   ],
   '8': [
     {'1': '_last_login'},
@@ -327,42 +208,10 @@ final $typed_data.Uint8List userSortDescriptor = $convert.base64Decode(
 const ListInput$json = {
   '1': 'ListInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
-    {
-      '1': 'paging',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.list.Paging',
-      '10': 'paging'
-    },
-    {
-      '1': 'filter',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.user.UserFilter',
-      '9': 0,
-      '10': 'filter',
-      '17': true
-    },
-    {
-      '1': 'sort',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.user.UserSort',
-      '9': 1,
-      '10': 'sort',
-      '17': true
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
+    {'1': 'paging', '3': 2, '4': 1, '5': 11, '6': '.list.Paging', '10': 'paging'},
+    {'1': 'filter', '3': 3, '4': 1, '5': 11, '6': '.user.UserFilter', '9': 0, '10': 'filter', '17': true},
+    {'1': 'sort', '3': 4, '4': 1, '5': 11, '6': '.user.UserSort', '9': 1, '10': 'sort', '17': true},
   ],
   '8': [
     {'1': '_filter'},
@@ -395,14 +244,7 @@ final $typed_data.Uint8List listOutputDescriptor = $convert.base64Decode(
 const GetInput$json = {
   '1': 'GetInput',
   '2': [
-    {
-      '1': 'session',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.authentication.Session',
-      '10': 'session'
-    },
+    {'1': 'session', '3': 1, '4': 1, '5': 11, '6': '.authentication.Session', '10': 'session'},
     {'1': 'id', '3': 2, '4': 1, '5': 11, '6': '.user.UserId', '10': 'id'},
   ],
 };
@@ -423,3 +265,4 @@ const GetOutput$json = {
 /// Descriptor for `GetOutput`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getOutputDescriptor = $convert.base64Decode(
     'CglHZXRPdXRwdXQSHgoEdXNlchgBIAEoCzIKLnVzZXIuVXNlclIEdXNlcg==');
+

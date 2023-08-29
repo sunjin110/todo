@@ -29,10 +29,10 @@ class AliveClient extends $grpc.Client {
   AliveClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options, interceptors: interceptors);
+      : super(channel, options: options,
+        interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.Empty> ping($0.Empty request,
-      {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Empty> ping($0.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$ping, request, options: options);
   }
 }
@@ -51,8 +51,7 @@ abstract class AliveServiceBase extends $grpc.Service {
         ($0.Empty value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.Empty> ping_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+  $async.Future<$0.Empty> ping_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
     return ping(call, await request);
   }
 
