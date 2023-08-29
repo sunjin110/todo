@@ -14,4 +14,15 @@ tf_plan_local:
 .PHONEY: tf_apply_local
 tf_apply_local:
 	@cd "$(PWD)/env/local" && terraform apply
-	
+
+.PHONEY: tf_init_prod
+tf_init_prod:
+	@cd "$(PWD)/env/production" && terraform init
+
+.PHONEY: tf_plan_prod
+tf_plan_prod:
+	@cd "$(PWD)/env/production" && terraform plan
+
+.PHONEY: tf_apply_prod
+tf_apply_prod:
+	@cd "$(PWD)/env/production" && terraform apply
