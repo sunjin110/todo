@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
       version = "~> 4"
     }
   }
@@ -27,7 +27,7 @@ module "todo_sessions" {
 }
 
 output "todo_session_api_token" {
-    sensitive = true
-    value = module.todo_sessions.todo_sessions_api_token
+  sensitive = true
+  value     = module.todo_sessions.todo_sessions_api_token
 }
 
