@@ -10,6 +10,11 @@ terraform {
       source  = "mongodb/mongodbatlas"
       version = "1.11.0"
     }
+
+    google = {
+        source = "hashicorp/google"
+        version = "~> 4.80.0"
+    }
   }
 }
 
@@ -40,6 +45,11 @@ provider "cloudflare" {
 provider "mongodbatlas" {
   public_key  = var.mongo_atlas_public_key
   private_key = var.mongo_atlas_private_key
+}
+
+provider "google" {
+  project = "alma-project-110"
+  region = "ap-northeast1"
 }
 
 module "todo_sessions" {
