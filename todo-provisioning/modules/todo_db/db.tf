@@ -19,7 +19,7 @@ resource "mongodbatlas_advanced_cluster" "db" {
     region_configs {
       electable_specs {
         instance_size = "M0"
-        node_count    = 1
+        node_count    = 0
       }
       provider_name         = "TENANT"
       backing_provider_name = "GCP"

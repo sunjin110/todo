@@ -29,6 +29,10 @@ variable "mongo_atlas_private_key" {
   type = string
 }
 
+variable "mongo_user_password" {
+  type = string
+}
+
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
@@ -49,6 +53,9 @@ module "todo_db" {
   name                  = "production-todo-db"
   env                   = "production"
   mongoatlas_project_id = "64edb35143d369529cc27fa8"
+  user_name = "production_todo_db_user"
+  user_password = var.mongo_user_password
+  user_use_database_name = "todo"
 }
 
 output "todo_session_api_token" {
