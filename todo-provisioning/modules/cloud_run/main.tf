@@ -1,22 +1,14 @@
-resource "google_cloud_run_v2_job" "default" {
-  name     = var.name
-  location = var.location
+# resource "google_cloud_run_v2_service" "default" {
+#   name     = var.name
+#   location = var.location
+#   ingress = "INGRESS_TRAFFIC_ALL"
 
-  template {
-    template {
-      containers {
-        # image = "us-docker.pkg.dev/cloudrun/container/hello"
-        image = var.image
-      }
-    }
-  }
-
-  lifecycle {
-    ignore_changes = [
-      launch_stage,
-    ]
-  }
-}
+#   template {
+#     containers {
+#       image = var.image
+#     }
+#   }
+# }
 
 variable "name" {
   type = string
@@ -24,7 +16,7 @@ variable "name" {
 
 variable "location" {
   type = string
-  default = "ap-northeast1"
+  default = "asia-northeast1"
 }
 
 variable "image" {

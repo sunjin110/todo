@@ -81,3 +81,11 @@ module "todo_backend_repository" {
   description = "todo backend repository (production)"
   repository_id = "todo-backend-production"
 }
+
+module "todo_backend" {
+  source = "../../modules/cloud_run"
+  name = "todo-backend-production"
+  location = "asia-northeast1"
+  image = "asia-northeast1-docker.pkg.dev/alma-project-110/todo-backend-production/todo-back:v1"
+}
+
