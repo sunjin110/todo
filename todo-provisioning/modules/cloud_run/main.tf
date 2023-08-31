@@ -1,14 +1,14 @@
-# resource "google_cloud_run_v2_service" "default" {
-#   name     = var.name
-#   location = var.location
-#   ingress = "INGRESS_TRAFFIC_ALL"
+resource "google_cloud_run_v2_service" "default" {
+  name     = var.name
+  location = var.location
+  ingress = "INGRESS_TRAFFIC_ALL"
 
-#   template {
-#     containers {
-#       image = var.image
-#     }
-#   }
-# }
+  template {
+    containers {
+      image = var.image
+    }
+  }
+}
 
 variable "name" {
   type = string
