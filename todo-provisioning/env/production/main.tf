@@ -49,7 +49,7 @@ provider "mongodbatlas" {
 
 provider "google" {
   project = "alma-project-110"
-  region = "ap-northeast1"
+  region = "asia-northeast1"
 }
 
 module "todo_sessions" {
@@ -71,4 +71,13 @@ module "todo_db" {
 output "todo_session_api_token" {
   sensitive = true
   value     = module.todo_sessions.todo_sessions_api_token
+}
+
+
+module "todo_backend_repository" {
+  source = "../../modules/gcp_docker_repository"
+  region = "asia-northeast1"
+  env = "production"
+  description = "todo backend repository (production)"
+  repository_id = "todo-backend-production"
 }
