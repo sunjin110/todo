@@ -23,6 +23,6 @@ variable "mongo_uri" {
   type = string
 }
 
-variable "mongo_user" {
+variable "mongo_db_name" {
   type = string
 }

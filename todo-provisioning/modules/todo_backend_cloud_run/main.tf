@@ -39,7 +39,7 @@ resource "google_cloud_run_v2_service" "default" {
 
       env {
         name = "TODO_MONGO_DB_NAME"
-        value = var.mongo_user
+        value = var.mongo_db_name
       }
 
       env {
