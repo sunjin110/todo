@@ -7,6 +7,7 @@ run:
 docker_apply:
 	@make docker_build
 	@make docker_push
+	@make cloud_run_deploy
 
 .PHONY: docker_build
 docker_build:
@@ -20,3 +21,7 @@ docker_push:
 docker_auth:
 	gcloud auth login
 	gcloud auth configure-docker us-central1-docker.pkg.dev,asia-northeast1-docker.pkg.dev
+
+.PHONEY: cloud_run_deploy
+cloud_run_deploy:
+	gcloud run deploy todo-backend-production --region asia-northeast1 --image asia-northeast1-docker.pkg.dev/alma-project-110/todo-backend-production/todo-back:v1
