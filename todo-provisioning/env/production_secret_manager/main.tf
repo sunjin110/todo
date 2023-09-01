@@ -15,8 +15,31 @@ provider "google" {
 
 
 resource "google_secret_manager_secret" "mongo_user_password" {
-  secret_id = "TODO_DB_MONGO_PASSWORD"
+  secret_id = "TODO_DB_MONGO_PASSWORD_PRODUCTION"
   replication {
     automatic = true
+  }
+  labels = {
+    env = "production"
+  }
+}
+
+resource "google_secret_manager_secret" "todo_password_hash_secret" {
+  secret_id = "TODO_PASSWORD_HASH_SECRET_PRODUCTION"
+  replication {
+    automatic = true
+  }
+  labels = {
+    env = "production"
+  }
+}
+
+resource "google_secret_manager_secret" "todo_session_secret_key" {
+  secret_id = "TODO_SESSION_SECRET_KEY_PRODUCTION"
+  replication {
+    automatic = true
+  }
+  labels = {
+    env = "production"
   }
 }
