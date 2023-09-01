@@ -18,12 +18,12 @@ variable "env" {
 }
 
 variable "region" {
-  type = string
+  type    = string
   default = "asia-northeast1"
 }
 
 variable "description" {
-  type = string
+  type    = string
   default = "Created by terrafrom"
 }
 

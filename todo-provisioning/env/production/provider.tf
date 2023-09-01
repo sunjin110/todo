@@ -10,5 +10,5 @@ provider "mongodbatlas" {
 
 provider "google" {
   project = "alma-project-110"
-  region = "asia-northeast1"
+  region  = "asia-northeast1"
 }

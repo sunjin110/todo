@@ -1,24 +1,32 @@
 resource "google_cloud_run_v2_service" "default" {
   name     = var.name
   location = var.location
-  ingress = "INGRESS_TRAFFIC_ALL"
+  ingress  = "INGRESS_TRAFFIC_ALL"
 
   template {
+
     containers {
       image = var.image
 
+      # Enable HTTP/2
+      # https://cloud.google.com/run/docs/configuring/http2
+      ports {
+        name           = "h2c"
+        container_port = 8080
+      }
+
       env {
-        name = "TODO_SERVER_ADDRESS"
+        name  = "TODO_SERVER_ADDRESS"
         value = ":8080"
       }
 
       env {
-        name = "TODO_SERVER_MAX_CONNECTION_AGE"
+        name  = "TODO_SERVER_MAX_CONNECTION_AGE"
         value = "300"
       }
 
       env {
-        name = "TODO_SERVER_MAX_CONNECTION_IDLE"
+        name  = "TODO_SERVER_MAX_CONNECTION_IDLE"
         value = "300"
       }
 
@@ -26,24 +34,24 @@ resource "google_cloud_run_v2_service" "default" {
         name = "TODO_PASSWORD_HASH_SECRET"
         value_source {
           secret_key_ref {
-            secret = var.todo_password_hash_secret_id
+            secret  = var.todo_password_hash_secret_id
             version = "latest"
           }
         }
       }
 
       env {
-        name = "TODO_MONGO_DB_URI"
+        name  = "TODO_MONGO_DB_URI"
         value = var.mongo_uri
       }
 
       env {
-        name = "TODO_MONGO_DB_NAME"
+        name  = "TODO_MONGO_DB_NAME"
         value = var.mongo_db_name
       }
 
       env {
-        name = "TODO_CLOUDFLARE_ACCOUNT_ID"
+        name  = "TODO_CLOUDFLARE_ACCOUNT_ID"
         value = var.cloudflare_account_id
       }
 
@@ -51,24 +59,24 @@ resource "google_cloud_run_v2_service" "default" {
         name = "TODO_SESSION_SECRET_KEY"
         value_source {
           secret_key_ref {
-            secret = var.todo_session_secret_key_id
+            secret  = var.todo_session_secret_key_id
             version = "latest"
           }
         }
       }
 
       env {
-        name = "TODO_SESSION_DURATION"
+        name  = "TODO_SESSION_DURATION"
         value = "360"
       }
 
       env {
-        name = "TODO_SESSION_NAMESPACE_IDENTIFIER"
+        name  = "TODO_SESSION_NAMESPACE_IDENTIFIER"
         value = var.todo_session_namespace_identifier
       }
 
       env {
-        name = "TODO_SESSION_KV_ACCESS_TOKEN"
+        name  = "TODO_SESSION_KV_ACCESS_TOKEN"
         value = var.todo_session_kv_access_token
       }
     }

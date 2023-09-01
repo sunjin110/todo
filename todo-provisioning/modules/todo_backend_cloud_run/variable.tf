@@ -15,7 +15,7 @@ variable "name" {
 }
 
 variable "location" {
-  type = string
+  type    = string
   default = "asia-northeast1"
 }
 
