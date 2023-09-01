@@ -7,6 +7,6 @@ output "backend_domain" {
   value = module.todo_backend.domain
 }
 
-output "backend_status" {
-  value = module.todo_backend.status
-}
+# output "backend_status" {
+#   value = module.todo_backend.status
+# }
