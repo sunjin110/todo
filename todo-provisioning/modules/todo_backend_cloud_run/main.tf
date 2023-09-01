@@ -4,11 +4,11 @@ resource "google_cloud_run_v2_service" "default" {
   ingress  = "INGRESS_TRAFFIC_ALL"
 
   lifecycle {
-    ignore_changes = [ 
+    ignore_changes = [
       client,
       client_version,
       template["revision"]
-     ]
+    ]
   }
 
   template {

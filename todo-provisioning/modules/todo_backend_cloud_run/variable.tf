@@ -39,3 +39,15 @@ variable "todo_password_hash_secret_id" {
 variable "todo_session_secret_key_id" {
   type = string
 }
+
+variable "google_project_id" {
+  type = string
+}
+
+variable "endpoint_url" {
+  type = string
+}
+
+variable "zone_id" {
+  type = string
+}

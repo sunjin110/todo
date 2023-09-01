@@ -19,8 +19,10 @@ terraform {
 }
 
 locals {
-  db_user_name = "production-todo-db"
-  db_name      = "todo"
+  db_user_name       = "production-todo-db"
+  db_name            = "todo"
+  cloudflare_zone_id = "290f6a226040ba43aadf7d21935b95f1"
+  google_project_id  = "alma-project-110"
 }
 
 module "todo_sessions" {
@@ -59,4 +61,8 @@ module "todo_backend" {
   cloudflare_account_id             = var.cloudflare_account_id
   todo_password_hash_secret_id      = "TODO_PASSWORD_HASH_SECRET_PRODUCTION"
   todo_session_secret_key_id        = "TODO_SESSION_SECRET_KEY_PRODUCTION"
+  google_project_id                 = local.google_project_id
+  endpoint_url                      = "todo-backend.sunjin.info"
+  zone_id                           = local.cloudflare_zone_id
 }
+
