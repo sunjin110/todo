@@ -50,6 +50,7 @@ func Serve(ctx context.Context, config *config.Config) error {
 
 // ぶっちゃけここで書くアレではないがもうしんどいのでここに書く
 func Routing(ctx context.Context, server *grpc.Server, config *config.Config) error {
+	logger := log.GetLogger(ctx)
 
 	cloudflareWorkspaceClient, err := cloudflare.NewWorkersKVClient(config.Session.CloudFlareApiToken, config.Session.CloudFlareAccountID)
 	if err != nil {
@@ -62,10 +63,12 @@ func Routing(ctx context.Context, server *grpc.Server, config *config.Config) er
 	}
 
 	mongoDB := mongoClient.Database(config.MongoDB.DB)
+
 	err = mongo.CreateIndex(ctx, mongoDB)
 	if err != nil {
 		return fmt.Errorf("failed create index. err: %w", err)
 	}
+	logger.Info().Msg("create index done")
 
 	passwordHashService := service.NewPasswordHash(config.PasswordHashSecret)
 	morphologicalAnalysisService, err := infra_service.NewMorphologicalAnalysis()

@@ -3,13 +3,13 @@ resource "google_cloud_run_v2_service" "default" {
   location = var.location
   ingress  = "INGRESS_TRAFFIC_ALL"
 
-  lifecycle {
-    ignore_changes = [
-      client,
-      client_version,
-      template["revision"]
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     client,
+  #     client_version,
+  #     template["revision"]
+  #   ]
+  # }
 
   template {
 
@@ -18,10 +18,10 @@ resource "google_cloud_run_v2_service" "default" {
 
       # Enable HTTP/2
       # https://cloud.google.com/run/docs/configuring/http2
-      ports {
-        name           = "h2c"
-        container_port = 8080
-      }
+      # ports {
+      #   name           = "h2c"
+      #   container_port = 8080
+      # }
 
       env {
         name  = "TODO_SERVER_ADDRESS"
