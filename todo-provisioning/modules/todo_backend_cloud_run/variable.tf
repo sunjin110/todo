@@ -30,3 +30,12 @@ variable "mongo_uri" {
 variable "mongo_db_name" {
   type = string
 }
+
+
+variable "todo_password_hash_secret_id" {
+  type = string
+}
+
+variable "todo_session_secret_key_id" {
+  type = string
+}

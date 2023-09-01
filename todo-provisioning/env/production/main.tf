@@ -57,4 +57,6 @@ module "todo_backend" {
   mongo_uri = module.todo_db.mongo_uri
   mongo_db_name = local.db_name
   cloudflare_account_id = var.cloudflare_account_id
+  todo_password_hash_secret_id = "TODO_PASSWORD_HASH_SECRET_PRODUCTION"
+  todo_session_secret_key_id = "TODO_SESSION_SECRET_KEY_PRODUCTION"
 }

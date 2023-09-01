@@ -26,8 +26,7 @@ resource "google_cloud_run_v2_service" "default" {
         name = "TODO_PASSWORD_HASH_SECRET"
         value_source {
           secret_key_ref {
-            secret = "" # TODO password hash secret
-            version = "latest"
+            secret = var.todo_password_hash_secret_id
           }
         }
       }
@@ -49,7 +48,11 @@ resource "google_cloud_run_v2_service" "default" {
 
       env {
         name = "TODO_SESSION_SECRET_KEY"
-        value = "TODO"
+        value_source {
+          secret_key_ref {
+            secret = var.todo_session_secret_key_id
+          }
+        }
       }
 
       env {
