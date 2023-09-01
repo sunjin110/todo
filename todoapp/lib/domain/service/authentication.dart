@@ -24,7 +24,7 @@ class _AuthenticationService implements AuthenticationService {
           ServiceErrorCode.notFoundSession, "not found session");
     }
     if (session.expireTime.isBefore(txTime)) {
-      throw ServiceException(ServiceErrorCode.internal,
+      throw ServiceException(ServiceErrorCode.sessionExpired,
           "expireTime: ${session.expireTime}, txTIme: $txTime");
     }
     return session;

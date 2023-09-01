@@ -19,6 +19,7 @@ class ErrorHandler {
     if (e is UseCaseException) {
       switch (e.errorCode) {
         case UseCaseErrorCode.session:
+          logger.d("セッションエラーなので、signIn画面に遷移させようとします");
           Fluttertoast.showToast(msg: "セッションエラーです");
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
@@ -27,10 +28,12 @@ class ErrorHandler {
               (route) => false);
           return;
         default:
+          logger.d("よくわからないエラー。code=${e.errorCode}", error: e);
           Fluttertoast.showToast(msg: "エラーが発生しました.${e.toString()}");
           return;
       }
     }
+    logger.d("予期しないエラー", error: e);
     Fluttertoast.showToast(msg: "予期しないエラーが発生. ${e.toString()}");
   }
 }
