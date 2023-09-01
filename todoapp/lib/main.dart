@@ -33,7 +33,9 @@ class MyApp extends StatelessWidget {
     // grpc client
     // https://zuma-lab.com/posts/flutter-connect-to-the-localhost-api
     // final clientChannel = newClientChannel("0.0.0.0", 3010);
-    final clientChannel = newClientChannel("192.168.10.101", 3010);
+    // final clientChannel = newClientChannel("192.168.10.101", 3010);
+    final clientChannel = newClientChannel(
+        "todo-backend-production-7aq3iszjfq-an.a.run.app", 443, true);
 
     final authenticationRepository =
         AuthenticationRepository(AuthenticationClient(clientChannel));
