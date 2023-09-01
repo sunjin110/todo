@@ -52,6 +52,10 @@ provider "google" {
   region = "asia-northeast1"
 }
 
+locals {
+  db_user_name = "production-todo-db"
+}
+
 module "todo_sessions" {
   source                = "../../modules/todo_sessions"
   cloudflare_account_id = var.cloudflare_account_id
@@ -60,7 +64,7 @@ module "todo_sessions" {
 
 module "todo_db" {
   source                = "../../modules/todo_db"
-  name                  = "production-todo-db"
+  name                  = local.db_user_name
   env                   = "production"
   mongoatlas_project_id = "64edb35143d369529cc27fa8"
   user_name = "production_todo_db_user"
@@ -73,6 +77,10 @@ output "todo_session_api_token" {
   value     = module.todo_sessions.todo_sessions_api_token
 }
 
+output "db_uri" {
+  value = module.todo_db.mongo_uri
+}
+
 
 module "todo_backend_repository" {
   source = "../../modules/gcp_docker_repository"
@@ -83,11 +91,13 @@ module "todo_backend_repository" {
 }
 
 module "todo_backend" {
-  source = "../../modules/cloud_run"
+  source = "../../modules/todo_backend_cloud_run"
   name = "todo-backend-production"
   location = "asia-northeast1"
   image = "asia-northeast1-docker.pkg.dev/alma-project-110/todo-backend-production/todo-back:v1"
   todo_session_namespace_identifier = module.todo_sessions.todo_session_workers_kv_id
   todo_session_kv_access_token = module.todo_sessions.todo_sessions_api_token
+  mongo_uri = module.todo_db.mongo_uri
+  mongo_user = local.db_user_name
 }
 

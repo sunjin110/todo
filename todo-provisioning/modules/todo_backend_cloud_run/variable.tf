@@ -19,3 +19,10 @@ variable "image" {
   type = string
 }
 
+variable "mongo_uri" {
+  type = string
+}
+
+variable "mongo_user" {
+  type = string
+}

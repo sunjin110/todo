@@ -34,12 +34,12 @@ resource "google_cloud_run_v2_service" "default" {
 
       env {
         name = "TODO_MONGO_DB_URI"
-        value = "TODO"
+        value = var.mongo_uri
       }
 
       env {
         name = "TODO_MONGO_DB_NAME"
-        value = "TODO"
+        value = var.mongo_user
       }
 
       env {
