@@ -3,6 +3,14 @@ resource "google_cloud_run_v2_service" "default" {
   location = var.location
   ingress  = "INGRESS_TRAFFIC_ALL"
 
+  lifecycle {
+    ignore_changes = [ 
+      client,
+      client_version,
+      template["revision"]
+     ]
+  }
+
   template {
 
     containers {

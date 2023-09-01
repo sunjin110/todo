@@ -8,9 +8,10 @@ resource "google_artifact_registry_repository" "this" {
     env = var.env
   }
 
-  docker_config {
-    immutable_tags = false
-  }
+  # https://github.com/hashicorp/terraform-provider-google/issues/14846
+  # docker_config {
+  #   immutable_tags = false
+  # }
 }
 
 variable "env" {
