@@ -27,6 +27,7 @@ resource "google_cloud_run_v2_service" "default" {
         value_source {
           secret_key_ref {
             secret = var.todo_password_hash_secret_id
+            version = "latest"
           }
         }
       }
@@ -51,6 +52,7 @@ resource "google_cloud_run_v2_service" "default" {
         value_source {
           secret_key_ref {
             secret = var.todo_session_secret_key_id
+            version = "latest"
           }
         }
       }
