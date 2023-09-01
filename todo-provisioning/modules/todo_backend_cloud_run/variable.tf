@@ -1,3 +1,7 @@
+variable "cloudflare_account_id" {
+  type = string
+}
+
 variable "todo_session_namespace_identifier" {
   type = string
 }

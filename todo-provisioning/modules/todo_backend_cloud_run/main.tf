@@ -44,7 +44,7 @@ resource "google_cloud_run_v2_service" "default" {
 
       env {
         name = "TODO_CLOUDFLARE_ACCOUNT_ID"
-        value = "TODO"
+        value = var.cloudflare_account_id
       }
 
       env {

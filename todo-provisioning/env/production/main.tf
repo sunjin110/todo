@@ -56,4 +56,5 @@ module "todo_backend" {
   todo_session_kv_access_token = module.todo_sessions.todo_sessions_api_token
   mongo_uri = module.todo_db.mongo_uri
   mongo_db_name = local.db_name
+  cloudflare_account_id = var.cloudflare_account_id
 }
