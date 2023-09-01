@@ -87,5 +87,7 @@ module "todo_backend" {
   name = "todo-backend-production"
   location = "asia-northeast1"
   image = "asia-northeast1-docker.pkg.dev/alma-project-110/todo-backend-production/todo-back:v1"
+  todo_session_namespace_identifier = module.todo_sessions.todo_session_workers_kv_id
+  todo_session_kv_access_token = module.todo_sessions.todo_sessions_api_token
 }
 
