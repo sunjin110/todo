@@ -26,3 +26,15 @@ tf_plan_prod:
 .PHONEY: tf_apply_prod
 tf_apply_prod:
 	@cd "$(PWD)/env/production" && terraform apply
+
+.PHONEY: tf_init_prod_secret
+tf_init_prod_secret:
+	@cd "$(PWD)/env/production_secret_manager" && terraform init
+
+.PHONEY: tf_plan_prod_secret
+tf_plan_prod_secret:
+	@cd "$(PWD)/env/production_secret_manager" && terraform plan
+
+.PHONEY: tf_apply_prod_secret
+tf_apply_prod_secret:
+	@cd "$(PWD)/env/production_secret_manager" && terraform apply
