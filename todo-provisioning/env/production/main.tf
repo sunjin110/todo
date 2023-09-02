@@ -16,6 +16,11 @@ terraform {
       version = "~> 4.80.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "todo-terraform-state-production"
+  }
+ 
 }
 
 locals {
@@ -23,7 +28,16 @@ locals {
   db_name            = "todo"
   cloudflare_zone_id = "290f6a226040ba43aadf7d21935b95f1"
   google_project_id  = "alma-project-110"
+  tfstate_bucket_name = "todo-terraform-state-production"
 }
+
+
+
+# resource "cloudflare_r2_bucket" "tfstate" {
+#   account_id = var.cloudflare_account_id
+#   name = "todo-production-terraform"
+#   location = "APAC"
+# }
 
 module "todo_sessions" {
   source                = "../../modules/todo_sessions"
