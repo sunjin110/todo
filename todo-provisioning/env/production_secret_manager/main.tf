@@ -6,6 +6,10 @@ terraform {
       version = "~> 4.80.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "todo-terraform-secret-manager-production"
+  }
 }
 
 provider "google" {
@@ -13,6 +17,9 @@ provider "google" {
   region  = "asia-northeast1"
 }
 
+locals {
+  tfstate_bucket_name = "todo-terraform-secret-manager-production"
+}
 
 resource "google_secret_manager_secret" "mongo_user_password" {
   secret_id = "TODO_DB_MONGO_PASSWORD_PRODUCTION"
