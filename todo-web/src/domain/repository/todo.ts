@@ -1,5 +1,5 @@
-import { Session } from "../../domain/model/authentication";
-import { Todo, TodoId, TodoStatus } from "../../domain/model/todo";
+import { Session } from "../model/authentication";
+import { Todo, TodoId, TodoStatus } from "../model/todo";
 import { FilterField, Paging, SortField } from "./list";
 
 export interface TodoRepository {

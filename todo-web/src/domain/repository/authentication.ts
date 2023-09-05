@@ -1,4 +1,4 @@
-import { Session, UserSignUpStatus } from "../../domain/model/authentication";
+import { Session, UserSignUpStatus } from "../model/authentication";
 
 export interface AuthenticationRepository {
     signUp(name: string, email: string, password: string): SignUpOutput;
