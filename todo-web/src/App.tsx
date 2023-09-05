@@ -1,10 +1,11 @@
+import React from "react";
 import './App.css';
 import TopPage from './ui/pages/index';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignUpPage from './ui/pages/signup';
 
-const App = () => {
+const App = () : JSX.Element => {
   return (
     <div className='App'>
       <BrowserRouter>
