@@ -1,8 +1,9 @@
 import { Todo, TodoId, TodoStatus } from "../../../domain/model/todo";
-import { TodoFilter, TodoSort } from "../../../domain/repository/todo";
+import { CreateTodo, TodoFilter, TodoSort, UpdateTodo } from "../../../domain/repository/todo";
 import * as grpc from "../../grpc/proto_ts_gen/todo/todo_pb";
 import { toGrpcFilterKind, toGrpcSortField } from "./list";
 import { toUserId } from "./user";
+import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 
 export function toTodoStatus(status: grpc.Status): TodoStatus {
     switch(status) {
@@ -90,4 +91,31 @@ export function toGrpcTodoSort(sort: TodoSort): grpc.TodoSort {
     }
 
     return grpcTodoSort;
+}
+
+export function toGrpcCreateTodo(createTodo: CreateTodo): grpc.CreateTodo {
+    const grpcCreateTodo = new grpc.CreateTodo();
+    grpcCreateTodo.setTitle(createTodo.title);
+    grpcCreateTodo.setDescription(createTodo.description);
+    grpcCreateTodo.setStatus(toGrpcTodoStatus(createTodo.status));
+    grpcCreateTodo.setStartTime(Timestamp.fromDate(createTodo.start_time));
+    return grpcCreateTodo;
+}
+
+export function toGrpcUpdateTodo(updateTodo: UpdateTodo): grpc.UpdateTodo {
+    const grpcUpdateTodo = new grpc.UpdateTodo();
+    grpcUpdateTodo.setId(toGrpcTodoId(updateTodo.id));
+
+    if (updateTodo.title) {
+        grpcUpdateTodo.setTitle(updateTodo.title);
+    }
+
+    if (updateTodo.description) {
+        grpcUpdateTodo.setDescription(updateTodo.description);
+    }
+
+    if (updateTodo.status) {
+        grpcUpdateTodo.setStatus(toGrpcTodoStatus(updateTodo.status));
+    }
+    return grpcUpdateTodo;
 }

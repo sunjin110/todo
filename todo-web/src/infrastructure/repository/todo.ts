@@ -3,7 +3,7 @@ import { TodoRpcClient } from "../grpc/proto_ts_gen/todo/TodoServiceClientPb";
 import * as grpc from "../grpc/proto_ts_gen/todo/todo_pb";
 import { toGrpcSession } from "./converter/authentication";
 import { toGrpcPaging } from "./converter/list";
-import { toGrpcTodoFilter, toGrpcTodoId, toGrpcTodoSort, toTodo, toTodos } from "./converter/todo";
+import { toGrpcCreateTodo, toGrpcTodoFilter, toGrpcTodoId, toGrpcTodoSort, toGrpcUpdateTodo, toTodo, toTodos } from "./converter/todo";
 
 export class TodoGrpcRepository implements TodoRepository {
     client: TodoRpcClient;
@@ -44,14 +44,23 @@ export class TodoGrpcRepository implements TodoRepository {
             todo: toTodo(result.getTodo()!),
         };
     }
-    create(input: CreateInput): void {
-        throw new Error("Method not implemented.");
+    
+    async create(input: CreateInput): Promise<void> {
+        const grpcInput = new grpc.CreateInput();
+        grpcInput.setSession(toGrpcSession(input.session));
+        grpcInput.setTodo(toGrpcCreateTodo(input.create_todo));
+        await this.client.create(grpcInput, null);
     }
-    update(input: UpdateInput): void {
-        throw new Error("Method not implemented.");
+    async update(input: UpdateInput): Promise<void> {
+        const grpcInput = new grpc.UpdateInput();
+        grpcInput.setSession(toGrpcSession(input.session));
+        grpcInput.setTodo(toGrpcUpdateTodo(input.update_todo));
+        await this.client.update(grpcInput, null);
     }
-    delete(input: DeleteInput): void {
-        throw new Error("Method not implemented.");
+    async delete(input: DeleteInput): Promise<void> {
+        const gInput = new grpc.DeleteInput();
+        gInput.setSession(toGrpcSession(input.session));
+        gInput.setId(toGrpcTodoId(input.id));
+        await this.client.delete(gInput, null);
     }
-
 };

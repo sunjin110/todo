@@ -5,9 +5,9 @@ import { FilterField, Paging, SortField } from "./list";
 export interface TodoRepository {
     list(input: ListInput): Promise<ListOutput>;
     get(input: GetInput): Promise<GetOutput>;
-    create(input: CreateInput): void;
-    update(input: UpdateInput): void;
-    delete(input: DeleteInput): void;
+    create(input: CreateInput): Promise<void>;
+    update(input: UpdateInput): Promise<void>;
+    delete(input: DeleteInput): Promise<void>;
 };
 
 export type TodoFilter = {
@@ -60,6 +60,7 @@ export type UpdateInput = {
 
 export type DeleteInput = {
     session: Session;
+    id: TodoId;
 };
 
 export type GetInput = {
