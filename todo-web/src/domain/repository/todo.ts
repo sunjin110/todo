@@ -3,8 +3,8 @@ import { Todo, TodoId, TodoStatus } from "../model/todo";
 import { FilterField, Paging, SortField } from "./list";
 
 export interface TodoRepository {
-    list(input: ListInput): ListOutput;
-    get(input: GetInput): GetOutput;
+    list(input: ListInput): Promise<ListOutput>;
+    get(input: GetInput): Promise<GetOutput>;
     create(input: CreateInput): void;
     update(input: UpdateInput): void;
     delete(input: DeleteInput): void;
@@ -14,7 +14,7 @@ export type TodoFilter = {
     id?: TodoId;
     title?: FilterField<string>;
     description?: FilterField<string>;
-    status?: FilterField<TodoStatus>;
+    status?: TodoStatus;
 };
 
 export type TodoSort = {
